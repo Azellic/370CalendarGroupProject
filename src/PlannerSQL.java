@@ -3,6 +3,51 @@ import java.sql.*;
 public class PlannerSQL {
     private static Connection con;
 
+    public void startUp() throws SQLException, ClassNotFoundException {
+        getConnection();
+    }
+    public void insertTag(String tagName) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO tag(tagName) VALUES(?);");
+        prep.setString(1,tagName);
+        prep.executeUpdate();
+    }
+    public void insertEvent(int tagID, int startTime, int endTime, String date, String eventTitle) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO event(tagID, startTime, endTime," +
+                "date, eventTitle) VALUES(?,?,?,?,?);");
+        prep.setInt(1,tagID);
+        prep.setInt(2,startTime);
+        prep.setInt(3,endTime);
+        prep.setString(4,date);
+        prep.setString(5,eventTitle);
+        prep.executeUpdate();
+
+    }
+    public void insertTask(int tagID, String dueDate, String taskTitle) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO task(tagID, DueDate, taskTitle,completed)" +
+                "VALUES(?,?,?,?);");
+        prep.setInt(1,tagID);
+        prep.setString(2,dueDate);
+        prep.setString(3,taskTitle);
+        prep.setInt(4,0);
+        prep.executeUpdate();
+    }
+    public void insertAssessment(int tagID, int weight, float grade, String assessmentTitle) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(TAGID, WEIGHT, " +
+                "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?);");
+        prep.setInt(1, tagID);
+        prep.setInt(2,weight);
+        prep.setFloat(3,grade);
+        prep.setString(4, assessmentTitle);
+    }
+    public ResultSet displayEvents() throws SQLException, ClassNotFoundException {
+        if (con == null) {
+            getConnection();
+        }
+
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT * FROM event;");
+    }
+
     /**
      * Sets the connection to the database and then calls initialise method
      * @throws SQLException
@@ -40,7 +85,7 @@ public class PlannerSQL {
                     "tagID INTEGER," +
                     "startTime INTEGER," +
                     "endTime INTEGER," +
-                    "date INTEGER," +
+                    "date VARCHAR," +
                     "eventTitle VARCHAR," +
                     "FOREIGN KEY(tagID) REFERENCES tag(tagID)" +
                     "ON DELETE CASCADE);");
@@ -67,14 +112,12 @@ public class PlannerSQL {
             state.execute("CREATE TABLE task" +
                     "(taskID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "tagID INTEGER," +
-                    "DueDate VARCHAR," +
+                    "dueDate VARCHAR," +
                     "taskTitle VARCHAR," +
                     "completed VARCHAR," +
                     "FOREIGN KEY(tagID) REFERENCES tag(tagID)" +
                     "ON DELETE CASCADE);");
         }
     }
-    public void startUp() throws SQLException, ClassNotFoundException {
-        getConnection();
-    }
+
 }
