@@ -3,25 +3,59 @@ import java.sql.*;
 public class PlannerSQL {
     private static Connection con;
 
+    /**
+     * Starts the database
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void startUp() throws SQLException, ClassNotFoundException {
         getConnection();
     }
+
+    /**
+     * Inserts values into the tag table
+     * @param tagName
+     * @throws SQLException
+     */
     public void insertTag(String tagName) throws SQLException {
         PreparedStatement prep = con.prepareStatement("INSERT INTO tag(tagName) VALUES(?);");
         prep.setString(1,tagName);
         prep.executeUpdate();
     }
-    public void insertEvent(int tagID, int startTime, int endTime, String date, String eventTitle) throws SQLException {
-        PreparedStatement prep = con.prepareStatement("INSERT INTO event(tagID, startTime, endTime," +
-                "date, eventTitle) VALUES(?,?,?,?,?);");
+
+    /**
+     * Inserts values into the event table
+     * @param tagID
+     * @param startTime
+     * @param endTime
+     * @param day
+     * @param month
+     * @param year
+     * @param eventTitle
+     * @throws SQLException
+     */
+    public void insertEvent(int tagID, String startTime, String endTime,
+            int day, int month, int year, String eventTitle) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO event(tagID, startTime, endTime, day" +
+                ", month, year, eventTitle) VALUES (?,?,?,?,?,?,?);");
         prep.setInt(1,tagID);
-        prep.setInt(2,startTime);
-        prep.setInt(3,endTime);
-        prep.setString(4,date);
-        prep.setString(5,eventTitle);
+        prep.setString(2,startTime);
+        prep.setString(3,endTime);
+        prep.setInt(4, day);
+        prep.setInt(5, month);
+        prep.setInt(6,year);
+        prep.setString(7,eventTitle);
         prep.executeUpdate();
 
     }
+
+    /**
+     * Inserts values into the task table
+     * @param tagID
+     * @param dueDate
+     * @param taskTitle
+     * @throws SQLException
+     */
     public void insertTask(int tagID, String dueDate, String taskTitle) throws SQLException {
         PreparedStatement prep = con.prepareStatement("INSERT INTO task(tagID, DueDate, taskTitle,completed)" +
                 "VALUES(?,?,?,?);");
@@ -31,6 +65,15 @@ public class PlannerSQL {
         prep.setInt(4,0);
         prep.executeUpdate();
     }
+
+    /**
+     * Inserts values into the assessment table
+     * @param tagID
+     * @param weight
+     * @param grade
+     * @param assessmentTitle
+     * @throws SQLException
+     */
     public void insertAssessment(int tagID, int weight, float grade, String assessmentTitle) throws SQLException {
         PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(TAGID, WEIGHT, " +
                 "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?);");
@@ -39,13 +82,61 @@ public class PlannerSQL {
         prep.setFloat(3,grade);
         prep.setString(4, assessmentTitle);
     }
+
+    /**
+     * Returns all values in the event table
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ResultSet displayEvents() throws SQLException, ClassNotFoundException {
         if (con == null) {
             getConnection();
         }
-
         Statement state = con.createStatement();
         return state.executeQuery("SELECT * FROM event;");
+    }
+
+    /**
+     * Returns all values in the tag table
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public ResultSet displayTags() throws SQLException, ClassNotFoundException {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT * FROM tag");
+    }
+
+    /**
+     * Returns all values in the assessment table
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public ResultSet displayAssessments() throws SQLException, ClassNotFoundException {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT * FROM assessment");
+    }
+
+    /**
+     * Returns all values in the tasks table
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public ResultSet displayTasks() throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT * FROM task");
     }
 
     /**
@@ -83,9 +174,11 @@ public class PlannerSQL {
             state.execute("CREATE TABLE event" +
                     "(eventID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "tagID INTEGER," +
-                    "startTime INTEGER," +
-                    "endTime INTEGER," +
-                    "date VARCHAR," +
+                    "startTime VARCHAR," +
+                    "endTime VARCHAR," +
+                    "day INTEGER," +
+                    "month INTEGER," +
+                    "year INTEGER," +
                     "eventTitle VARCHAR," +
                     "FOREIGN KEY(tagID) REFERENCES tag(tagID)" +
                     "ON DELETE CASCADE);");
