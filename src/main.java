@@ -14,6 +14,7 @@ public class main {
             test.insertTag("MATH110");
             test.insertTag("WORK");
         } else {
+            System.out.println("\nTags Table Testing");
             System.out.println(tagResult.getInt("tagID")+ " "+ tagResult.getString("tagName"));
             while(tagResult.next()){
                 System.out.println(tagResult.getInt("tagID")+ " "+ tagResult.getString("tagName"));
@@ -39,6 +40,7 @@ public class main {
             test.insertEvent(4, "7:00", "10:00",
                     10, 3, 2020, "Work Shift");
         } else {
+            System.out.println("\nEvent Table Tests");
             System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("tagID")+" "+
                     eventResult.getString("startTime")+" "+eventResult.getString("endTime")+ " "+
                     eventResult.getInt("day")+ " " + eventResult.getInt("month")+ " "+
@@ -51,7 +53,38 @@ public class main {
             }
         }
         ResultSet assessmentResult = test.displayAssessments();
+        if (!assessmentResult.next()){
+            test.insertAssessment(1, 25, 100, "Midterm");
+            test.insertAssessment(2, 50, 25, "Final");
+            test.insertAssessment(3, 35, 37.5, "Final Project");
+            test.insertAssessment(1, 5, 55.5, "assignment 1");
+            test.insertAssessment(2, 10, 65, "Assignment 3");
+        } else {
+            System.out.println("\nAssessment Table Tests");
+            System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("tagID")+" "+
+                    assessmentResult.getInt("grade")+" "+assessmentResult.getString("assessmentTitle"));
+            while(assessmentResult.next()){
+                System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("tagID")+" "+
+                        assessmentResult.getInt("grade")+" "+assessmentResult.getString("assessmentTitle"));
+            }
+        }
         ResultSet tasksResult = test.displayTasks();
+        if (!tasksResult.next()) {
+            test.insertTask(1, 6, 4, 2020, "Assignment");
+            test.insertTask(1, 5, 8, 2020, "Assignment");
+            test.insertTask(2, 3, 4, 2020, "clean room");
+            test.insertTask(3, 5, 6, 2020, "Do Dishes");
+        } else {
+            System.out.println("\nTasks Table Tests");
+            System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("tagID")+" "+
+                    tasksResult.getInt("dueDay")+" "+tasksResult.getInt("dueMonth")+" "+
+                    tasksResult.getInt("dueYear")+" "+tasksResult.getString("taskTitle"));
+            while(tasksResult.next()) {
+                System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("tagID")+" "+
+                        tasksResult.getInt("dueDay")+" "+tasksResult.getInt("dueMonth")+" "+
+                        tasksResult.getInt("dueYear")+" "+tasksResult.getString("taskTitle"));
+            }
+        }
 
     }
 }

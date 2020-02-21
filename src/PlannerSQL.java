@@ -52,17 +52,21 @@ public class PlannerSQL {
     /**
      * Inserts values into the task table
      * @param tagID
-     * @param dueDate
+     * @param dueDay
+     * @param dueMonth
+     * @param dueYear
      * @param taskTitle
      * @throws SQLException
      */
-    public void insertTask(int tagID, String dueDate, String taskTitle) throws SQLException {
-        PreparedStatement prep = con.prepareStatement("INSERT INTO task(tagID, DueDate, taskTitle,completed)" +
-                "VALUES(?,?,?,?);");
+    public void insertTask(int tagID, int dueDay, int dueMonth, int dueYear, String taskTitle) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO task(tagID, dueDay, dueMonth, dueYear," +
+                " taskTitle,completed) VALUES(?,?,?,?,?,?);");
         prep.setInt(1,tagID);
-        prep.setString(2,dueDate);
-        prep.setString(3,taskTitle);
-        prep.setInt(4,0);
+        prep.setInt(2,dueDay);
+        prep.setInt(3,dueMonth);
+        prep.setInt(4,dueYear);
+        prep.setString(5,taskTitle);
+        prep.setInt(6,0);
         prep.executeUpdate();
     }
 
@@ -74,13 +78,14 @@ public class PlannerSQL {
      * @param assessmentTitle
      * @throws SQLException
      */
-    public void insertAssessment(int tagID, int weight, float grade, String assessmentTitle) throws SQLException {
+    public void insertAssessment(int tagID, int weight, double grade, String assessmentTitle) throws SQLException {
         PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(TAGID, WEIGHT, " +
                 "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?);");
         prep.setInt(1, tagID);
-        prep.setInt(2,weight);
-        prep.setFloat(3,grade);
+        prep.setInt(2, weight);
+        prep.setDouble(3, grade);
         prep.setString(4, assessmentTitle);
+        prep.executeUpdate();
     }
 
     /**
@@ -205,7 +210,9 @@ public class PlannerSQL {
             state.execute("CREATE TABLE task" +
                     "(taskID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "tagID INTEGER," +
-                    "dueDate VARCHAR," +
+                    "dueDay INTEGER," +
+                    "dueMonth INTEGER," +
+                    "dueYear INTEGER," +
                     "taskTitle VARCHAR," +
                     "completed VARCHAR," +
                     "FOREIGN KEY(tagID) REFERENCES tag(tagID)" +
