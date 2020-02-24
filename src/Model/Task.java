@@ -1,4 +1,4 @@
 package Model;
 
-public class Task {
+public class Task extends CalendarItem {
 }

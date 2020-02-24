@@ -1,4 +1,8 @@
 package View;
 
-public class TaskSidebar {
+public class TaskSidebar implements PlannerListener  {
+    @Override
+    public void modelChanged() {
+
+    }
 }

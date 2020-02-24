@@ -1,4 +1,8 @@
 package View;
 
-public class Dashboard {
+public class Dashboard implements PlannerListener {
+    @Override
+    public void modelChanged() {
+
+    }
 }
