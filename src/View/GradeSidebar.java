@@ -1,4 +1,8 @@
 package View;
 
-public class GradeSidebar {
+public class GradeSidebar implements PlannerListener {
+    @Override
+    public void modelChanged() {
+
+    }
 }

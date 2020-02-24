@@ -1,4 +1,8 @@
 package View;
 
-public class DaySidebar {
+public class DaySidebar implements PlannerListener {
+    @Override
+    public void modelChanged() {
+
+    }
 }

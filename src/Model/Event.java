@@ -1,4 +1,4 @@
 package Model;
 
-public class Event {
+public class Event extends CalendarItem {
 }
