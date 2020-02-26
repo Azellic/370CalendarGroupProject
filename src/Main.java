@@ -1,10 +1,42 @@
+import Controller.*;
+import Model.Calendar;
+import Model.CalendarItem;
+import Model.CoursesModel;
+import Model.TaskBoardModel;
+import View.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class main {
+public class Main extends Application{
+    //Models
+    Calendar calendarModel;
+    CoursesModel coursesModel;
+    TaskBoardModel taskModel;
+    //Controllers
+    CalendarController calController;
+    DashboardController dashController;
+    DayTabController daytabController;
+    GradeTabController gradeController;
+    TaskTabController taskController;
+    //Views
+    CalendarView calendarView;
+    Dashboard dashboard;
+    DaySidebar dayView;
+    GradeSidebar gradeView;
+    TaskSidebar taskView;
+
+
+    @Override
+    public void start(Stage primaryStage) {
+        //TODO: Connect it all
+    }
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         PlannerSQL test = new PlannerSQL();
         test.startUp();
+
+        launch(args);
 
         // Insert values careful not to add repeats on multiple runs
         ResultSet tagResult = test.displayTags();
