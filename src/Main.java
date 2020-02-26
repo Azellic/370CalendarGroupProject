@@ -7,7 +7,7 @@ import View.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+// Main execution for the app
 public class Main {//extends Application{
     //Models
     Calendar calendarModel;
