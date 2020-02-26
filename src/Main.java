@@ -8,7 +8,7 @@ import View.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Main extends Application{
+public class Main {//extends Application{
     //Models
     Calendar calendarModel;
     CoursesModel coursesModel;
@@ -26,17 +26,17 @@ public class Main extends Application{
     GradeSidebar gradeView;
     TaskSidebar taskView;
 
-
+    /*
     @Override
     public void start(Stage primaryStage) {
-        //TODO: Connect it all
-    }
+
+    }*/
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         PlannerSQL test = new PlannerSQL();
         test.startUp();
 
-        launch(args);
+        //launch(args);
 
         // Insert values careful not to add repeats on multiple runs
         ResultSet tagResult = test.displayTags();
