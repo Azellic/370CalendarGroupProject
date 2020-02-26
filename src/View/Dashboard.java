@@ -1,8 +1,14 @@
 package View;
 
-public class Dashboard implements PlannerListener {
-    @Override
-    public void modelChanged() {
+import Model.Calendar;
 
+public class Dashboard implements PlannerListener {
+
+    public void draw() {
+
+    }
+
+    public void modelChanged() {
+        draw();
     }
 }

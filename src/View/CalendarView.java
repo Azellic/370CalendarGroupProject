@@ -1,9 +1,19 @@
 package View;
 
+import Model.Calendar;
+
 public class CalendarView implements PlannerListener{
+    Calendar model;
 
-    @Override
+    public void setModel(Calendar newModel) {
+        model = newModel;
+    }
+
+    public void draw() {
+
+    }
+
     public void modelChanged() {
-
+        draw();
     }
 }
