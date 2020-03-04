@@ -82,6 +82,7 @@ public class Main extends Application{
         calendarBox.setPrefSize(bounds.getWidth()*2/3, bounds.getHeight());
         calendarBox.setAlignment(Pos.CENTER);
 
+<<<<<<< HEAD
         buttonBox = new HBox(grades, tasks, day);
         buttonBox.setPrefSize(bounds.getWidth()/3, 40);
         buttonBox.setAlignment(Pos.TOP_CENTER);
@@ -117,6 +118,10 @@ public class Main extends Application{
 
     }
 
+=======
+    }*/
+    // Added comment above main
+>>>>>>> 797907cf630eae6e43ae164866da26368f00f010
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         PlannerSQL test = new PlannerSQL();
         test.startUp();
