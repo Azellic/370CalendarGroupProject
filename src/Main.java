@@ -31,7 +31,7 @@ public class Main {//extends Application{
     public void start(Stage primaryStage) {
 
     }*/
-
+    // Added comment above main
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         PlannerSQL test = new PlannerSQL();
         test.startUp();
