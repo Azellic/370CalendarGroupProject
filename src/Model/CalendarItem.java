@@ -8,21 +8,23 @@ public class CalendarItem {
 
     protected String description; // A description of the item
 
-    private int tags;
-
     private Color color;
 
-    private course class;
+    private Course course;
 
-    private assesment mark;
+    private int ID;
 
-    public CalendarItem(String title, String description, String tags, Color color){
+    //private Assesment mark;
+
+    public CalendarItem(String title, String description, Course course, Color color){
         this.title = title;
         this.description = description;
-        this.tags = tags;
+        this.course = course;
         this.color = color;
-        // call a function to add the new calendar item to the DB
+
     }
+
+    // *** the Getters and Setters ***
 
     public String getTitle(){
         return this.title;
@@ -36,17 +38,42 @@ public class CalendarItem {
         return this.description;
     }
 
-    public void setDescription(String title){
-        this.title = description;
+    public void setDescription(String description){
+        this.description = description;
     }
-    public String getColor(){
+
+    public Course getCourse(){
+        return this.course;
+    }
+
+    public void setCourse(Course course){
+        this.course = course;
+    }
+
+    /*public Assesment getMark() {
+        return mark;
+    }
+     */
+
+    /*
+    public void setMark(Assesment mark) {
+        this.mark = mark;
+    }
+    */
+
+    public Color getColor(){
         return this.color;
     }
 
-    public void setColor(String title){
-        this.title = color;
+    public void setColor(Color color){
+        this.color = color;
     }
 
+    public int getID() {
+        return ID;
+    }
 
-
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 }
