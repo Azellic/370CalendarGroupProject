@@ -1,6 +1,6 @@
 import Controller.*;
 import Model.Calendar;
-import Model.CalendarItem;
+//import Model.CalendarItem;
 import Model.CoursesModel;
 import Model.TaskBoardModel;
 import View.*;
@@ -34,23 +34,23 @@ public class Main {//extends Application{
     }*/
     // adding same comment for testing
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        PlannerSQL test = new PlannerSQL();
+        DataBase test = new DataBase();
         test.startUp();
 
         //launch(args);
 
         // Insert values careful not to add repeats on multiple runs
-        ResultSet tagResult = test.displayTags();
-        if (!tagResult.next()){
-            test.insertTag("CMPT370");
-            test.insertTag("CMPT340");
-            test.insertTag("MATH110");
-            test.insertTag("WORK");
+        ResultSet courseResult = test.displayCourses();
+        if (!courseResult.next()){
+            test.insertCourse("CMPT370");
+            test.insertCourse("CMPT340");
+            test.insertCourse("MATH110");
+            test.insertCourse("WORK");
         } else {
-            System.out.println("\nTags Table Testing");
-            System.out.println(tagResult.getInt("tagID")+ " "+ tagResult.getString("tagName"));
-            while(tagResult.next()){
-                System.out.println(tagResult.getInt("tagID")+ " "+ tagResult.getString("tagName"));
+            System.out.println("\nTa Table Testing");
+            System.out.println(courseResult.getInt("courseID")+ " "+ courseResult.getString("courseName"));
+            while(courseResult.next()){
+                System.out.println(courseResult.getInt("courseID")+ " "+ courseResult.getString("courseName"));
             }
         }
 
@@ -74,12 +74,12 @@ public class Main {//extends Application{
                     10, 3, 2020, "Work Shift");
         } else {
             System.out.println("\nEvent Table Tests");
-            System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("tagID")+" "+
+            System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("courseID")+" "+
                     eventResult.getString("startTime")+" "+eventResult.getString("endTime")+ " "+
                     eventResult.getInt("day")+ " " + eventResult.getInt("month")+ " "+
                     eventResult.getInt("year")+ " " + eventResult.getString("eventTitle"));
             while(eventResult.next()){
-                System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("tagID")+" "+
+                System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("courseID")+" "+
                         eventResult.getString("startTime")+" "+eventResult.getString("endTime")+ " "+
                         eventResult.getInt("day")+ " " + eventResult.getInt("month")+ " "+
                         eventResult.getInt("year")+ " " + eventResult.getString("eventTitle"));
@@ -94,10 +94,10 @@ public class Main {//extends Application{
             test.insertAssessment(2, 10, 65, "Assignment 3");
         } else {
             System.out.println("\nAssessment Table Tests");
-            System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("tagID")+" "+
+            System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("courseID")+" "+
                     assessmentResult.getInt("grade")+" "+assessmentResult.getString("assessmentTitle"));
             while(assessmentResult.next()){
-                System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("tagID")+" "+
+                System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("courseID")+" "+
                         assessmentResult.getInt("grade")+" "+assessmentResult.getString("assessmentTitle"));
             }
         }
@@ -109,11 +109,11 @@ public class Main {//extends Application{
             test.insertTask(3, 5, 6, 2020, "Do Dishes");
         } else {
             System.out.println("\nTasks Table Tests");
-            System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("tagID")+" "+
+            System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("courseID")+" "+
                     tasksResult.getInt("dueDay")+" "+tasksResult.getInt("dueMonth")+" "+
                     tasksResult.getInt("dueYear")+" "+tasksResult.getString("taskTitle"));
             while(tasksResult.next()) {
-                System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("tagID")+" "+
+                System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("courseID")+" "+
                         tasksResult.getInt("dueDay")+" "+tasksResult.getInt("dueMonth")+" "+
                         tasksResult.getInt("dueYear")+" "+tasksResult.getString("taskTitle"));
             }
