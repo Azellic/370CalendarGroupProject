@@ -31,6 +31,7 @@ public class FullCalendarView {
         GridPane calendar = new GridPane();
         calendar.setPrefSize(600, 400);
         calendar.setGridLinesVisible(true);
+       //System.out.println(yearMonth);
         // Create rows and columns with anchor panes for the calendar
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
@@ -67,7 +68,9 @@ public class FullCalendarView {
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
     }
-
+    public YearMonth getCurrentYearMonth() {
+        return currentYearMonth;
+    }
     /**
      * Set the days of the calendar to correspond to the appropriate date
      * @param yearMonth year and month of month to render

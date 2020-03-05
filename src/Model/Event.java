@@ -27,25 +27,32 @@ public class Event extends CalendarItem {
         this.year = year;
         this.location = location;
     }
+    public Time getStart() {
+        return start;
+    }
+    public Time getEnd() {
+        return end;
+    }
     public int getDay() {
         return day;
     }
-    public Date getStart() {
-        return start;
+    public int getMonth() {
+        return month;
     }
-
+    public int getYear() {
+        return year;
+    }
+    public String getLocation(){
+        return location;
+    }
+    
     public void setStart(Time start) {
         this.start = start;
-    }
-
-    public Date getEnd() {
-        return end;
     }
 
     public void setEnd(Time end) {
         this.end = end;
     }
-
     @Override
     public String toString() {
         return "Event{" +
@@ -105,6 +112,5 @@ public class Event extends CalendarItem {
                     "STM College");
         }
         System.out.println(getEvents().get(0).toString());
-
     }
 }
