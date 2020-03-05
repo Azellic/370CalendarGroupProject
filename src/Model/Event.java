@@ -102,11 +102,11 @@ public class Event extends CalendarItem {
         formatQuery(eventsQuery, events);
         return events;
     }
-    public static ArrayList<Event> getDaysEvents(int month, int day) throws SQLException,
+    public static ArrayList<Event> getDaysEvents(int year, int month, int day) throws SQLException,
             ClassNotFoundException, ParseException {
         DataBase db = new DataBase();
         db.startUp();
-        ResultSet eventsQuery = db.getDaysEvents(month, day);
+        ResultSet eventsQuery = db.getDaysEvents(year, month, day);
         ArrayList<Event> events = new ArrayList<>();
         formatQuery(eventsQuery, events);
         return events;
@@ -165,8 +165,8 @@ public class Event extends CalendarItem {
             db.insertEvent(1,
                     "9:30",
                     "10:30",
-                    2,
-                    4,
+                    5,
+                    3,
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
@@ -174,8 +174,8 @@ public class Event extends CalendarItem {
             db.insertEvent(1,
                     "9:30",
                     "10:30",
-                    2,
-                    4,
+                    5,
+                    3,
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
@@ -183,6 +183,6 @@ public class Event extends CalendarItem {
         }
         System.out.println(getEvents());
         System.out.println(getMonthsEvents(4));
-        System.out.println(getDaysEvents(4, 2));
+        System.out.println(getDaysEvents(2020, 4, 2));
     }
 }

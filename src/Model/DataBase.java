@@ -149,14 +149,15 @@ public class DataBase {
         prep.setInt(1, month);
         return prep.executeQuery();
     }
-    public ResultSet getDaysEvents(int month, int day) throws SQLException, ClassNotFoundException {
+    public ResultSet getDaysEvents(int year, int month, int day) throws SQLException, ClassNotFoundException {
         if (con == null){
             getConnection();
         }
         PreparedStatement prep = con.prepareStatement(
-                "SELECT * FROM event WHERE month = ? AND day = ?;");
-        prep.setInt(1, month);
-        prep.setInt(2, day);
+                "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;");
+        prep.setInt(1, year);
+        prep.setInt(2, month);
+        prep.setInt(3, day);
         return prep.executeQuery();
     }
 

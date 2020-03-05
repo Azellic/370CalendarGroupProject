@@ -12,6 +12,7 @@ import static javafx.application.Application.launch;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.YearMonth;
 
 // JavaFX packages we need
@@ -230,11 +231,16 @@ public class Main extends Application {
         dayBox.setPrefSize(100, 800);
         dayBox.setAlignment(Pos.CENTER_LEFT);
     }
-    // adding same comment for testing
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         DataBase db = new DataBase();
         db.startUp();
+        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        int currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
+        int currentDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
+        Calendar c = new Calendar(currentYear, currentMonth, currentDay);
+        System.out.println(c.getCurrentDayEvents());
         launch(args);
-        // Added comment above main
+
     }
 }
