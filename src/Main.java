@@ -77,8 +77,9 @@ public class Main extends Application{
         primaryStage.setScene(new Scene(new FullCalendarView(YearMonth.now()).getView()));
         primaryStage.show();
          */
+        calController = new CalendarController();
 
-        calendarv = new FullCalendarView(YearMonth.now());
+        calendarv = new FullCalendarView(YearMonth.now(), calController);
         tabPane = new TabPane();
         border = new BorderPane();
 

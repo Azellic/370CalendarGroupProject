@@ -1,6 +1,7 @@
 package Calendar;
 
 import Calendar.AnchorPaneNode;
+import Controller.CalendarController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -20,12 +21,13 @@ public class FullCalendarView {
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
+    private CalendarController controller;
 
     /**
      * Create a calendar view
      * @param yearMonth year month to create the calendar of
      */
-    public FullCalendarView(YearMonth yearMonth) {
+    public FullCalendarView(YearMonth yearMonth, CalendarController controller) {
         currentYearMonth = yearMonth;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
@@ -35,6 +37,8 @@ public class FullCalendarView {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setController(controller);
+                ap.setOnClickController();
                 ap.setPrefSize(200,200);
                 calendar.add(ap,j,i);
                 allCalendarDays.add(ap);
@@ -121,5 +125,9 @@ public class FullCalendarView {
 
     public void setAllCalendarDays(ArrayList<AnchorPaneNode> allCalendarDays) {
         this.allCalendarDays = allCalendarDays;
+    }
+
+    public void setController(CalendarController ctrl) {
+        controller = ctrl;
     }
 }
