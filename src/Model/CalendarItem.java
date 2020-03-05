@@ -50,12 +50,11 @@ public class CalendarItem {
         this.course = course;
     }
 
-    /*public Assesment getMark() {
+    /*
+    public Assesment getMark() {
         return mark;
     }
-     */
 
-    /*
     public void setMark(Assesment mark) {
         this.mark = mark;
     }

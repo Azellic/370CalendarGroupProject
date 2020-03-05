@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//test
 public class Event extends CalendarItem {
     protected Date start;
     protected Date end;
@@ -26,6 +27,7 @@ public class Event extends CalendarItem {
     }
     public int getDay() {
         return day;
+
     }
     public Date getStart() {
         return start;
