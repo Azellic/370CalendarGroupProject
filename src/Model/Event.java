@@ -2,6 +2,7 @@ package Model;
 import java.awt.*;
 import java.util.Date;
 
+//test
 public class Event extends CalendarItem {
     protected Date start;
     protected Date end;
