@@ -232,18 +232,9 @@ public class Main extends Application {
     }
     // adding same comment for testing
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
-
-        DataBase test = new DataBase();
-        test.startUp();
-
-
-
-    // Added comment above main
-
+        DataBase db = new DataBase();
+        db.startUp();
         launch(args);
-
-
         // Added comment above main
     }
 }
