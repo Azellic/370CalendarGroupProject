@@ -17,15 +17,13 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.scene.control.TabPane;
+
 
 // Main execution for the app
 public class Main extends Application{
@@ -61,8 +59,23 @@ public class Main extends Application{
     Tab tasks;
     Tab day;
 
-    //
+    // Boxes to add to the tabs
+    VBox gradesBox;
+    VBox tasksBox;
+    VBox dayBox;
+
+    // Buttons for adding new grades, tasks, and day
+    Button addGradesb;
+    Button addTasksb;
+    Button addDayb;
+
+    // The view the calendar is stored in
     FullCalendarView calendarv;
+
+    // Lists for the tabs
+    ListView gradesList;
+    ListView tasksList;
+    ListView dayList;
 
     @Override
     public void start(Stage primaryStage)  throws Exception{
@@ -89,6 +102,7 @@ public class Main extends Application{
 
         calendarView = new CalendarView(w, h);
 
+        createTabComponents();
         createTabs();
 
         // Set the title
@@ -141,14 +155,66 @@ public class Main extends Application{
      */
     public void createTabs() {
 
-        grades = new Tab("Grades", new Label("Show all the grades available"));
-        tasks = new Tab("Tasks"  , new Label("Show all tasks for the month"));
-        day = new Tab("Day" , new Label("Show all day events, grades, courses"));
+        grades = new Tab("Grades", gradesBox);
+        tasks = new Tab("Tasks"  , tasksBox);
+        day = new Tab("Day" , dayBox);
 
         tabPane.getTabs().add(grades);
         tabPane.getTabs().add(tasks);
         tabPane.getTabs().add(day);
 
+    }
+
+    public void createTabComponents(){
+
+        //Initialize the component for the grades type
+
+        // Initialize the list
+        gradesList = new ListView();
+        gradesList.setPrefWidth(100);
+        gradesList.setPrefHeight(700);
+        gradesList.fixedCellSizeProperty();
+
+        // Initialize the button
+        addGradesb = new Button("New Grade");
+        addGradesb.setPrefHeight(60);
+        addGradesb.setPrefWidth(100);
+
+
+        // Initialize Components for the tasks tab
+        tasksList = new ListView();
+        tasksList.setPrefWidth(100);
+        tasksList.setPrefHeight(700);
+        tasksList.fixedCellSizeProperty();
+
+        addTasksb = new Button("New Task");
+        addTasksb.setPrefHeight(60);
+        addTasksb.setPrefWidth(100);
+
+
+        // Initialize Components for the day tab
+        // Does List view initialization
+        dayList = new ListView();
+        dayList.setPrefWidth(100);
+        dayList.setPrefHeight(700);
+        dayList.fixedCellSizeProperty();
+
+        addDayb = new Button("New Day");
+        addDayb.setPrefHeight(60);
+        addDayb.setPrefWidth(100);
+
+        // Assign the list views and the buttons to their appropriate
+        gradesBox = new VBox(gradesList, addGradesb);
+        gradesBox.setPrefSize(100, 800);
+        gradesBox.setAlignment(Pos.CENTER_LEFT);
+
+        tasksBox = new VBox(tasksList, addTasksb);
+        tasksBox.setPrefSize(100, 800);
+        tasksBox.setAlignment(Pos.CENTER_LEFT);
+
+        dayBox = new VBox(dayList, addDayb);
+        dayBox.setPrefSize(100, 800);
+        dayBox.setAlignment(Pos.CENTER_LEFT);
     }
 
     // Added comment above main
