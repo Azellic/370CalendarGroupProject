@@ -141,6 +141,24 @@ public class DataBase {
         Statement state = con.createStatement();
         return state.executeQuery("SELECT * FROM event;");
     }
+    public ResultSet getMonthsEvents(int month) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ?; ");
+        prep.setInt(1, month);
+        return prep.executeQuery();
+    }
+    public ResultSet getDaysEvents(int month, int day) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement(
+                "SELECT * FROM event WHERE month = ? AND day = ?;");
+        prep.setInt(1, month);
+        prep.setInt(2, day);
+        return prep.executeQuery();
+    }
 
     public ResultSet displayCourses() throws SQLException, ClassNotFoundException {
         if (con == null) {
