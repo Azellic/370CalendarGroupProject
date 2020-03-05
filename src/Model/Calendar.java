@@ -3,6 +3,8 @@ package Model;
 import java.awt.*;
 import View.PlannerListener;
 import Model.DataBase;
+
+import java.sql.Time;
 import java.util.Date;
 
 import java.awt.*;
@@ -22,7 +24,7 @@ public class Calendar {
     }
 
     public void newEvent(String title, String description, Course course, Color color,
-                         int day, int month, int year, Date start, Date end, String location ){
+                         int day, int month, int year, Time start, Time end, String location ){
         Event event = new Event(title,description,course,color, day, month, year, start, end, location);
         addEventToDB(event);
         addEventToCache(event);
