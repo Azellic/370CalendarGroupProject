@@ -13,6 +13,10 @@ public class Calendar {
 
     }
 
+    public void changeMonthTo(int month, int year){
+
+    }
+
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);
     }
@@ -20,4 +24,6 @@ public class Calendar {
     private void notifySubscribers() {
         subscribers.forEach(sub -> sub.modelChanged());
     }
+
+    //private
 }
