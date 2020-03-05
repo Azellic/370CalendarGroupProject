@@ -198,7 +198,7 @@ public class Main extends Application{
         dayList.setPrefHeight(700);
         dayList.fixedCellSizeProperty();
 
-        addDayb = new Button("New Day");
+        addDayb = new Button("New Event");
         addDayb.setPrefHeight(60);
         addDayb.setPrefWidth(100);
 
