@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Calendar;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +24,17 @@ public class CalendarController {
 
     public void handleDayClicked(MouseEvent event) {
         LocalDate date = ((AnchorPaneNode)event.getSource()).getDate();
-        model.setSelectedDay();
+        System.out.println(date);
+        //model.setSelectedDay(date);
+    }
+
+    public void previousMonth(ActionEvent actionEvent) {
+        System.out.println("-1");
+        //model.changeMonthBy(-1);
+    }
+
+    public void nextMonth(ActionEvent actionEvent) {
+        System.out.println("+1");
+        //model.changeMonthBy(+1);
     }
 }

@@ -2,6 +2,7 @@ package Calendar;
 
 import Calendar.AnchorPaneNode;
 import Controller.CalendarController;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -29,6 +30,7 @@ public class FullCalendarView {
      */
     public FullCalendarView(YearMonth yearMonth, CalendarController controller) {
         currentYearMonth = yearMonth;
+        this.controller = controller;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
         calendar.setPrefSize(600, 400);
@@ -37,7 +39,7 @@ public class FullCalendarView {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setController(controller);
+                ap.setController(this.controller);
                 ap.setOnClickController();
                 ap.setPrefSize(200,200);
                 calendar.add(ap,j,i);
@@ -61,9 +63,9 @@ public class FullCalendarView {
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
         Button previousMonth = new Button("<<");
-        previousMonth.setOnAction(e -> previousMonth());
+        previousMonth.setOnAction(this::previousMonth);//previousMonth());
         Button nextMonth = new Button(">>");
-        nextMonth.setOnAction(e -> nextMonth());
+        nextMonth.setOnAction(this::nextMonth);
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
@@ -102,17 +104,19 @@ public class FullCalendarView {
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
-    private void previousMonth() {
+    private void previousMonth(ActionEvent actionEvent) {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
+        controller.previousMonth(actionEvent);
     }
 
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */
-    private void nextMonth() {
+    private void nextMonth(ActionEvent actionEvent) {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth);
+        controller.nextMonth(actionEvent);
     }
 
     public VBox getView() {
