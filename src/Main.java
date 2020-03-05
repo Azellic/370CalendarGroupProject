@@ -168,11 +168,11 @@ public class Main extends Application {
 
         grades = new Tab("Grades", new Label("Show all the grades available"));
         tasks = new Tab("Tasks", new Label("Show all tasks for the month"));
-        day = new Tab("Day", new Label("Show all day events, grades, courses"));
+        day = new Tab("Today's Events", new Label("Show all day events, grades, courses"));
 
         grades = new Tab("Grades", gradesBox);
         tasks = new Tab("Tasks"  , tasksBox);
-        day = new Tab("Day" , dayBox);
+        day = new Tab("Today's Events" , dayBox);
 
         tabPane.getTabs().add(grades);
         tabPane.getTabs().add(tasks);
@@ -214,7 +214,7 @@ public class Main extends Application {
         dayList.setPrefHeight(700);
         dayList.fixedCellSizeProperty();
 
-        addDayb = new Button("New Day");
+        addDayb = new Button("New Event");
         addDayb.setPrefHeight(60);
         addDayb.setPrefWidth(100);
 
