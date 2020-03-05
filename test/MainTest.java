@@ -1,3 +1,4 @@
+import Model.DataBase;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 public class MainTest {
-    PlannerSQL test = new PlannerSQL();
+    DataBase test = new DataBase();
     @BeforeClass
     public void setup() throws ClassNotFoundException, SQLException {
         test.startUp();

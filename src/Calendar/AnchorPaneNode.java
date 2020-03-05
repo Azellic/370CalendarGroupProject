@@ -1,5 +1,6 @@
 package Calendar;
 
+import Controller.CalendarController;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
@@ -12,6 +13,7 @@ public class AnchorPaneNode extends AnchorPane {
 
     // Date associated with this pane
     private LocalDate date;
+    CalendarController controller;
 
     /**
      * Create a anchor pane node. Date is not assigned in the constructor.
@@ -20,7 +22,7 @@ public class AnchorPaneNode extends AnchorPane {
     public AnchorPaneNode(Node... children) {
         super(children);
         // Add action handler for mouse clicked
-        this.setOnMouseClicked(e -> System.out.println("This pane's date is: " + date));
+        //this.setOnMouseClicked(e -> System.out.println("This pane's date is: " + date));
     }
 
     public LocalDate getDate() {
@@ -29,5 +31,11 @@ public class AnchorPaneNode extends AnchorPane {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setController(CalendarController controller) { this.controller = controller; }
+
+    public void setOnClickController() {
+        this.setOnMouseClicked(controller::handleDayClicked);
     }
 }
