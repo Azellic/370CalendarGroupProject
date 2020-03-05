@@ -7,6 +7,7 @@ import Model.DataBase;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Date;
 
@@ -16,29 +17,46 @@ import java.util.ArrayList;
 public class Calendar {
    private ArrayList<PlannerListener> subscribers;
    private ArrayList<Day> days;
-   private Day selectedDay;
+   //
+   private int selectedDay;
    private int selectedMonth;
+   private int selectedYear;
+   //The current calendar day (today)
    private int currentDay;
    private int currentMonth;
    private int currentYear;
    private ArrayList<Event> currentDayEvents;
    private ArrayList<Event> currentMonthEvents;
 
-   public Calendar(int currentYear, int currentMonth, int currentDay)
-           throws ParseException, SQLException, ClassNotFoundException {
+   public Calendar() throws ParseException, SQLException, ClassNotFoundException {
+       int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+       int currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
+       int currentDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
        this.currentYear = currentYear;
        this.currentMonth = currentMonth;
        this.currentDay = currentDay;
+       selectedDay = currentDay;
+       selectedMonth = currentMonth;
        setCurrentDayEvents();
        setCurrentMonthEvents();
    }
 
-   public void setSelectedDay(){
-
+   public void setSelectedDay(LocalDate date){
+       selectedDay = date.getDayOfMonth();
+       selectedMonth = date.getMonthValue();
+       selectedYear = date.getYear();
    }
 
-   public void changeMonthTo(int month, int year){
-
+   public void changeMonthBy(int increment){
+       selectedMonth += increment;
+       if(selectedMonth < 1){
+           selectedMonth = 12;
+           selectedYear -= 1;
+       }
+       else if(selectedMonth > 12){
+            selectedMonth = 1;
+            selectedYear += 1;
+       }
    }
 
    public void setCurrentDayEvents() throws ParseException, SQLException, ClassNotFoundException {

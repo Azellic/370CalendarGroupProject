@@ -25,16 +25,16 @@ public class CalendarController {
     public void handleDayClicked(MouseEvent event) {
         LocalDate date = ((AnchorPaneNode)event.getSource()).getDate();
         System.out.println(date);
-        //model.setSelectedDay(date);
+        model.setSelectedDay(date);
     }
 
     public void previousMonth(ActionEvent actionEvent) {
         System.out.println("-1");
-        //model.changeMonthBy(-1);
+        model.changeMonthBy(-1);
     }
 
     public void nextMonth(ActionEvent actionEvent) {
         System.out.println("+1");
-        //model.changeMonthBy(+1);
+        model.changeMonthBy(+1);
     }
 }
