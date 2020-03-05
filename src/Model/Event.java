@@ -45,7 +45,7 @@ public class Event extends CalendarItem {
     public String getLocation(){
         return location;
     }
-    
+
     public void setStart(Time start) {
         this.start = start;
     }
@@ -94,6 +94,23 @@ public class Event extends CalendarItem {
             events.add(event);
         }
         return events;
+    }
+
+    public static void createEvent(String startTime, String endTime, int day, int month,
+    int year, String eventTitle, String eventDescription, String eventLocation) throws SQLException, ClassNotFoundException {
+        DataBase db = new DataBase();
+        db.startUp();
+
+        ResultSet eventResult = db.displayEvents();
+        db.insertEvent(1, startTime,
+                endTime,
+                day,
+                month,
+                year,
+                eventTitle,
+                eventDescription,
+                eventLocation);
+
     }
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         DataBase db = new DataBase();
