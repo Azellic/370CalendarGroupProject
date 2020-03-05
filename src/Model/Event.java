@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//test
 public class Event extends CalendarItem {
     protected Time start;
     protected Time end;
@@ -35,6 +36,7 @@ public class Event extends CalendarItem {
     }
     public int getDay() {
         return day;
+
     }
     public int getMonth() {
         return month;
