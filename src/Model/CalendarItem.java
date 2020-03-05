@@ -16,11 +16,11 @@ public class CalendarItem {
 
     //private Assesment mark;
 
-    public CalendarItem(String title, String description, Course course, Color color){
+    public CalendarItem(String title, String description, Course course){
         this.title = title;
         this.description = description;
         this.course = course;
-        this.color = color;
+        //this.color = color;
 
     }
 
@@ -50,12 +50,11 @@ public class CalendarItem {
         this.course = course;
     }
 
-    /*public Assesment getMark() {
+    /*
+    public Assesment getMark() {
         return mark;
     }
-     */
 
-    /*
     public void setMark(Assesment mark) {
         this.mark = mark;
     }

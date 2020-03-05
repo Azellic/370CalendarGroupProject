@@ -1,7 +1,10 @@
 package Model;
 
+import java.awt.*;
 import View.PlannerListener;
+import Model.DataBase;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Calendar {
@@ -17,6 +20,14 @@ public class Calendar {
 
     }
 
+    public void newEvent(String title, String description, Course course){
+        Event event = new Event(title,description,course);
+        addEventToDB(event);
+        addEventToCache(event);
+        notifySubscribers();
+
+    }
+
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);
     }
@@ -25,5 +36,13 @@ public class Calendar {
         subscribers.forEach(sub -> sub.modelChanged());
     }
 
-    private
+    private void addEventToCache(Event event){
+
+    }
+
+    private void addEventToDB(Event event){
+
+    }
+
+
 }

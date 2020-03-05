@@ -9,9 +9,8 @@ public class Event extends CalendarItem {
     protected String location;
     protected int type;
 
-    public Event(String title, String description, String tags, Color color, int type) {
-        super(title, description, tags, color);
-        this.type = type;
+    public Event(String title, String description, Course course) {
+        super(title, description, course);
     }
 
     public Date getStart() {
