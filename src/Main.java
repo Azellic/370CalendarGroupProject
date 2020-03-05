@@ -1,4 +1,9 @@
 import Controller.*;
+import Model.Calendar;
+//import Model.CalendarItem;
+import Model.CoursesModel;
+import Model.DataBase;
+import Model.TaskBoardModel;
 import Model.*;
 import View.*;
 import Calendar.FullCalendarView;
@@ -25,7 +30,11 @@ import javafx.stage.Stage;
 
 
 // Main execution for the app
-public class Main extends Application{
+
+// test
+//public class Main {//extends Application{
+
+public class Main extends Application {
     //Models
     Calendar calendarModel;
     CoursesModel coursesModel;
@@ -76,8 +85,10 @@ public class Main extends Application{
     ListView tasksList;
     ListView dayList;
 
+
+
     @Override
-    public void start(Stage primaryStage)  throws Exception{
+    public void start (Stage primaryStage)  throws Exception {
         /*
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
@@ -118,13 +129,13 @@ public class Main extends Application{
 
         // Set the bounds of the calendar
         calendarBoundingBox = new VBox(calendarv.getView());
-        calendarBoundingBox.setMaxSize((bounds.getWidth()*2/3) - bounds.getWidth()*0.05, bounds.getHeight());
+        calendarBoundingBox.setMaxSize((bounds.getWidth() * 2 / 3) - bounds.getWidth() * 0.05, bounds.getHeight());
         calendarBoundingBox.setAlignment(Pos.CENTER);
         calendarBoundingBox.setStyle("-fx-background-color: lightgrey");
 
         // set the calender view to the window
         calendarBox = new VBox(calendarBoundingBox);
-        calendarBox.setPrefSize(bounds.getWidth()*2/3, bounds.getHeight());
+        calendarBox.setPrefSize(bounds.getWidth() * 2 / 3, bounds.getHeight());
         calendarBox.setAlignment(Pos.CENTER);
         calendarBox.setStyle("-fx-background-color: dimgrey");
 
@@ -135,7 +146,7 @@ public class Main extends Application{
 
         // Set the the buttons on the side bar
         sideBar = new VBox(tabPane);
-        sideBar.setPrefSize(bounds.getWidth()/3, bounds.getHeight());
+        sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.setStyle("-fx-background-color: darkgrey");
 
@@ -152,7 +163,11 @@ public class Main extends Application{
     /*
         Create the tabs for the sidebar
      */
-    public void createTabs() {
+    public void createTabs () {
+
+        grades = new Tab("Grades", new Label("Show all the grades available"));
+        tasks = new Tab("Tasks", new Label("Show all tasks for the month"));
+        day = new Tab("Day", new Label("Show all day events, grades, courses"));
 
         grades = new Tab("Grades", gradesBox);
         tasks = new Tab("Tasks"  , tasksBox);
@@ -215,11 +230,20 @@ public class Main extends Application{
         dayBox.setPrefSize(100, 800);
         dayBox.setAlignment(Pos.CENTER_LEFT);
     }
+    // adding same comment for testing
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+
+        DataBase test = new DataBase();
+        test.startUp();
+
+
 
     // Added comment above main
 
-
-    public static void main(String[] args) {
         launch(args);
+
+
+        // Added comment above main
     }
 }
