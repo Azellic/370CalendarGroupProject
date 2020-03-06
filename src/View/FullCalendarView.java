@@ -1,6 +1,8 @@
-package Calendar;
+package View;
 
-import Calendar.AnchorPaneNode;
+import Controller.CalendarController;
+import Model.Calendar;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -9,32 +11,40 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
 
-public class FullCalendarView {
+public class FullCalendarView implements PlannerListener {
 
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
+    private CalendarController controller;
+    private Calendar model;
 
     /**
      * Create a calendar view
      * @param yearMonth year month to create the calendar of
      */
-    public FullCalendarView(YearMonth yearMonth) {
+    public FullCalendarView(YearMonth yearMonth, CalendarController controller) {
         currentYearMonth = yearMonth;
+        this.controller = controller;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
         calendar.setPrefSize(600, 400);
         calendar.setGridLinesVisible(true);
+       //System.out.println(yearMonth);
         // Create rows and columns with anchor panes for the calendar
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setController(this.controller);
+                ap.setOnClickController();
                 ap.setPrefSize(200,200);
                 calendar.add(ap,j,i);
                 allCalendarDays.add(ap);
@@ -57,9 +67,29 @@ public class FullCalendarView {
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
         Button previousMonth = new Button("<<");
-        previousMonth.setOnAction(e -> previousMonth());
+        previousMonth.setOnAction(actionEvent -> {
+            try {
+                previousMonth(actionEvent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         Button nextMonth = new Button(">>");
-        nextMonth.setOnAction(e -> nextMonth());
+        nextMonth.setOnAction(actionEvent -> {
+            try {
+                nextMonth(actionEvent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
@@ -67,7 +97,9 @@ public class FullCalendarView {
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
     }
-
+    public YearMonth getCurrentYearMonth() {
+        return currentYearMonth;
+    }
     /**
      * Set the days of the calendar to correspond to the appropriate date
      * @param yearMonth year and month of month to render
@@ -86,6 +118,7 @@ public class FullCalendarView {
             }
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             ap.setDate(calendarDate);
+            //TODO: If we are going to add events to the calendar, this would be the place
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
             ap.getChildren().add(txt);
@@ -98,17 +131,19 @@ public class FullCalendarView {
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
-    private void previousMonth() {
+    private void previousMonth(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
+        controller.previousMonthClicked(actionEvent);
     }
 
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */
-    private void nextMonth() {
+    private void nextMonth(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth);
+        controller.nextMonthClicked(actionEvent);
     }
 
     public VBox getView() {
@@ -121,5 +156,17 @@ public class FullCalendarView {
 
     public void setAllCalendarDays(ArrayList<AnchorPaneNode> allCalendarDays) {
         this.allCalendarDays = allCalendarDays;
+    }
+
+    public void setController(CalendarController ctrl) {
+        controller = ctrl;
+    }
+
+    public void setModel(Calendar m){
+        model = m;
+    }
+
+    public void modelChanged() {
+        populateCalendar(currentYearMonth);
     }
 }

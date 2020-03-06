@@ -1,38 +1,31 @@
 import Controller.*;
 import Model.Calendar;
-//import Model.CalendarItem;
 import Model.CoursesModel;
 import Model.DataBase;
 import Model.TaskBoardModel;
-import Model.*;
 import View.*;
-import Calendar.FullCalendarView;
+import View.FullCalendarView;
 
 import static javafx.application.Application.launch;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.YearMonth;
 
 // JavaFX packages we need
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.YearMonth;
 
-// Main execution for the app
-
-// test
-//public class Main {//extends Application{
 
 public class Main extends Application {
     //Models
@@ -46,83 +39,76 @@ public class Main extends Application {
     GradeTabController gradeController;
     TaskTabController taskController;
     //Views
-    CalendarView calendarView;
     Dashboard dashboard;
     DaySidebar dayView;
     GradeSidebar gradeView;
     TaskSidebar taskView;
-
-    // Window set up values
-    Rectangle2D bounds;
-
-    // Bounding boxes for the window objects
-    BorderPane border;
-    VBox calendarBoundingBox; // To control the size of the calendar
-    VBox calendarBox;
-    VBox sideBar;
-
-    // Parts of the tab pane
-    TabPane tabPane;
-    Tab grades;
-    Tab tasks;
-    Tab day;
-
-    // Boxes to add to the tabs
-    VBox gradesBox;
-    VBox tasksBox;
-    VBox dayBox;
-
-    // Buttons for adding new grades, tasks, and day
-    Button addGradesb;
-    Button addTasksb;
-    Button addDayb;
+    FullCalendarView calendarView;
 
     // The view the calendar is stored in
     FullCalendarView calendarv;
-
-    // Lists for the tabs
-    ListView<VBox> gradesList;
-    ListView<VBox> tasksList;
-    ListView<VBox> dayList;
+    BorderPane border;
 
 
 
     @Override
     public void start (Stage primaryStage)  throws Exception {
-        /*
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
-        */
-        /*
-        Code used for display the calendar
-            primaryStage.setTitle("Full Calendar Example");
-        primaryStage.setScene(new Scene(new FullCalendarView(YearMonth.now()).getView()));
-        primaryStage.show();
-         */
-
-        calendarv = new FullCalendarView(YearMonth.now());
-        tabPane = new TabPane();
+        StackPane root = new StackPane();
         border = new BorderPane();
 
+
+        calController = new CalendarController();
+        dashController = new DashboardController();
+        daytabController = new DayTabController();
+        gradeController = new GradeTabController();
+        taskController = new TaskTabController();
+
+        calendarModel = new Calendar();
+        System.out.println(calendarModel.getCurrentDayEvents());
+        coursesModel = new CoursesModel();
+        taskModel = new TaskBoardModel();
+
+        //Set up the controllers with respective models
+        calController.setModel(calendarModel);
+        daytabController.setModel(calendarModel);
+        gradeController.setModel(coursesModel);
+        taskController.setModel(taskModel);
+
         Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        //Screen screen = Screen.getPrimary();
         bounds = screen.getVisualBounds();
-        dashboard = new Dashboard(bounds);
+        //dashboard = new Dashboard(bounds);
 
+        dayView = new DaySidebar();
+        taskView = new TaskSidebar();
+        calendarView = new FullCalendarView(YearMonth.now(), calController);
+        gradeView = new GradeSidebar();
 
-        int w = 600;
-        int h = 800;
+        dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
 
-        calendarView = new CalendarView(w, h);
+        //Set up each view with the model it will draw
+        dayView.setModel(calendarModel);
+        taskView.setModel(taskModel);
+        calendarView.setModel(calendarModel);
+        gradeView.setModel(coursesModel);
 
         /*
         createTabComponents();
         createTabs();
         */
+        //Set up model-view subscriber relationship
+        calendarModel.addSubscriber(dayView);
+        calendarModel.addSubscriber(calendarView);
+        taskModel.addSubscriber(taskView);
+        coursesModel.addSubscriber(gradeView);
+
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
 
+        root.setPrefWidth(bounds.getWidth());
+        root.setPrefHeight(bounds.getHeight());
 
 
         // Set the window size based on the screen bounds
@@ -156,11 +142,14 @@ public class Main extends Application {
         sideBar.setStyle("-fx-background-color: darkgrey");
         */
         // Set the two regions onto the main window
+        /*
         border.setLeft(dashboard.getCalendarBox());
         border.setRight(dashboard.getSideBar());
+        */
 
         // Set items in the border into the scene and display the scene
-        Scene scene = new Scene(border);
+        root.getChildren().add(dashboard);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -238,20 +227,127 @@ public class Main extends Application {
         dayBox.setAlignment(Pos.CENTER_LEFT);
     }
     */
-    // adding same comment for testing
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
-
-        DataBase test = new DataBase();
-        test.startUp();
-
-
 
     // Added comment above main
 
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
+        DataBase db = new DataBase();
+        db.startUp();
+        ResultSet eventResult = db.displayEvents();
+        if (!eventResult.next()) {
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    6,
+                    3,
+                    2020,
+                    "CMPT370 Project1",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    6,
+                    3,
+                    2020,
+                    "CMPT370 Project2",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    6,
+                    3,
+                    2020,
+                    "CMPT370 Project3",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    2,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    2,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    2,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    4,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    4,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    4,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    5,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    5,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    5,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+        }
+
+        //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
         launch(args);
 
 
-        // Added comment above main
     }
 }

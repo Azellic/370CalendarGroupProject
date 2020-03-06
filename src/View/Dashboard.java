@@ -1,6 +1,7 @@
 package View;
 
-import Calendar.FullCalendarView;
+
+import View.FullCalendarView;
 import Model.Calendar;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -12,7 +13,21 @@ import javafx.stage.Screen;
 
 import java.time.YearMonth;
 
-public class Dashboard implements PlannerListener {
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
+
+public class Dashboard extends Pane implements PlannerListener {
+    //Subview classes for the sidebar
+    DaySidebar dayView;
+    FullCalendarView calendarView;
+    GradeSidebar gradeView;
+    TaskSidebar taskView;
+
 
     // Window set up values
     Rectangle2D bounds;
@@ -47,40 +62,21 @@ public class Dashboard implements PlannerListener {
     ListView<VBox> tasksList;
     ListView<VBox> dayList;
 
+    public Dashboard(Rectangle2D bounds, FullCalendarView calendarView, GradeSidebar gradeView, TaskSidebar taskView, DaySidebar dayView) {
+        this.taskView = taskView;
+        this.gradeView = gradeView;
+        this.calendarView = calendarView;
+        this.dayView = dayView;
+        this.bounds = bounds;
 
-    public void draw() {
-
-    }
-
-    public Dashboard(Rectangle2D bounds){
-        calendarv = new FullCalendarView(YearMonth.now());
+        border = new BorderPane();
         tabPane = new TabPane();
-        //border = new BorderPane();
 
-
-        int w = 600;
-        int h = 800;
-
-        //calendarView = new CalendarView(w, h);
-
-        createTabComponents();
+        //createTabComponents();
         createTabs();
 
-        // Set the title
-        //primaryStage.setTitle("CMPT370 Project");
-        /*
-        Screen screen = Screen.getPrimary();
-        bounds = screen.getVisualBounds();
-        */
-        // Set the window size based on the screen bounds
-        /*
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight());
-        */
         // Set the bounds of the calendar
-        calendarBoundingBox = new VBox(calendarv.getView());
+        calendarBoundingBox = new VBox(calendarView.getView());
         calendarBoundingBox.setMaxSize((bounds.getWidth() * 2 / 3) - bounds.getWidth() * 0.05, bounds.getHeight());
         calendarBoundingBox.setAlignment(Pos.CENTER);
         calendarBoundingBox.setStyle("-fx-background-color: lightgrey");
@@ -103,16 +99,17 @@ public class Dashboard implements PlannerListener {
         sideBar.setStyle("-fx-background-color: darkgrey");
 
         // Set the two regions onto the main window
-        /*
         border.setLeft(calendarBox);
         border.setRight(sideBar);
-        */
-        // Set items in the border into the scene and display the scene
-        /*
-        Scene scene = new Scene(border);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        */
+
+        this.setPrefHeight(bounds.getHeight());
+        this.setPrefWidth(bounds.getWidth());
+        this.getChildren().add(border);
+    }
+
+
+    public void draw() {
+
     }
 
     /*
@@ -124,13 +121,15 @@ public class Dashboard implements PlannerListener {
         tasks = new Tab("Tasks", new Label("Show all tasks for the month"));
         day = new Tab("Today's Events", new Label("Show all day events, grades, courses"));
 
-        grades = new Tab("Grades", gradesBox);
-        tasks = new Tab("Tasks"  , tasksBox);
-        day = new Tab("Today's Events" , dayBox);
+        grades = new Tab("Grades", gradeView);
+        tasks = new Tab("Tasks"  , taskView);
+        day = new Tab("Today's Events" , dayView);
 
-        tabPane.getTabs().add(grades);
-        tabPane.getTabs().add(tasks);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabPane.setTabMinWidth(bounds.getWidth()/10.5);
         tabPane.getTabs().add(day);
+        tabPane.getTabs().add(tasks);
+        tabPane.getTabs().add(grades);
 
     }
 
