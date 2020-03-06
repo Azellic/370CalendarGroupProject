@@ -1,5 +1,6 @@
 package View;
 
+import Controller.DayTabController;
 import Model.Calendar;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -45,5 +46,9 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     public void modelChanged() {
         draw();
+    }
+
+    public void setButtonController(DayTabController controller) {
+        addEventbutton.setOnAction(controller::handleAddEventClicked);
     }
 }
