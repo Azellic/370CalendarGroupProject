@@ -27,6 +27,7 @@ public class Calendar {
    private int currentYear;
    private ArrayList<Event> currentDayEvents;
    private ArrayList<Event> currentMonthEvents;
+   private ArrayList<Event> selectedMonthsEvents;
 
    public Calendar() throws ParseException, SQLException, ClassNotFoundException {
        subscribers = new ArrayList<>();
@@ -36,8 +37,9 @@ public class Calendar {
        this.currentYear = currentYear;
        this.currentMonth = currentMonth;
        this.currentDay = currentDay;
-       selectedDay = currentDay;
-       selectedMonth = currentMonth;
+       this.selectedDay = currentDay;
+       this.selectedMonth = currentMonth;
+       this.selectedYear = currentYear;
        setCurrentDayEvents();
        setCurrentMonthEvents();
    }
@@ -48,7 +50,7 @@ public class Calendar {
        selectedYear = date.getYear();
    }
 
-   public void changeMonthBy(int increment){
+   public void changeMonthBy(int increment) throws ParseException, SQLException, ClassNotFoundException {
        selectedMonth += increment;
        if(selectedMonth < 1){
            selectedMonth = 12;
@@ -58,6 +60,8 @@ public class Calendar {
             selectedMonth = 1;
             selectedYear += 1;
        }
+       setSelectedMonthsEvents();
+       System.out.println(getSelectedMonthsEvents());
    }
 
    public void setCurrentDayEvents() throws ParseException, SQLException, ClassNotFoundException {
@@ -66,13 +70,18 @@ public class Calendar {
    public void setCurrentMonthEvents() throws ParseException, SQLException, ClassNotFoundException {
        this.currentMonthEvents = Event.getMonthsEvents(selectedMonth);
    }
+   public void setSelectedMonthsEvents() throws ParseException, SQLException, ClassNotFoundException {
+       this.selectedMonthsEvents = Event.getSelectedEvents(selectedYear, selectedMonth);
+   }
    public ArrayList<Event> getCurrentDayEvents(){
        return currentDayEvents;
    }
    public ArrayList<Event> getCurrentMonthEvents(){
        return currentMonthEvents;
    }
-
+   public ArrayList<Event> getSelectedMonthsEvents(){
+       return selectedMonthsEvents;
+   }
    public void newEvent(String title, String description, Course course, Color color,
                         int day, int month, int year, Time start, Time end, String location ){
         Event event = new Event(title,description,course,color, day, month, year, start, end, location);

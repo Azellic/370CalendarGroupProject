@@ -161,6 +161,18 @@ public class DataBase {
         return prep.executeQuery();
     }
 
+    public ResultSet getSelectedEvents(int year, int month) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement(
+                "SELECT * FROM event WHERE year = ? AND month = ?;"
+        );
+        prep.setInt(1, year);
+        prep.setInt(2, month);
+        return prep.executeQuery();
+    }
+
     public ResultSet displayCourses() throws SQLException, ClassNotFoundException {
         if (con == null) {
             getConnection();
