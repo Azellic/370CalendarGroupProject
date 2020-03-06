@@ -70,6 +70,9 @@ public class Dashboard extends Pane implements PlannerListener {
         border.setLeft(calendarBox);
         border.setRight(sideBar);
 
+        border.setPrefHeight(bounds.getHeight());
+        border.setPrefWidth(bounds.getWidth());
+
         this.setPrefHeight(bounds.getHeight());
         this.setPrefWidth(bounds.getWidth());
         this.getChildren().add(border);

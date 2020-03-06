@@ -2,6 +2,7 @@ package View;
 
 import Model.Calendar;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -12,7 +13,7 @@ public class DaySidebar extends VBox implements PlannerListener {
     Button addEventbutton;
     ListView dayList;
 
-    public DaySidebar() {
+    public DaySidebar(Rectangle2D bounds) {
 
         // Initialize Components for the day tab
         // Does List view initialization
@@ -25,11 +26,7 @@ public class DaySidebar extends VBox implements PlannerListener {
         addEventbutton.setPrefHeight(60);
         addEventbutton.setPrefWidth(100);
 
-        dayBox = new VBox(dayList, addEventbutton);
-        dayBox.setPrefSize(100, 800);
-        dayBox.setAlignment(Pos.CENTER_LEFT);
-
-        this.setPrefSize(100,800);
+        this.setPrefSize(100, bounds.getHeight());
         this.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().add(dayList);
         this.getChildren().add(addEventbutton);

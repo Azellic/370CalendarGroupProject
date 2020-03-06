@@ -61,10 +61,10 @@ public class Main extends Application {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
-        dayView = new DaySidebar();
-        taskView = new TaskSidebar();
+        dayView = new DaySidebar(bounds);
+        taskView = new TaskSidebar(bounds);
         calendarView = new FullCalendarView(YearMonth.now(), calController);
-        gradeView = new GradeSidebar();
+        gradeView = new GradeSidebar(bounds);
 
         dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
 
