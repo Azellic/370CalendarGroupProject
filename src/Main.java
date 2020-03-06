@@ -1,35 +1,20 @@
 import Controller.*;
 import Model.Calendar;
-//import Model.CalendarItem;
 import Model.CoursesModel;
 import Model.DataBase;
 import Model.TaskBoardModel;
 import View.*;
-import View.FullCalendarView;
-
-import static javafx.application.Application.launch;
+import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.YearMonth;
 
-// JavaFX packages we need
-import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-
-
-// Main execution for the app
-
-// test
-//public class Main {//extends Application{
 
 public class Main extends Application {
     //Models
@@ -97,6 +82,10 @@ public class Main extends Application {
 
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
+
+
+        root.setPrefWidth(bounds.getWidth());
+        root.setPrefHeight(bounds.getHeight());
 
         // Set the window size based on the screen bounds
         primaryStage.setX(bounds.getMinX());
