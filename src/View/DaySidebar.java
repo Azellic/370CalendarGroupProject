@@ -28,11 +28,6 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     Stage primaryStage;
 
-    /*
-        model.getCurrentDayEvents()
-        model.getCurrentMonthEvents()
-        model.getSelectedMonthEvents()
-     */
     public DaySidebar(){
 
         // Initialize Components for the day tab
