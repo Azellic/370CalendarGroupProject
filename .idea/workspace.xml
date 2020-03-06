@@ -3,12 +3,36 @@
   <component name="ChangeListManager">
     <list default="true" id="d0d61cd5-05bd-4df1-b775-441b43d506f8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CalendarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Calendar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/DaySidebar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DaySidebar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Calendar/FXMLMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Controller/CalendarController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Controller/DashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Controller/DayTabController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Controller/GradeTabController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Controller/TaskTabController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/META-INF/370project.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/Assessment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/Calendar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/CalendarItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/Course.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/CoursesModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/DataBase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/Day.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/Event.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/Task.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/Model/TaskBoardModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/AnchorPaneNode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/CalendarView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/Dashboard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/DaySidebar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/FullCalendarView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/GradeSidebar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/PlannerListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/TaskSidebar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/View/fullCalendar.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/sample.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/370project/sample/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plannerDB.db" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,10 +42,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
+            <state relative-caret-position="-2680">
               <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -46,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/src/View/Dashboard.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="160">
-              <caret line="98" column="25" lean-forward="true" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="57" />
+              <caret line="98" column="25" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/src/Model/Event.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -72,13 +96,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/View/DaySidebar.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
-                <element signature="e#1688#1689#0" expanded="true" />
+                <element signature="e#1680#1681#0" expanded="true" />
                 <element signature="e#4740#4741#0" expanded="true" />
                 <element signature="e#4788#4789#0" expanded="true" />
               </folding>
@@ -151,6 +175,11 @@
             <path>
               <item name="370project" type="b2602c69:ProjectViewProjectNode" />
               <item name="370project" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="370project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="370project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -187,7 +216,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1583534819350" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1583535551984" />
     <property name="last_opened_file_path" value="C:/Program Files/Java/javafx-sdk-13.0.2/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -239,18 +268,17 @@
       <workItem from="1583368157060" duration="4604000" />
       <workItem from="1583431087054" duration="97000" />
       <workItem from="1583435825811" duration="2007000" />
-      <workItem from="1583521732294" duration="12914000" />
+      <workItem from="1583521732294" duration="13707000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36177000" />
+    <option name="totallyTimeSpent" value="36970000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29194632" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29194632" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -259,7 +287,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -415,7 +443,7 @@
     <entry file="file://$PROJECT_DIR$/src/View/Dashboard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
-          <caret line="98" column="25" lean-forward="true" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="57" />
+          <caret line="98" column="25" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -429,31 +457,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/View/DaySidebar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
           <folding>
-            <element signature="e#1688#1689#0" expanded="true" />
+            <element signature="e#1680#1681#0" expanded="true" />
             <element signature="e#4740#4741#0" expanded="true" />
             <element signature="e#4788#4789#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2680">
+          <caret line="96" column="37" selection-start-line="96" selection-start-column="37" selection-end-line="96" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
