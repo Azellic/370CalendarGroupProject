@@ -1,11 +1,25 @@
 package View;
 
+
+import View.FullCalendarView;
+import Model.Calendar;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+
+import java.time.YearMonth;
+
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
 
 public class Dashboard extends Pane implements PlannerListener {
     //Subview classes for the sidebar
@@ -14,6 +28,9 @@ public class Dashboard extends Pane implements PlannerListener {
     GradeSidebar gradeView;
     TaskSidebar taskView;
 
+
+    // Window set up values
+    Rectangle2D bounds;
 
     // Bounding boxes for the window objects
     BorderPane border;
@@ -27,8 +44,23 @@ public class Dashboard extends Pane implements PlannerListener {
     Tab tasks;
     Tab day;
 
-    // Window set up values
-    Rectangle2D bounds;
+    // Boxes to add to the tabs
+    VBox gradesBox;
+    VBox tasksBox;
+    VBox dayBox;
+
+    // Buttons for adding new grades, tasks, and day
+    Button addGradesb;
+    Button addTasksb;
+    Button addDayb;
+
+    // The view the calendar is stored in
+    FullCalendarView calendarv;
+
+    // Lists for the tabs
+    ListView<VBox> gradesList;
+    ListView<VBox> tasksList;
+    ListView<VBox> dayList;
 
     public Dashboard(Rectangle2D bounds, FullCalendarView calendarView, GradeSidebar gradeView, TaskSidebar taskView, DaySidebar dayView) {
         this.taskView = taskView;
@@ -40,7 +72,7 @@ public class Dashboard extends Pane implements PlannerListener {
         border = new BorderPane();
         tabPane = new TabPane();
 
-        createTabComponents();
+        //createTabComponents();
         createTabs();
 
         // Set the bounds of the calendar
@@ -75,7 +107,8 @@ public class Dashboard extends Pane implements PlannerListener {
         this.getChildren().add(border);
     }
 
-    public void createTabComponents(){
+
+    public void draw() {
 
     }
 
@@ -97,10 +130,69 @@ public class Dashboard extends Pane implements PlannerListener {
         tabPane.getTabs().add(day);
         tabPane.getTabs().add(tasks);
         tabPane.getTabs().add(grades);
+
     }
 
-    public void draw() {
+    public void createTabComponents(){
 
+        //Initialize the component for the grades type
+
+        // Initialize the list
+        gradesList = new ListView();
+        gradesList.setPrefWidth(100);
+        gradesList.setPrefHeight(700);
+        gradesList.fixedCellSizeProperty();
+
+        // Initialize the button
+        addGradesb = new Button("New Grade");
+        addGradesb.setPrefHeight(60);
+        addGradesb.setPrefWidth(100);
+
+
+        // Initialize Components for the tasks tab
+        tasksList = new ListView();
+        tasksList.setPrefWidth(100);
+        tasksList.setPrefHeight(700);
+        tasksList.fixedCellSizeProperty();
+
+        addTasksb = new Button("New Task");
+        addTasksb.setPrefHeight(60);
+        addTasksb.setPrefWidth(100);
+
+
+        // Initialize Components for the day tab
+        // Does List view initialization
+        dayList = new ListView();
+        dayList.setPrefWidth(100);
+        dayList.setPrefHeight(700);
+        dayList.fixedCellSizeProperty();
+
+        addDayb = new Button("New Event");
+        addDayb.setPrefHeight(60);
+        addDayb.setPrefWidth(100);
+
+        // Assign the list views and the buttons to their appropriate
+        gradesBox = new VBox(gradesList, addGradesb);
+        gradesBox.setPrefSize(100, 800);
+        gradesBox.setAlignment(Pos.CENTER_LEFT);
+
+        tasksBox = new VBox(tasksList, addTasksb);
+        tasksBox.setPrefSize(100, 800);
+        tasksBox.setAlignment(Pos.CENTER_LEFT);
+
+        dayBox = new VBox(dayList, addDayb);
+        dayBox.setPrefSize(100, 800);
+        dayBox.setAlignment(Pos.CENTER_LEFT);
+    }
+
+    public VBox getCalendarBox(){
+
+        return calendarBox;
+    }
+
+    public VBox getSideBar(){
+
+        return sideBar;
     }
 
     public void modelChanged() {
