@@ -11,6 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -65,9 +67,29 @@ public class FullCalendarView implements PlannerListener {
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
         Button previousMonth = new Button("<<");
-        previousMonth.setOnAction(this::previousMonth);
+        previousMonth.setOnAction(actionEvent -> {
+            try {
+                previousMonth(actionEvent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         Button nextMonth = new Button(">>");
-        nextMonth.setOnAction(this::nextMonth);
+        nextMonth.setOnAction(actionEvent -> {
+            try {
+                nextMonth(actionEvent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
@@ -109,7 +131,7 @@ public class FullCalendarView implements PlannerListener {
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
-    private void previousMonth(ActionEvent actionEvent) {
+    private void previousMonth(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
         controller.previousMonthClicked(actionEvent);
@@ -118,7 +140,7 @@ public class FullCalendarView implements PlannerListener {
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */
-    private void nextMonth(ActionEvent actionEvent) {
+    private void nextMonth(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth);
         controller.nextMonthClicked(actionEvent);
