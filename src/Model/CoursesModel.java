@@ -8,6 +8,10 @@ public class CoursesModel {
     ArrayList<Course> courses;
     ArrayList<PlannerListener> subscribers;
 
+    public CoursesModel() {
+        subscribers = new ArrayList<>();
+    }
+
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);
     }

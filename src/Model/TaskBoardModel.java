@@ -7,6 +7,10 @@ import java.util.ArrayList;
 public class TaskBoardModel {
     ArrayList<PlannerListener> subscribers;
 
+    public TaskBoardModel() {
+        subscribers = new ArrayList<>();
+    }
+
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);
     }

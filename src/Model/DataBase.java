@@ -52,6 +52,8 @@ public class DataBase {
                     "month INTEGER," +
                     "year INTEGER," +
                     "eventTitle VARCHAR," +
+                    "eventDescription VARCHAR," +
+                    "eventLocation VARCHAR," +
                     "FOREIGN KEY(courseID) REFERENCES course(courseID)" +
                     "ON DELETE CASCADE);");
         }
@@ -94,9 +96,10 @@ public class DataBase {
     }
 
     public void insertEvent(int courseID, String startTime, String endTime,
-                            int day, int month, int year, String eventTitle) throws SQLException {
-        PreparedStatement prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day" +
-                ", month, year, eventTitle) VALUES (?,?,?,?,?,?,?);");
+                            int day, int month, int year, String eventTitle, String eventDescription ,
+                            String eventLocation) throws SQLException {
+        PreparedStatement prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
+                " month, year, eventTitle, eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?);");
         prep.setInt(1,courseID);
         prep.setString(2,startTime);
         prep.setString(3,endTime);
@@ -104,6 +107,8 @@ public class DataBase {
         prep.setInt(5, month);
         prep.setInt(6,year);
         prep.setString(7,eventTitle);
+        prep.setString(8,eventDescription);
+        prep.setString(9,eventLocation);
         prep.executeUpdate();
     }
 
@@ -135,6 +140,37 @@ public class DataBase {
         }
         Statement state = con.createStatement();
         return state.executeQuery("SELECT * FROM event;");
+    }
+    public ResultSet getMonthsEvents(int month) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ?; ");
+        prep.setInt(1, month);
+        return prep.executeQuery();
+    }
+    public ResultSet getDaysEvents(int year, int month, int day) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement(
+                "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;");
+        prep.setInt(1, year);
+        prep.setInt(2, month);
+        prep.setInt(3, day);
+        return prep.executeQuery();
+    }
+
+    public ResultSet getSelectedEvents(int year, int month) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement(
+                "SELECT * FROM event WHERE year = ? AND month = ?;"
+        );
+        prep.setInt(1, year);
+        prep.setInt(2, month);
+        return prep.executeQuery();
     }
 
     public ResultSet displayCourses() throws SQLException, ClassNotFoundException {
