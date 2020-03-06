@@ -115,37 +115,40 @@ public class Main extends Application {
         DataBase db = new DataBase();
         db.startUp();
         ResultSet eventResult = db.displayEvents();
+        int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
+        int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
+        int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
         if (!eventResult.next()) {
             db.insertEvent(1,
                     "9:30",
                     "10:30",
-                    6,
-                    3,
-                    2020,
+                    cDay,
+                    cMonth,
+                    cYear,
                     "CMPT370 Project1",
                     "Write code for the project",
                     "STM College");
             db.insertEvent(1,
                     "9:30",
-                    "10:30",
-                    6,
-                    3,
-                    2020,
+                    "11:30",
+                    cDay,
+                    cMonth,
+                    cYear,
                     "CMPT370 Project2",
                     "Write code for the project",
                     "STM College");
             db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    6,
-                    3,
-                    2020,
+                    "12:30",
+                    "13:30",
+                    cDay,
+                    cMonth,
+                    cYear,
                     "CMPT370 Project3",
                     "Write code for the project",
                     "STM College");
             db.insertEvent(1,
-                    "9:30",
                     "10:30",
+                    "11:30",
                     5,
                     2,
                     2020,
