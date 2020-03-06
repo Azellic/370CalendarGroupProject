@@ -126,6 +126,7 @@ public class FullCalendarView implements PlannerListener {
         }
         // Change the title of the calendar
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+
     }
 
     /**

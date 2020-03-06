@@ -61,7 +61,7 @@ public class Calendar {
             selectedYear += 1;
        }
        setSelectedMonthsEvents();
-       System.out.println(getSelectedMonthsEvents());
+       //System.out.println(getSelectedMonthsEvents());
    }
 
    public void setCurrentDayEvents() throws ParseException, SQLException, ClassNotFoundException {
@@ -81,6 +81,10 @@ public class Calendar {
    }
    public ArrayList<Event> getSelectedMonthsEvents(){
        return selectedMonthsEvents;
+   }
+   public void insertEvent(ArrayList<String> userInput) throws SQLException,
+           ClassNotFoundException {
+       //event.createEvent(startTime, endTime, day, month, year, eventTitle, eventDescription, eventLocation);
    }
    public void newEvent(String title, String description, Course course, Color color,
                         int day, int month, int year, Time start, Time end, String location ){
