@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -69,7 +70,9 @@ public class Main extends Application {
         taskController.setModel(taskModel);
 
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        Rectangle2D wBounds = screen.getVisualBounds();
+        Rectangle2D bounds = new Rectangle2D(wBounds.getMinX(), wBounds.getMinY(), wBounds.getWidth(),
+                wBounds.getHeight()-20);
 
         dayView = new DaySidebar(bounds);
         taskView = new TaskSidebar(bounds);
@@ -94,14 +97,14 @@ public class Main extends Application {
         primaryStage.setTitle("CMPT370 Project");
 
 
-        root.setPrefWidth(bounds.getWidth());
-        root.setPrefHeight(bounds.getHeight());
+        //root.setPrefWidth(bounds.getWidth());
+        //root.setPrefHeight(bounds.getHeight());
 
         // Set the window size based on the screen bounds
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight());
+        primaryStage.setX(wBounds.getMinX());
+        primaryStage.setY(wBounds.getMinY());
+        primaryStage.setWidth(wBounds.getWidth());
+        primaryStage.setHeight(wBounds.getHeight());
 
         // Set items in the border into the scene and display the scene
         root.getChildren().add(dashboard);

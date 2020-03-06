@@ -62,7 +62,7 @@ public class Dashboard extends Pane implements PlannerListener {
 
         // Set the the buttons on the side bar
         sideBar = new VBox(tabPane);
-        sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
+        //sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.setStyle("-fx-background-color: darkgrey");
 
