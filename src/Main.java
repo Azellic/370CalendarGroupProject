@@ -81,9 +81,9 @@ public class Main extends Application {
     FullCalendarView calendarv;
 
     // Lists for the tabs
-    ListView gradesList;
-    ListView tasksList;
-    ListView dayList;
+    ListView<VBox> gradesList;
+    ListView<VBox> tasksList;
+    ListView<VBox> dayList;
 
 
 
@@ -106,20 +106,24 @@ public class Main extends Application {
         tabPane = new TabPane();
         border = new BorderPane();
 
+        Screen screen = Screen.getPrimary();
+        bounds = screen.getVisualBounds();
+        dashboard = new Dashboard(bounds);
+
 
         int w = 600;
         int h = 800;
 
         calendarView = new CalendarView(w, h);
 
+        /*
         createTabComponents();
         createTabs();
-
+        */
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
 
-        Screen screen = Screen.getPrimary();
-        bounds = screen.getVisualBounds();
+
 
         // Set the window size based on the screen bounds
         primaryStage.setX(bounds.getMinX());
@@ -127,6 +131,7 @@ public class Main extends Application {
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
 
+        /*
         // Set the bounds of the calendar
         calendarBoundingBox = new VBox(calendarv.getView());
         calendarBoundingBox.setMaxSize((bounds.getWidth() * 2 / 3) - bounds.getWidth() * 0.05, bounds.getHeight());
@@ -149,10 +154,10 @@ public class Main extends Application {
         sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.setStyle("-fx-background-color: darkgrey");
-
+        */
         // Set the two regions onto the main window
-        border.setLeft(calendarBox);
-        border.setRight(sideBar);
+        border.setLeft(dashboard.getCalendarBox());
+        border.setRight(dashboard.getSideBar());
 
         // Set items in the border into the scene and display the scene
         Scene scene = new Scene(border);
@@ -160,9 +165,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
     /*
         Create the tabs for the sidebar
      */
+    /*
     public void createTabs () {
 
         grades = new Tab("Grades", new Label("Show all the grades available"));
@@ -230,6 +237,7 @@ public class Main extends Application {
         dayBox.setPrefSize(100, 800);
         dayBox.setAlignment(Pos.CENTER_LEFT);
     }
+    */
     // adding same comment for testing
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
