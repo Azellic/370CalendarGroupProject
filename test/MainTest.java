@@ -20,7 +20,7 @@ public class MainTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
+    /*@Test
     public void testSQL() throws SQLException, ClassNotFoundException{
         // Insert values careful not to add repeats on multiple runs
 
@@ -104,5 +104,6 @@ public class MainTest {
             }
         }
     }
+    */
 
 }

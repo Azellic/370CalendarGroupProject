@@ -1,4 +1,4 @@
-package Calendar;
+package View;
 
 import Controller.CalendarController;
 import javafx.scene.Node;

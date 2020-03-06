@@ -29,6 +29,7 @@ public class Calendar {
    private ArrayList<Event> currentMonthEvents;
 
    public Calendar() throws ParseException, SQLException, ClassNotFoundException {
+       subscribers = new ArrayList<>();
        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
        int currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
        int currentDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);

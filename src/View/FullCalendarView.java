@@ -1,7 +1,7 @@
-package Calendar;
+package View;
 
-import Calendar.AnchorPaneNode;
 import Controller.CalendarController;
+import Model.Calendar;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,13 +16,14 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 
 
-public class FullCalendarView {
+public class FullCalendarView implements PlannerListener {
 
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
     private CalendarController controller;
+    private Calendar model;
 
     /**
      * Create a calendar view
@@ -64,7 +65,7 @@ public class FullCalendarView {
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
         Button previousMonth = new Button("<<");
-        previousMonth.setOnAction(this::previousMonth);//previousMonth());
+        previousMonth.setOnAction(this::previousMonth);
         Button nextMonth = new Button(">>");
         nextMonth.setOnAction(this::nextMonth);
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
@@ -95,6 +96,7 @@ public class FullCalendarView {
             }
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             ap.setDate(calendarDate);
+            //TODO: If we are going to add events to the calendar, this would be the place
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
             ap.getChildren().add(txt);
@@ -110,7 +112,7 @@ public class FullCalendarView {
     private void previousMonth(ActionEvent actionEvent) {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
-        controller.previousMonth(actionEvent);
+        controller.previousMonthClicked(actionEvent);
     }
 
     /**
@@ -119,7 +121,7 @@ public class FullCalendarView {
     private void nextMonth(ActionEvent actionEvent) {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth);
-        controller.nextMonth(actionEvent);
+        controller.nextMonthClicked(actionEvent);
     }
 
     public VBox getView() {
@@ -136,5 +138,13 @@ public class FullCalendarView {
 
     public void setController(CalendarController ctrl) {
         controller = ctrl;
+    }
+
+    public void setModel(Calendar m){
+        model = m;
+    }
+
+    public void modelChanged() {
+        populateCalendar(currentYearMonth);
     }
 }
