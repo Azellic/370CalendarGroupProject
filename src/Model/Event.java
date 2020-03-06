@@ -68,60 +68,6 @@ public class Event extends CalendarItem {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-    private static void formatQuery(ResultSet query, ArrayList<Event> events) throws SQLException, ParseException {
-        while(query.next()){
-            SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
-            String startTimeString = query.getString("startTime");
-            String endTimeString= query.getString("endTime");
-
-            Time startTime = new Time(format1.parse(startTimeString).getTime());
-            Time endTime = new Time(format1.parse(endTimeString).getTime());
-
-            Event event = new Event(query.getString("eventTitle"),
-                    query.getString("eventDescription"),
-                    null,
-                    null,
-                    query.getInt("day"),
-                    query.getInt("month"),
-                    query.getInt("year"),
-                    startTime,
-                    endTime,
-                    query.getString("eventLocation"));
-            events.add(event);
-        }
-    }
-
-
-    public static ArrayList<Event> getMonthsEvents(int month) throws SQLException,
-            ClassNotFoundException, ParseException {
-        DataBase db = new DataBase();
-        db.startUp();
-        ResultSet eventsQuery = db.getMonthsEvents(month);
-        ArrayList<Event> events = new ArrayList<Event>();
-        formatQuery(eventsQuery, events);
-        return events;
-    }
-    public static ArrayList<Event> getDaysEvents(int year, int month, int day) throws SQLException,
-            ClassNotFoundException, ParseException {
-        DataBase db = new DataBase();
-        db.startUp();
-        ResultSet eventsQuery = db.getDaysEvents(year, month, day);
-        ArrayList<Event> events = new ArrayList<>();
-        formatQuery(eventsQuery, events);
-        return events;
-    }
-
-    public static ArrayList<Event> getEvents() throws SQLException, ClassNotFoundException, ParseException {
-        DataBase db = new DataBase();
-        db.startUp();
-
-        ResultSet eventsQuery = db.displayEvents();
-        ArrayList<Event> events = new ArrayList<>();
-        formatQuery(eventsQuery, events);
-        return events;
-    }
-
     public static void createEvent(String startTime, String endTime, int day, int month,
     int year, String eventTitle, String eventDescription, String eventLocation) throws SQLException, ClassNotFoundException {
         DataBase db = new DataBase();
@@ -137,52 +83,5 @@ public class Event extends CalendarItem {
                 eventDescription,
                 eventLocation);
 
-    }
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
-        DataBase db = new DataBase();
-        db.startUp();
-
-        ResultSet eventResult = db.displayEvents();
-        if (!eventResult.next()) {
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    3,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    3,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    3,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-        }
-        System.out.println(getEvents());
-        System.out.println(getMonthsEvents(4));
-        System.out.println(getDaysEvents(2020, 4, 2));
     }
 }

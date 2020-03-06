@@ -32,7 +32,6 @@ public class DataBase {
                 "WHERE type='table' AND name='course';")) {
 
             if (!courseTable.next()) {
-                System.out.println("Building the tag table and putting some data in it");
                 state.execute("CREATE TABLE course" +
                         "(courseID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "courseName VARCHAR);");
@@ -42,7 +41,6 @@ public class DataBase {
         ResultSet eventTable = state.executeQuery("SELECT name FROM sqlite_master WHERE " +
                 "type='table' AND name='event';");
         if (!eventTable.next()){
-            System.out.println("Building the event table and putting some data in it");
             state.execute("CREATE TABLE event" +
                     "(eventID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "courseID INTEGER," +
@@ -61,7 +59,6 @@ public class DataBase {
         ResultSet assessmentTable = state.executeQuery("SELECT name FROM sqlite_master WHERE " +
                 "type='table' AND name='assessment';");
         if(!assessmentTable.next()) {
-            System.out.println("Building the assessment table and putting data in it");
             state.execute("CREATE TABLE assessment" +
                     "(assessmentID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "courseID INTEGER," +
@@ -75,7 +72,6 @@ public class DataBase {
         ResultSet taskTable = state.executeQuery("SELECT name FROM sqlite_master WHERE " +
                 "type='table' AND name='task';");
         if(!taskTable.next()) {
-            System.out.println("Building the task table and putting data in it");
             state.execute("CREATE TABLE task" +
                     "(taskID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "courseID INTEGER," +
@@ -158,6 +154,18 @@ public class DataBase {
         prep.setInt(1, year);
         prep.setInt(2, month);
         prep.setInt(3, day);
+        return prep.executeQuery();
+    }
+
+    public ResultSet getSelectedEvents(int year, int month) throws SQLException, ClassNotFoundException {
+        if (con == null){
+            getConnection();
+        }
+        PreparedStatement prep = con.prepareStatement(
+                "SELECT * FROM event WHERE year = ? AND month = ?;"
+        );
+        prep.setInt(1, year);
+        prep.setInt(2, month);
         return prep.executeQuery();
     }
 

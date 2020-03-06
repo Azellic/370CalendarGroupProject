@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 
 import View.AnchorPaneNode;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 public class CalendarController {
@@ -27,13 +29,15 @@ public class CalendarController {
         model.setSelectedDay(date);
     }
 
-    public void previousMonthClicked(ActionEvent actionEvent) {
+    public void previousMonthClicked(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
         System.out.println("Go back a month");
         model.changeMonthBy(-1);
+        model.setSelectedMonthsEvents();
     }
 
-    public void nextMonthClicked(ActionEvent actionEvent) {
+    public void nextMonthClicked(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
         System.out.println("Go forward a month");
         model.changeMonthBy(+1);
+        model.setSelectedMonthsEvents();
     }
 }

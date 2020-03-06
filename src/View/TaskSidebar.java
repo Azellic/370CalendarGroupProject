@@ -24,7 +24,7 @@ public class TaskSidebar extends VBox implements PlannerListener  {
         addTasksbutton.setPrefWidth(100);
 
         this.setPrefSize(100,800);
-        this.setAlignment(Pos.CENTER_LEFT);
+        this.setAlignment(Pos.TOP_LEFT);
         this.getChildren().add(tasksList);
         this.getChildren().add(addTasksbutton);
     }
