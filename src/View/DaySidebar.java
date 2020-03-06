@@ -13,7 +13,6 @@ public class DaySidebar extends VBox implements PlannerListener {
     ListView dayList;
 
     public DaySidebar() {
-
         // Initialize Components for the day tab
         // Does List view initialization
         dayList = new ListView();

@@ -58,7 +58,7 @@ public class Main extends Application {
         taskController = new TaskTabController();
 
         calendarModel = new Calendar();
-        System.out.println(calendarModel.getCurrentDayEvents());
+        //System.out.println(calendarModel.getCurrentDayEvents());
         coursesModel = new CoursesModel();
         taskModel = new TaskBoardModel();
 
