@@ -9,6 +9,7 @@ import View.FullCalendarView;
 
 import static javafx.application.Application.launch;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.YearMonth;
@@ -115,8 +116,121 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         DataBase db = new DataBase();
         db.startUp();
+        ResultSet eventResult = db.displayEvents();
+        if (!eventResult.next()) {
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    6,
+                    3,
+                    2020,
+                    "CMPT370 Project1",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    6,
+                    3,
+                    2020,
+                    "CMPT370 Project2",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    6,
+                    3,
+                    2020,
+                    "CMPT370 Project3",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    2,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    2,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    2,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    4,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    4,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    4,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    1,
+                    5,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    5,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+            db.insertEvent(1,
+                    "9:30",
+                    "10:30",
+                    5,
+                    5,
+                    2020,
+                    "CMPT370 Project",
+                    "Write code for the project",
+                    "STM College");
+        }
+
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
         launch(args);
+
 
     }
 }

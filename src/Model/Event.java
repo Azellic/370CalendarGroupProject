@@ -92,7 +92,15 @@ public class Event extends CalendarItem {
         }
     }
 
-
+    public static ArrayList<Event> getSelectedEvents(int year, int month) throws SQLException,
+            ClassNotFoundException, ParseException {
+        DataBase db = new DataBase();
+        db.startUp();
+        ResultSet eventsQuery = db.getSelectedEvents(year, month);
+        ArrayList<Event> events = new ArrayList<Event>();
+        formatQuery(eventsQuery, events);
+        return events;
+    }
     public static ArrayList<Event> getMonthsEvents(int month) throws SQLException,
             ClassNotFoundException, ParseException {
         DataBase db = new DataBase();
@@ -142,45 +150,7 @@ public class Event extends CalendarItem {
         DataBase db = new DataBase();
         db.startUp();
 
-        ResultSet eventResult = db.displayEvents();
-        if (!eventResult.next()) {
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    3,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    3,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    3,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-        }
+
         System.out.println(getEvents());
         System.out.println(getMonthsEvents(4));
         System.out.println(getDaysEvents(2020, 4, 2));
