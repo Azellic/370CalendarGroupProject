@@ -94,6 +94,8 @@ public class Main extends Application {
         calendarView.setModel(calendarModel);
         gradeView.setModel(coursesModel);
 
+        dayView.setStage(primaryStage);
+
         /*
         createTabComponents();
         createTabs();

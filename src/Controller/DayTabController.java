@@ -8,4 +8,5 @@ public class DayTabController {
     public void setModel(Calendar newModel) {
         model = newModel;
     }
+
 }
