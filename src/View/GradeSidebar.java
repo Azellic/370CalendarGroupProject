@@ -29,8 +29,18 @@ public class GradeSidebar extends VBox implements PlannerListener {
         addGradesbutton.setPrefHeight(60);
         addGradesbutton.setPrefWidth(100);
 
+<<<<<<< HEAD
         this.setPrefSize(100, bounds.getHeight());
         this.setAlignment(Pos.CENTER_LEFT);
+=======
+        // Assign the list views and the buttons to their appropriate
+        //gradesBox = new VBox(gradesList, addGradesbutton);
+        //gradesBox.setPrefSize(100, 800);
+        //gradesBox.setAlignment(Pos.TOP_LEFT);
+
+        this.setPrefSize(100,800);
+        this.setAlignment(Pos.TOP_LEFT);
+>>>>>>> 434630e2df8202fe5a960533d287f3016e708726
         this.getChildren().add(gradesList);
         this.getChildren().add(addGradesbutton);
     }
