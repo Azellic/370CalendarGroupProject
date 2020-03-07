@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 
 import java.awt.*;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -117,8 +118,13 @@ public class DayTabController {
         result.ifPresent(event -> {
             System.out.println(event.toString());
             if(event.getTitle() != ""){
-                //model.addEvent(event);
-                //TODO:connect this with model
+                try {
+                    model.insertEvent(event);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

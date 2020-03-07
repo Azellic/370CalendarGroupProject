@@ -59,7 +59,7 @@ public class DaySidebar extends VBox implements PlannerListener {
     }
 
     public void draw() {
-
+        populateList();
     }
 
     public void modelChanged() {

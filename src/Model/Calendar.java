@@ -126,9 +126,17 @@ public class Calendar {
    public ArrayList<Event> getSelectedMonthsEvents(){
        return selectedMonthsEvents;
    }
+
    public void insertEvent(Event userInput) throws SQLException,
            ClassNotFoundException {
-       //event.createEvent(startTime, endTime, day, month, year, eventTitle, eventDescription, eventLocation);
+       //DataBase db = new DataBase();
+       //db.startUp();
+       //db.insertEvent(1, "", "", userInput.getDay(),
+              // userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
+               //userInput.getLocation());
+       currentDayEvents.add(userInput);
+       System.out.println(getCurrentDayEvents());
+       notifySubscribers();
    }
    public void newEvent(String title, String description, Course course, Color color,
                         int day, int month, int year, Time start, Time end, String location ){
