@@ -50,6 +50,10 @@ public class CalendarItem {
         this.course = course;
     }
 
+    public void setCourse(String value) {
+        //TODO: find course by name and assign
+    }
+
     /*
     public Assesment getMark() {
         return mark;

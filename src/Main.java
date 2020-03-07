@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.YearMonth;
@@ -105,6 +106,8 @@ public class Main extends Application {
         calendarModel.addSubscriber(calendarView);
         taskModel.addSubscriber(taskView);
         coursesModel.addSubscriber(gradeView);
+
+        dayView.setButtonController(daytabController);
 
         // Set the title
         primaryStage.setTitle("CMPT370 Project");

@@ -1,5 +1,6 @@
 package View;
 
+import Controller.DayTabController;
 import Model.Calendar;
 import Model.Event;
 import javafx.collections.FXCollections;
@@ -58,12 +59,13 @@ public class DaySidebar extends VBox implements PlannerListener {
     }
 
     public void draw() {
-
+        populateList();
     }
 
     public void modelChanged() {
         draw();
     }
+
 
     public void populateList() {
 
@@ -152,5 +154,9 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
+    }
+
+    public void setButtonController(DayTabController controller) {
+        addEventbutton.setOnAction(controller::handleAddEventClicked);
     }
 }
