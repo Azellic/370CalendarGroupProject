@@ -54,8 +54,8 @@ public class DaySidebar extends VBox implements PlannerListener {
         this.setPrefSize(100, bounds.getHeight());
         //this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
-        this.getChildren().add(dayList);
-        this.getChildren().add(buttonBar);
+        //this.getChildren().add(dayList);
+        this.getChildren().add(dayBox);
     }
 
     public void setModel(Calendar newModel) {
@@ -73,7 +73,6 @@ public class DaySidebar extends VBox implements PlannerListener {
 
 
     public void populateList() {
-
         ArrayList<Event> events = model.getCurrentDayEvents();
         dayListArray = FXCollections.observableArrayList ();
 
