@@ -8,19 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-<<<<<<< HEAD
 import javafx.geometry.Rectangle2D;
-=======
 import javafx.scene.Scene;
->>>>>>> 434630e2df8202fe5a960533d287f3016e708726
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-<<<<<<< HEAD
-import javafx.scene.control.ScrollPane;
-=======
 import javafx.scene.layout.HBox;
->>>>>>> 434630e2df8202fe5a960533d287f3016e708726
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
@@ -37,12 +30,7 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     Stage primaryStage;
 
-<<<<<<< HEAD
     public DaySidebar(Rectangle2D bounds) {
-=======
-    public DaySidebar(){
->>>>>>> 434630e2df8202fe5a960533d287f3016e708726
-
         // Initialize Components for the day tab
         // Does List view initialization
         dayList = new ListView<VBox>();
@@ -55,21 +43,19 @@ public class DaySidebar extends VBox implements PlannerListener {
         addEventbutton.setMinHeight(60);
         addEventbutton.setPrefWidth(100);
 
-<<<<<<< HEAD
-        this.setPrefSize(100, bounds.getHeight());
         VBox buttonBar = new VBox(addEventbutton);
         buttonBar.setMaxHeight(65);
         this.setAlignment(Pos.CENTER_LEFT);
-=======
+
         dayBox = new VBox(dayList, addEventbutton);
         dayBox.setPrefSize(100, 800);
         dayBox.setAlignment(Pos.CENTER_LEFT);
 
-        this.setPrefSize(100,800);
+        this.setPrefSize(100, bounds.getHeight());
+        //this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
->>>>>>> 434630e2df8202fe5a960533d287f3016e708726
         this.getChildren().add(dayList);
-        this.getChildren().add(addEventbutton);
+        this.getChildren().add(buttonBar);
     }
 
     public void setModel(Calendar newModel) {

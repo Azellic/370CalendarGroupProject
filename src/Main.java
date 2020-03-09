@@ -97,10 +97,6 @@ public class Main extends Application {
 
         dayView.setStage(primaryStage);
 
-        /*
-        createTabComponents();
-        createTabs();
-        */
         //Set up model-view subscriber relationship
         calendarModel.addSubscriber(dayView);
         calendarModel.addSubscriber(calendarView);
@@ -122,36 +118,6 @@ public class Main extends Application {
         primaryStage.setY(wBounds.getMinY());
         primaryStage.setWidth(wBounds.getWidth());
         primaryStage.setHeight(wBounds.getHeight());
-
-        /*
-        // Set the bounds of the calendar
-        calendarBoundingBox = new VBox(calendarv.getView());
-        calendarBoundingBox.setMaxSize((bounds.getWidth() * 2 / 3) - bounds.getWidth() * 0.05, bounds.getHeight());
-        calendarBoundingBox.setAlignment(Pos.CENTER);
-        calendarBoundingBox.setStyle("-fx-background-color: lightgrey");
-
-        // set the calender view to the window
-        calendarBox = new VBox(calendarBoundingBox);
-        calendarBox.setPrefSize(bounds.getWidth() * 2 / 3, bounds.getHeight());
-        calendarBox.setAlignment(Pos.CENTER);
-        calendarBox.setStyle("-fx-background-color: dimgrey");
-
-        // Set the buttons to the side bar
-        //buttonBox = new HBox(tabPane);
-        //buttonBox.setPrefSize(bounds.getWidth()/3, 40);
-        //buttonBox.setAlignment(Pos.TOP_CENTER);
-
-        // Set the the buttons on the side bar
-        sideBar = new VBox(tabPane);
-        sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
-        sideBar.setAlignment(Pos.TOP_CENTER);
-        sideBar.setStyle("-fx-background-color: darkgrey");
-        */
-        // Set the two regions onto the main window
-        /*
-        border.setLeft(dashboard.getCalendarBox());
-        border.setRight(dashboard.getSideBar());
-        */
 
         // Set items in the border into the scene and display the scene
         root.getChildren().add(dashboard);
