@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class DaySidebar extends VBox implements PlannerListener {
@@ -89,22 +90,26 @@ public class DaySidebar extends VBox implements PlannerListener {
                     dialog.initModality(Modality.APPLICATION_MODAL);
                     dialog.initOwner(primaryStage);
 
-                    VBox top = new VBox();
+                    VBox top = new VBox(2);
                     top.setPrefSize(800, 300);
 
-                    VBox bottom = new VBox();
+
+                    VBox bottom = new VBox(2);
+                    bottom.setPrefSize(800, 600);
+                    bottom.setAlignment(Pos.TOP_LEFT);
+                    bottom.setStyle("-fx-background-color: lightgrey");
 
                     Label date = new Label("Date: " + e.getDay() + "/" + e.getMonth() + "/" + e.getYear());
-                    date.setFont(new Font("Ariel", 20));
+                    date.setFont(new Font("Ariel", 15));
 
                     Label title = new Label(e.getTitle());
-                    title.setFont(new Font("Ariel", 20));
+                    title.setFont(new Font("Ariel", 15));
 
                     Label time = new Label("Time: " + e.getStart() + " - " + e.getEnd());
-                    time.setFont(new Font("Ariel", 15));
+                    time.setFont(new Font("Ariel", 10));
 
                     Label location = new Label("Location: " + e.getLocation());
-                    location.setFont(new Font("Ariel", 15));
+                    location.setFont(new Font("Ariel", 10));
 
                     Label description = new Label(e.getDescription());
 
@@ -122,7 +127,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             });
 
 
-            HBox box = new HBox();
+            HBox box = new HBox(2);
 
             VBox left = new VBox(title, time, location);
             left.setPrefSize(200, 50);
@@ -136,11 +141,19 @@ public class DaySidebar extends VBox implements PlannerListener {
 
             box.setAlignment(Pos.CENTER_LEFT);
             box.setPrefSize(400, 50);
-            if(i%2 == 0){
-                box.setStyle("-fx-background-color: lightseagreen");
+
+            //e.setColor(pink);
+
+
+            if(e.getColor() == null){
+                if(i%2==0){
+                    box.setStyle("-fx-background-color: lightseagreen");
+                } else {
+                    box.setStyle("-fx-background-color: lightslategrey");
+                }
             }
             else {
-                box.setStyle("-fx-background-color: lightslategrey");
+                box.setStyle("-fx-background-color:" + e.getColor());
             }
 
 
@@ -159,4 +172,5 @@ public class DaySidebar extends VBox implements PlannerListener {
     public void setButtonController(DayTabController controller) {
         addEventbutton.setOnAction(controller::handleAddEventClicked);
     }
+
 }
