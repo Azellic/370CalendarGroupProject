@@ -80,7 +80,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             Label location = new Label("Location: " + e.getLocation());
 
             Button button = new Button("Details");
-            button.setPrefSize(60,40);
+            button.setPrefSize(80,40);
 
 
             button.setOnAction(new EventHandler<ActionEvent>() {
