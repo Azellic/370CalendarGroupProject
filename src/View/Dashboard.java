@@ -94,13 +94,16 @@ public class Dashboard extends Pane implements PlannerListener {
 
         // Set the the buttons on the side bar
         sideBar = new VBox(tabPane);
-        sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
+        //sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.setStyle("-fx-background-color: darkgrey");
 
         // Set the two regions onto the main window
         border.setLeft(calendarBox);
         border.setRight(sideBar);
+
+        border.setPrefHeight(bounds.getHeight());
+        border.setPrefWidth(bounds.getWidth());
 
         this.setPrefHeight(bounds.getHeight());
         this.setPrefWidth(bounds.getWidth());

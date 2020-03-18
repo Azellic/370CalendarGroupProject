@@ -3,6 +3,7 @@ package View;
 import Controller.DayTabController;
 import Model.CoursesModel;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -13,7 +14,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
     ListView gradesList;
     private Button addGradebutton;
 
-    public GradeSidebar() {
+    public GradeSidebar(Rectangle2D bounds) {
         //Initialize the component for the grades type
         super();
 
@@ -28,7 +29,9 @@ public class GradeSidebar extends VBox implements PlannerListener {
         addGradebutton.setPrefHeight(60);
         addGradebutton.setPrefWidth(100);
 
-        this.setPrefSize(100,800);
+
+        this.setPrefSize(100, bounds.getHeight());
+        //this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
         this.getChildren().add(gradesList);
         this.getChildren().add(addGradebutton);
