@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,8 +30,7 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     Stage primaryStage;
 
-    public DaySidebar(){
-
+    public DaySidebar(Rectangle2D bounds) {
         // Initialize Components for the day tab
         // Does List view initialization
         dayList = new ListView<VBox>();
@@ -40,17 +40,22 @@ public class DaySidebar extends VBox implements PlannerListener {
 
 
         addEventbutton = new Button("New Event");
-        addEventbutton.setPrefHeight(60);
+        addEventbutton.setMinHeight(60);
         addEventbutton.setPrefWidth(100);
+
+        VBox buttonBar = new VBox(addEventbutton);
+        buttonBar.setMaxHeight(65);
+        this.setAlignment(Pos.CENTER_LEFT);
 
         dayBox = new VBox(dayList, addEventbutton);
         dayBox.setPrefSize(100, 800);
         dayBox.setAlignment(Pos.CENTER_LEFT);
 
-        this.setPrefSize(100,800);
+        this.setPrefSize(100, bounds.getHeight());
+        //this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
-        this.getChildren().add(dayList);
-        this.getChildren().add(addEventbutton);
+        //this.getChildren().add(dayList);
+        this.getChildren().add(dayBox);
     }
 
     public void setModel(Calendar newModel) {
@@ -68,7 +73,6 @@ public class DaySidebar extends VBox implements PlannerListener {
 
 
     public void populateList() {
-
         ArrayList<Event> events = model.getCurrentDayEvents();
         dayListArray = FXCollections.observableArrayList ();
 
