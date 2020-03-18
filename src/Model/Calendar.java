@@ -74,9 +74,9 @@ public class Calendar {
                 SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
                 String startTimeString = query.getString("startTime");
                 String endTimeString = query.getString("endTime");
-
                 Time startTime = new Time(format1.parse(startTimeString).getTime());
                 Time endTime = new Time(format1.parse(endTimeString).getTime());
+
 
                 Event event = new Event(query.getString("eventTitle"),
                         query.getString("eventDescription"),
@@ -147,12 +147,11 @@ public class Calendar {
    }
 
    public void insertEvent(Event userInput) {
-       //DataBase db = new DataBase();
-       //db.setConnection();
-       db.insertEvent(1, "", "", userInput.getDay(),
+       db.insertEvent(1, userInput.getStart(), userInput.getEnd(), userInput.getDay(),
               userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
                userInput.getLocation());
        currentDayEvents.add(userInput);
+       db.closeConnection();
        System.out.println(getCurrentDayEvents());
        notifySubscribers();
    }

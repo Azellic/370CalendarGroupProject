@@ -28,11 +28,11 @@ public class Event extends CalendarItem {
         this.year = year;
         this.location = location;
     }
-    public Time getStart() {
-        return start;
+    public String getStart() {
+        return start.toString();
     }
-    public Time getEnd() {
-        return end;
+    public String getEnd() {
+        return end.toString();
     }
     public int getDay() {
         return day;

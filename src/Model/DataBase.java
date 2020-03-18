@@ -159,11 +159,10 @@ public class DataBase {
     public void insertEvent(int courseID, String startTime, String endTime,
                             int day, int month, int year, String eventTitle, String eventDescription ,
                             String eventLocation){
+        PreparedStatement prep = null;
         try {
-            if (con == null) {
-                getConnection();
-            }
-            PreparedStatement prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
+            setConnection();
+            prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
                     " month, year, eventTitle, eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?);");
             prep.setInt(1, courseID);
             prep.setString(2, startTime);
@@ -179,6 +178,14 @@ public class DataBase {
             System.out.println("Problem inserting Event");
             e.printStackTrace();
         }
+        finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing prepared statement for insert");
+                e.printStackTrace();
+            }
+        }
     }
 
     public ResultSet displayEvents() {
@@ -191,22 +198,13 @@ public class DataBase {
             System.out.println("Problem in displayEvents");
             e.printStackTrace();
         }
-//        finally {
-//            try {
-//                con.close();
-//            } catch (SQLException e) {
-//                System.out.println("Problem Closing after displayEvents called");
-//            }
-//        }
+
         return resultQuery;
     }
 
     public ResultSet getMonthsEvents(int month) {
         ResultSet resultQuery = null;
         try {
-            //if (con == null) {
-            //    getConnection();
-            //}
             setConnection();
             PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ?; ");
             prep.setInt(1, month);
@@ -215,21 +213,11 @@ public class DataBase {
             System.out.println("Problem in getMonthsEvents");
             e.printStackTrace();
         }
-//        finally {
-//            try {
-//                con.close();
-//            } catch (SQLException e) {
-//                System.out.println("Problem Closing after displayEvents called");
-//            }
-//        }
         return resultQuery;
     }
     public ResultSet getDaysEvents(int year, int month, int day) {
         ResultSet resultQuery = null;
         try {
-            //if (con == null) {
-            //    getConnection();
-            //}
             setConnection();
             PreparedStatement prep = con.prepareStatement(
                     "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;");
@@ -237,26 +225,18 @@ public class DataBase {
             prep.setInt(2, month);
             prep.setInt(3, day);
             resultQuery = prep.executeQuery();
+
         } catch(SQLException e){
             System.out.println("Problem with getDaysEvents");
             e.printStackTrace();
         }
-//        finally {
-//            try {
-//                con.close();
-//            } catch (SQLException e) {
-//                System.out.println("Problem Closing after displayEvents called");
-//            }
-//        }
+
         return resultQuery;
     }
 
     public ResultSet getSelectedEvents(int year, int month){
         ResultSet resultQuery = null;
         try {
-            //if (con == null) {
-            //    getConnection();
-            //}
             setConnection();
             PreparedStatement prep = con.prepareStatement(
                     "SELECT * FROM event WHERE year = ? AND month = ?;"

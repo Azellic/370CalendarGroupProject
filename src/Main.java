@@ -348,8 +348,9 @@ public class Main extends Application {
                     "CMPT370 Project",
                     "Write code for the project",
                     "STM College");
-        }
 
+        }
+        db.closeConnection();
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
         launch(args);
 
