@@ -1,18 +1,17 @@
 package View;
 
+import Controller.DayTabController;
 import Model.CoursesModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class GradeSidebar extends VBox implements PlannerListener {
 
-    CoursesModel model;
-    VBox gradesBox;
+    private CoursesModel model;
     ListView gradesList;
-    Button addGradesbutton;
+    private Button addGradebutton;
 
     public GradeSidebar() {
         //Initialize the component for the grades type
@@ -25,19 +24,14 @@ public class GradeSidebar extends VBox implements PlannerListener {
         gradesList.fixedCellSizeProperty();
 
         // Initialize the button
-        addGradesbutton = new Button("New Grade");
-        addGradesbutton.setPrefHeight(60);
-        addGradesbutton.setPrefWidth(100);
-
-        // Assign the list views and the buttons to their appropriate
-        //gradesBox = new VBox(gradesList, addGradesbutton);
-        //gradesBox.setPrefSize(100, 800);
-        //gradesBox.setAlignment(Pos.TOP_LEFT);
+        addGradebutton = new Button("New Grade");
+        addGradebutton.setPrefHeight(60);
+        addGradebutton.setPrefWidth(100);
 
         this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
         this.getChildren().add(gradesList);
-        this.getChildren().add(addGradesbutton);
+        this.getChildren().add(addGradebutton);
     }
 
     public void setModel(CoursesModel newModel) {
@@ -45,10 +39,14 @@ public class GradeSidebar extends VBox implements PlannerListener {
     }
 
     public void draw() {
-        //TODO
+
     }
 
     public void modelChanged() {
         draw();
+    }
+
+    public void setButtonController(DayTabController controller) {
+        addGradebutton.setOnAction(controller::handleAddEventClicked);
     }
 }
