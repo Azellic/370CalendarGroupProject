@@ -3,7 +3,7 @@ package Model;
 import java.sql.*;
 
 public class DataBase {
-    private static Connection con;
+    protected static Connection con;
 
     /**
      * Starts the database
@@ -38,7 +38,7 @@ public class DataBase {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    private void getConnection(){
+    protected void getConnection(){
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:plannerDB.db");
@@ -135,6 +135,8 @@ public class DataBase {
         }
     }
 
+
+
     public void insertCourse(String courseName){
         try {
             PreparedStatement prep = con.prepareStatement("INSERT INTO course(courseName) VALUES(?);");
@@ -144,6 +146,14 @@ public class DataBase {
             System.out.println("Problem inserting course");
             e.printStackTrace();
         }
+    }
+
+    public ResultSet displayCourses() throws SQLException, ClassNotFoundException {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT * FROM course");
     }
 
     public void insertEvent(int courseID, String startTime, String endTime,
@@ -171,38 +181,6 @@ public class DataBase {
         }
     }
 
-    public void insertTask(int courseID, int dueDay, int dueMonth, int dueYear, String taskTitle) {
-        try {
-            PreparedStatement prep = con.prepareStatement("INSERT INTO task(courseID, dueDay, dueMonth, dueYear," +
-                    " taskTitle,completed) VALUES(?,?,?,?,?,?);");
-            prep.setInt(1, courseID);
-            prep.setInt(2, dueDay);
-            prep.setInt(3, dueMonth);
-            prep.setInt(4, dueYear);
-            prep.setString(5, taskTitle);
-            prep.setInt(6, 0);
-            prep.executeUpdate();
-        } catch(SQLException e) {
-            System.out.println("Problem inserting Task");
-            e.printStackTrace();
-        }
-    }
-
-    public void insertAssessment(int courseID, int weight, double grade, String assessmentTitle) {
-        try {
-            PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
-                    "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?);");
-            prep.setInt(1, courseID);
-            prep.setInt(2, weight);
-            prep.setDouble(3, grade);
-            prep.setString(4, assessmentTitle);
-            prep.executeUpdate();
-        } catch(SQLException e) {
-            System.out.println("Problem inserting assessment");
-            e.printStackTrace();
-        }
-    }
-
     public ResultSet displayEvents() {
         ResultSet resultQuery = null;
         try {
@@ -222,6 +200,7 @@ public class DataBase {
 //        }
         return resultQuery;
     }
+
     public ResultSet getMonthsEvents(int month) {
         ResultSet resultQuery = null;
         try {
@@ -299,13 +278,21 @@ public class DataBase {
         return resultQuery;
     }
 
-    public ResultSet displayCourses() throws SQLException, ClassNotFoundException {
-        if (con == null) {
-            getConnection();
+    public void insertAssessment(int courseID, int weight, double grade, String assessmentTitle) {
+        try {
+            PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
+                    "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?);");
+            prep.setInt(1, courseID);
+            prep.setInt(2, weight);
+            prep.setDouble(3, grade);
+            prep.setString(4, assessmentTitle);
+            prep.executeUpdate();
+        } catch(SQLException e) {
+            System.out.println("Problem inserting assessment");
+            e.printStackTrace();
         }
-        Statement state = con.createStatement();
-        return state.executeQuery("SELECT * FROM course");
     }
+
     public ResultSet displayAssessments() throws SQLException, ClassNotFoundException {
         if (con == null) {
             getConnection();
@@ -313,6 +300,25 @@ public class DataBase {
         Statement state = con.createStatement();
         return state.executeQuery("SELECT * FROM assessment");
     }
+
+
+    public void insertTask(int courseID, int dueDay, int dueMonth, int dueYear, String taskTitle) {
+        try {
+            PreparedStatement prep = con.prepareStatement("INSERT INTO task(courseID, dueDay, dueMonth, dueYear," +
+                    " taskTitle,completed) VALUES(?,?,?,?,?,?);");
+            prep.setInt(1, courseID);
+            prep.setInt(2, dueDay);
+            prep.setInt(3, dueMonth);
+            prep.setInt(4, dueYear);
+            prep.setString(5, taskTitle);
+            prep.setInt(6, 0);
+            prep.executeUpdate();
+        } catch(SQLException e) {
+            System.out.println("Problem inserting Task");
+            e.printStackTrace();
+        }
+    }
+
     public ResultSet displayTasks() throws SQLException, ClassNotFoundException {
         if (con == null){
             getConnection();
@@ -322,5 +328,4 @@ public class DataBase {
         return resultQuery;
 
     }
-
 }

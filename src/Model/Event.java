@@ -73,7 +73,7 @@ public class Event extends CalendarItem {
         DataBase db = new DataBase();
         db.startUp();
 
-        ResultSet eventResult = db.displayEvents();
+        ResultSet eventResult =  db.displayEvents();
         db.insertEvent(1, startTime,
                 endTime,
                 day,

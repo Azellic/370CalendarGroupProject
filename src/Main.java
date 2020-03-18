@@ -1,8 +1,5 @@
 import Controller.*;
-import Model.Calendar;
-import Model.CoursesModel;
-import Model.DataBase;
-import Model.TaskBoardModel;
+import Model.*;
 import View.*;
 import View.FullCalendarView;
 
