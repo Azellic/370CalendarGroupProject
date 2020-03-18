@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -73,16 +74,15 @@ public class Main extends Application {
         taskController.setModel(taskModel);
 
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        Rectangle2D wBounds = screen.getVisualBounds();
+        Rectangle2D bounds = new Rectangle2D(wBounds.getMinX(), wBounds.getMinY(), wBounds.getWidth(),
+                wBounds.getHeight()-20);
 
-        //Screen screen = Screen.getPrimary();
-        bounds = screen.getVisualBounds();
-        //dashboard = new Dashboard(bounds);
+        dayView = new DaySidebar(bounds);
+        taskView = new TaskSidebar(bounds);
 
-        dayView = new DaySidebar();
-        taskView = new TaskSidebar();
         calendarView = new FullCalendarView(YearMonth.now(), calController);
-        gradeView = new GradeSidebar();
+        gradeView = new GradeSidebar(bounds);
 
         dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
 
@@ -94,10 +94,6 @@ public class Main extends Application {
 
         dayView.setStage(primaryStage);
 
-        /*
-        createTabComponents();
-        createTabs();
-        */
         //Set up model-view subscriber relationship
         calendarModel.addSubscriber(dayView);
         calendarModel.addSubscriber(calendarView);
@@ -109,45 +105,16 @@ public class Main extends Application {
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
 
-        root.setPrefWidth(bounds.getWidth());
-        root.setPrefHeight(bounds.getHeight());
+
+        //root.setPrefWidth(bounds.getWidth());
+        //root.setPrefHeight(bounds.getHeight());
 
 
         // Set the window size based on the screen bounds
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight());
-
-        /*
-        // Set the bounds of the calendar
-        calendarBoundingBox = new VBox(calendarv.getView());
-        calendarBoundingBox.setMaxSize((bounds.getWidth() * 2 / 3) - bounds.getWidth() * 0.05, bounds.getHeight());
-        calendarBoundingBox.setAlignment(Pos.CENTER);
-        calendarBoundingBox.setStyle("-fx-background-color: lightgrey");
-
-        // set the calender view to the window
-        calendarBox = new VBox(calendarBoundingBox);
-        calendarBox.setPrefSize(bounds.getWidth() * 2 / 3, bounds.getHeight());
-        calendarBox.setAlignment(Pos.CENTER);
-        calendarBox.setStyle("-fx-background-color: dimgrey");
-
-        // Set the buttons to the side bar
-        //buttonBox = new HBox(tabPane);
-        //buttonBox.setPrefSize(bounds.getWidth()/3, 40);
-        //buttonBox.setAlignment(Pos.TOP_CENTER);
-
-        // Set the the buttons on the side bar
-        sideBar = new VBox(tabPane);
-        sideBar.setPrefSize(bounds.getWidth() / 3, bounds.getHeight());
-        sideBar.setAlignment(Pos.TOP_CENTER);
-        sideBar.setStyle("-fx-background-color: darkgrey");
-        */
-        // Set the two regions onto the main window
-        /*
-        border.setLeft(dashboard.getCalendarBox());
-        border.setRight(dashboard.getSideBar());
-        */
+        primaryStage.setX(wBounds.getMinX());
+        primaryStage.setY(wBounds.getMinY());
+        primaryStage.setWidth(wBounds.getWidth());
+        primaryStage.setHeight(wBounds.getHeight());
 
         // Set items in the border into the scene and display the scene
         root.getChildren().add(dashboard);
@@ -157,80 +124,6 @@ public class Main extends Application {
     }
 
 
-    /*
-        Create the tabs for the sidebar
-     */
-    /*
-    public void createTabs () {
-
-        grades = new Tab("Grades", new Label("Show all the grades available"));
-        tasks = new Tab("Tasks", new Label("Show all tasks for the month"));
-        day = new Tab("Today's Events", new Label("Show all day events, grades, courses"));
-
-        grades = new Tab("Grades", gradesBox);
-        tasks = new Tab("Tasks"  , tasksBox);
-        day = new Tab("Today's Events" , dayBox);
-
-        tabPane.getTabs().add(grades);
-        tabPane.getTabs().add(tasks);
-        tabPane.getTabs().add(day);
-
-    }
-
-    public void createTabComponents(){
-
-        //Initialize the component for the grades type
-
-        // Initialize the list
-        gradesList = new ListView();
-        gradesList.setPrefWidth(100);
-        gradesList.setPrefHeight(700);
-        gradesList.fixedCellSizeProperty();
-
-        // Initialize the button
-        addGradesb = new Button("New Grade");
-        addGradesb.setPrefHeight(60);
-        addGradesb.setPrefWidth(100);
-
-
-        // Initialize Components for the tasks tab
-        tasksList = new ListView();
-        tasksList.setPrefWidth(100);
-        tasksList.setPrefHeight(700);
-        tasksList.fixedCellSizeProperty();
-
-        addTasksb = new Button("New Task");
-        addTasksb.setPrefHeight(60);
-        addTasksb.setPrefWidth(100);
-
-
-        // Initialize Components for the day tab
-        // Does List view initialization
-        dayList = new ListView();
-        dayList.setPrefWidth(100);
-        dayList.setPrefHeight(700);
-        dayList.fixedCellSizeProperty();
-
-        addDayb = new Button("New Event");
-        addDayb.setPrefHeight(60);
-        addDayb.setPrefWidth(100);
-
-        // Assign the list views and the buttons to their appropriate
-        gradesBox = new VBox(gradesList, addGradesb);
-        gradesBox.setPrefSize(100, 800);
-        gradesBox.setAlignment(Pos.CENTER_LEFT);
-
-        tasksBox = new VBox(tasksList, addTasksb);
-        tasksBox.setPrefSize(100, 800);
-        tasksBox.setAlignment(Pos.CENTER_LEFT);
-
-        dayBox = new VBox(dayList, addDayb);
-        dayBox.setPrefSize(100, 800);
-        dayBox.setAlignment(Pos.CENTER_LEFT);
-    }
-    */
-
-    // Added comment above main
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         db = new DataBase();
