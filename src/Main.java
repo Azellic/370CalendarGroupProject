@@ -50,10 +50,10 @@ public class Main extends Application {
     FullCalendarView calendarv;
     BorderPane border;
 
-
+    public static DataBase db;
 
     @Override
-    public void start (Stage primaryStage)  throws Exception {
+    public void start (Stage primaryStage){
         StackPane root = new StackPane();
         border = new BorderPane();
 
@@ -236,7 +236,7 @@ public class Main extends Application {
     // Added comment above main
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
-        DataBase db = new DataBase();
+        db = new DataBase();
         db.startUp();
         ResultSet eventResult = db.displayEvents();
         int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);

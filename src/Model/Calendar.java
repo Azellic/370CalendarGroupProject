@@ -3,6 +3,8 @@ package Model;
 import java.awt.*;
 import View.PlannerListener;
 import Model.DataBase;
+import com.sun.tools.javac.Main;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +21,6 @@ import java.util.ArrayList;
 public class Calendar {
    private ArrayList<PlannerListener> subscribers;
    private ArrayList<Day> days;
-   //
    private int selectedDay;
    private int selectedMonth;
    private int selectedYear;
@@ -30,8 +31,8 @@ public class Calendar {
    private ArrayList<Event> currentDayEvents;
    private ArrayList<Event> currentMonthEvents;
    private ArrayList<Event> selectedMonthsEvents;
-
-   public Calendar() throws ParseException, SQLException, ClassNotFoundException {
+   private DataBase db;
+   public Calendar() {
        subscribers = new ArrayList<>();
        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
        int currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
@@ -42,6 +43,7 @@ public class Calendar {
        this.selectedDay = currentDay;
        this.selectedMonth = currentMonth;
        this.selectedYear = currentYear;
+       this.db = new DataBase();
        this.currentDayEvents = getDaysEvents();
        this.currentMonthEvents = getMonthsEvents();
    }
@@ -66,54 +68,71 @@ public class Calendar {
        System.out.println(getSelectedMonthsEvents());
    }
 
-    private static void formatEventQuery(ResultSet query, ArrayList<Event> events) throws SQLException, ParseException {
-        while(query.next()){
-            SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
-            String startTimeString = query.getString("startTime");
-            String endTimeString= query.getString("endTime");
+    private static void formatEventQuery(ResultSet query, ArrayList<Event> events) {
+        try {
+            while (query.next()) {
+                SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
+                String startTimeString = query.getString("startTime");
+                String endTimeString = query.getString("endTime");
 
-            Time startTime = new Time(format1.parse(startTimeString).getTime());
-            Time endTime = new Time(format1.parse(endTimeString).getTime());
+                Time startTime = new Time(format1.parse(startTimeString).getTime());
+                Time endTime = new Time(format1.parse(endTimeString).getTime());
 
-            Event event = new Event(query.getString("eventTitle"),
-                    query.getString("eventDescription"),
-                    null,
-                    null,
-                    query.getInt("day"),
-                    query.getInt("month"),
-                    query.getInt("year"),
-                    startTime,
-                    endTime,
-                    query.getString("eventLocation"));
-            events.add(event);
+                Event event = new Event(query.getString("eventTitle"),
+                        query.getString("eventDescription"),
+                        null,
+                        null,
+                        query.getInt("day"),
+                        query.getInt("month"),
+                        query.getInt("year"),
+                        startTime,
+                        endTime,
+                        query.getString("eventLocation"));
+                events.add(event);
+            }
+        } catch (SQLException | ParseException e) {
+            System.out.println("Problem with formatEventQuery");
+            e.printStackTrace();
         }
     }
-    public void setSelectedMonthsEvents() throws SQLException, ClassNotFoundException, ParseException {
+    public void setSelectedMonthsEvents() {
        this.selectedMonthsEvents = getSelectedEvents();
     }
 
-   public ArrayList<Event> getDaysEvents() throws SQLException, ClassNotFoundException, ParseException {
-       DataBase db = new DataBase();
-       db.startUp();
+   public ArrayList<Event> getDaysEvents() {
        ResultSet eventsQuery = db.getDaysEvents(currentYear, currentMonth, currentDay);
        ArrayList<Event> events = new ArrayList<Event>();
        formatEventQuery(eventsQuery, events);
+       try {
+           eventsQuery.close();
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       db.closeConnection();
        return events;
    }
-   public ArrayList<Event> getSelectedEvents() throws SQLException, ClassNotFoundException, ParseException {
-       DataBase db = new DataBase();
-       db.startUp();
+   public ArrayList<Event> getSelectedEvents() {
        ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth);
        ArrayList<Event> events = new ArrayList<Event>();
        formatEventQuery(eventsQuery, events);
+       try {
+           eventsQuery.close();
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       db.closeConnection();
        return events;
    }
-   public ArrayList<Event> getMonthsEvents() throws SQLException, ClassNotFoundException, ParseException {
-       DataBase db = new DataBase();
-       db.startUp();
+   public ArrayList<Event> getMonthsEvents() {
        ResultSet eventsQuery = db.getMonthsEvents(currentMonth);
        ArrayList<Event> events = new ArrayList<Event>();
        formatEventQuery(eventsQuery, events);
+       try {
+           eventsQuery.close();
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       db.closeConnection();
        return events;
    }
 
@@ -127,13 +146,12 @@ public class Calendar {
        return selectedMonthsEvents;
    }
 
-   public void insertEvent(Event userInput) throws SQLException,
-           ClassNotFoundException {
+   public void insertEvent(Event userInput) {
        //DataBase db = new DataBase();
-       //db.startUp();
-       //db.insertEvent(1, "", "", userInput.getDay(),
-              // userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
-               //userInput.getLocation());
+       //db.setConnection();
+       db.insertEvent(1, "", "", userInput.getDay(),
+              userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
+               userInput.getLocation());
        currentDayEvents.add(userInput);
        System.out.println(getCurrentDayEvents());
        notifySubscribers();
