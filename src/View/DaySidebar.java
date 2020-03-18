@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -40,7 +41,7 @@ public class DaySidebar extends VBox implements PlannerListener {
 
 
         addEventbutton = new Button("New Event");
-        addEventbutton.setMinHeight(60);
+        addEventbutton.setPrefHeight(120);
         addEventbutton.setPrefWidth(100);
 
         VBox buttonBar = new VBox(addEventbutton);
@@ -52,9 +53,7 @@ public class DaySidebar extends VBox implements PlannerListener {
         dayBox.setAlignment(Pos.CENTER_LEFT);
 
         this.setPrefSize(100, bounds.getHeight());
-        //this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
-        //this.getChildren().add(dayList);
         this.getChildren().add(dayBox);
     }
 

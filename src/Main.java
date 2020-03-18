@@ -48,7 +48,6 @@ public class Main extends Application {
     FullCalendarView calendarView;
 
     // The view the calendar is stored in
-    FullCalendarView calendarv;
     BorderPane border;
 
 
@@ -66,13 +65,13 @@ public class Main extends Application {
         taskController = new TaskTabController();
 
         calendarModel = new Calendar();
-        //System.out.println(calendarModel.getCurrentDayEvents());
         coursesModel = new CoursesModel();
         taskModel = new TaskBoardModel();
 
         //Set up the controllers with respective models
         calController.setModel(calendarModel);
         daytabController.setModel(calendarModel);
+        daytabController.setCoursesModel(coursesModel);
         gradeController.setModel(coursesModel);
         taskController.setModel(taskModel);
 
@@ -103,14 +102,14 @@ public class Main extends Application {
         taskModel.addSubscriber(taskView);
         coursesModel.addSubscriber(gradeView);
 
+        //Establish controller - add-button relationship
         dayView.setButtonController(daytabController);
+        gradeView.setButtonController(gradeController);
+        taskView.setButtonController(taskController);
+
 
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
-
-
-        //root.setPrefWidth(bounds.getWidth());
-        //root.setPrefHeight(bounds.getHeight());
 
 
         // Set the window size based on the screen bounds

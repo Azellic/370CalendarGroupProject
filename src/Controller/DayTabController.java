@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.Calendar;
+import Model.Course;
+import Model.CoursesModel;
 import Model.Event;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -24,9 +26,14 @@ import java.util.Optional;
 
 public class DayTabController {
     Calendar model;
+    CoursesModel courseModel;
 
     public void setModel(Calendar newModel) {
         model = newModel;
+    }
+
+    public void setCoursesModel(CoursesModel newModel) {
+        courseModel = newModel;
     }
 
     /**
@@ -79,6 +86,7 @@ public class DayTabController {
         colourChoice.setValue("Green");
 
         DatePicker datePicker = new DatePicker(LocalDate.now());
+        datePicker.setEditable(false);
 
         ToggleGroup startAMPM = new ToggleGroup(), endAMPM = new ToggleGroup();
         Spinner<Integer> startHour = new Spinner<>(1, 12, 1, 1);
