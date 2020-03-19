@@ -173,12 +173,8 @@ public class DayTabController {
         result.ifPresent(event -> {
             System.out.println(event.toString());
 
-            try {
+            if(event.getTitle() != ""){
                 model.insertEvent(event);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         });
 
