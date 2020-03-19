@@ -52,6 +52,7 @@ public class DaySidebar extends VBox implements PlannerListener {
         dayBox.setPrefSize(100, 800);
         dayBox.setAlignment(Pos.CENTER_LEFT);
 
+        this.setPadding(new Insets(2,5,5,2));
         this.setPrefSize(100, bounds.getHeight());
         this.setAlignment(Pos.TOP_LEFT);
         this.getChildren().add(dayBox);
