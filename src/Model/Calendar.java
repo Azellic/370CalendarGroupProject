@@ -161,7 +161,7 @@ public class Calendar {
        System.out.println(getCurrentDayEvents());
        notifySubscribers();
    }
-   
+
    public void addSubscriber (PlannerListener aSub) {
        subscribers.add(aSub);
    }

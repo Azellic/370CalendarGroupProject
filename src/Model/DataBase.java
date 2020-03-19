@@ -5,15 +5,10 @@ import java.sql.*;
 public class DataBase {
     protected static Connection con;
 
-    /**
-     * Starts the database
-     *
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     */
     public void startUp() {
         getConnection();
     }
+
     public void setConnection(){
         try {
             Class.forName("org.sqlite.JDBC");
@@ -23,6 +18,7 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+
     public void closeConnection(){
         try{
             con.close();
@@ -32,12 +28,6 @@ public class DataBase {
         }
     }
 
-    /**
-     * Sets the connection to the database and then calls initialise method
-     *
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     */
     protected void getConnection(){
         try {
             Class.forName("org.sqlite.JDBC");
@@ -47,7 +37,6 @@ public class DataBase {
             System.out.println("Problem with getConnection");
             e.printStackTrace();
         }
-
     }
 
     private void initialize() {
@@ -66,7 +55,6 @@ public class DataBase {
             System.out.println("Problem creating the course table");
             e.printStackTrace();
         }
-
         try {
             ResultSet eventTable = state.executeQuery("SELECT name FROM sqlite_master WHERE " +
                     "type='table' AND name='event';");
@@ -89,7 +77,6 @@ public class DataBase {
             System.out.println("Problem creating the event table");
             e.printStackTrace();
         }
-
         try {
             ResultSet assessmentTable = state.executeQuery("SELECT name FROM sqlite_master WHERE " +
                     "type='table' AND name='assessment';");
@@ -107,7 +94,6 @@ public class DataBase {
             System.out.println("Problem creating the assessment Table");
             e.printStackTrace();
         }
-
         try {
             ResultSet taskTable = state.executeQuery("SELECT name FROM sqlite_master WHERE " +
                     "type='table' AND name='task';");
