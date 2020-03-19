@@ -1,17 +1,17 @@
 package Controller;
 
 import Model.Calendar;
+import Model.Course;
+import Model.CoursesModel;
 import Model.Event;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -22,41 +22,51 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.YearMonth;
 import java.util.Optional;
 
 public class DayTabController {
     Calendar model;
+    CoursesModel courseModel;
 
     public void setModel(Calendar newModel) {
         model = newModel;
     }
 
+    public void setCoursesModel(CoursesModel newModel) {
+        courseModel = newModel;
+    }
+
+    /**
+     * Creates dialog to collect information for new event when New Event button clicked
+     * @param actionEvent
+     */
     public void handleAddEventClicked(ActionEvent actionEvent) {
-        System.out.println("Add event clicked");
+        Dialog<Event> dialog = createNewEventDialog();
 
+        Optional<Event> result = dialog.showAndWait();
+
+        result.ifPresent(event -> {
+            System.out.println(event.toString());
+
+            model.insertEvent(event);
+        });
+    }
+
+    private Dialog<Event> createNewEventDialog(){
         Dialog<Event> dialog = new Dialog<>();
-
         dialog.setTitle("Create an Event");
 
-        // Set the button types.
         ButtonType doneButtonType = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
-
         dialog.getDialogPane().getButtonTypes().addAll(doneButtonType, ButtonType.CANCEL);
 
-
         VBox addEventBox = new VBox();
-        HBox startTimeBox = new HBox();
-        ToggleGroup startAMPM = new ToggleGroup();
-        HBox endTimeBox = new HBox();
-        ToggleGroup endAMPM = new ToggleGroup();
         addEventBox.setPrefWidth(400);
 
         Label mainLabel = new Label("Enter new event information");
         mainLabel.setFont(new Font("Arial", 16));
-        Label infoLabel = new Label("(Must enter all starred fields)");
         TextField title = new TextField();
         title.setPromptText("Title");
+        Tooltip.install(title, new Tooltip("Hitting done with an empty title is the same as hitting cancel"));
         TextField desc = new TextField();
         desc.setPromptText("Description");
 
@@ -65,61 +75,36 @@ public class DayTabController {
         ComboBox<String> courseChoice = new ComboBox<>(courses);
         courseChoice.setValue("None");
 
-        ObservableList<String> colours = FXCollections.observableArrayList("Green", "Blue",
-                "Pink", "Red", "Orange", "Yellow");
+        ObservableList<String> colours = FXCollections.observableArrayList("Green", "Blue", "Red",
+                "Orange", "Yellow");
         ComboBox<String> colourChoice = new ComboBox<>(colours);
         colourChoice.setValue("Green");
 
         DatePicker datePicker = new DatePicker(LocalDate.now());
+        datePicker.setEditable(false);
 
-        Spinner<Integer> startHour = new Spinner<>(1, 12, 1);
-        startHour.setPrefWidth(70);
+        ToggleGroup startAMPM = new ToggleGroup(), endAMPM = new ToggleGroup();
+        Spinner<Integer> startHour = new Spinner<>(1, 12, 1, 1);
         Spinner<Integer> startMinute = new Spinner<>(0, 59, 0);
-        startMinute.setPrefWidth(70);
-        RadioButton amS = new RadioButton("AM");
-        amS.setToggleGroup(startAMPM);
-        amS.setSelected(true);
-        RadioButton pmS = new RadioButton("PM");
-        pmS.setToggleGroup(startAMPM);
-        startTimeBox.getChildren().addAll(startHour, startMinute, amS, pmS);
-
-
         Spinner<Integer> endHour = new Spinner<>(1, 12, 2, 1);
-        endHour.setPrefWidth(70);
         Spinner<Integer> endMinute = new Spinner<>(0, 59, 0, 1);
-        endMinute.setPrefWidth(70);
-        RadioButton amE = new RadioButton("AM");
-        amE.setToggleGroup(endAMPM);
-        amE.setSelected(true);
-        RadioButton pmE = new RadioButton("PM");
-        pmE.setToggleGroup(endAMPM);
-        endTimeBox.getChildren().addAll(endHour, endMinute, amE, pmE);
-
-
-        TextField location = new TextField();
-        title.setPromptText("Location");
-
-
-        addEventBox.getChildren().add(mainLabel);
-        addEventBox.getChildren().add(infoLabel);
-        addEventBox.getChildren().addAll(new Label("Title (*):"), title);
-        Tooltip.install(title, new Tooltip("Hitting done with an empty title is the same as hitting cancel"));
-        addEventBox.getChildren().addAll(new Label("Description:"), desc);
-        addEventBox.getChildren().addAll(new Label("Course:"), courseChoice);
-        addEventBox.getChildren().addAll(new Label("Colour:"), colourChoice);
-        addEventBox.getChildren().addAll(new Label("Date: (*)"), datePicker);
-        addEventBox.getChildren().addAll(new Label("Start time:"), startTimeBox);
-        addEventBox.getChildren().addAll(new Label("End time:"), endTimeBox);
+        HBox startTimeBox = createTimeBox(startHour, startMinute, startAMPM);
+        HBox endTimeBox = createTimeBox(endHour, endMinute, endAMPM);
         Tooltip.install(endHour, new Tooltip("End time must be after start time. Will otherwise default to being " +
                 "equal to start time."));
-        Tooltip.install(endMinute, new Tooltip("End time must be after start time. Will otherwise default to being " +
-                "equal to start time."));
-        addEventBox.getChildren().addAll(new Label("Location:"), location);
+        Tooltip.install(endMinute, new Tooltip("End time must be after start time. Will otherwise default to " +
+                "being equal to start time."));
+        TextField location = new TextField();
+        location.setPromptText("Location");
 
+        addEventBox.getChildren().addAll(mainLabel, new Label("(Must enter all starred fields)"),
+                new Label("Title (*):"), title, new Label("Description:"), desc,
+                new Label("Course:"), courseChoice, new Label("Colour:"), colourChoice,
+                new Label("Date: (*)"), datePicker, new Label("Start time:"), startTimeBox,
+                new Label("End time:"), endTimeBox, new Label("Location:"), location);
 
         dialog.getDialogPane().setContent(addEventBox);
 
-        // Request focus on the username field by default.
         Platform.runLater(() -> title.requestFocus());
 
         // Convert the result to an event when the done button is clicked.
@@ -138,15 +123,13 @@ public class DayTabController {
                 }
 
                 int mod = 0;
-                if(pmS.isSelected()){
+                if(((RadioButton)startAMPM.getSelectedToggle()).getText().equals("PM")){
                     mod = 12;
                 }
                 LocalTime sTime = LocalTime.of(startHour.getValue()+mod, startMinute.getValue());
 
-                if(amE.isSelected()){
-                    mod = 0;
-                }
-                else if (pmE.isSelected()){
+                mod = 0;
+                if (((RadioButton)endAMPM.getSelectedToggle()).getText().equals("PM")){
                     mod = 12;
                 }
                 LocalTime eTime = LocalTime.of(endHour.getValue()+mod, endMinute.getValue());
@@ -155,40 +138,34 @@ public class DayTabController {
                     eTime = sTime;
                 }
 
-                Event e =  new Event(title.getText(), desc.getText(), null, c,
-                datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
+                Event newEvent =  new Event(title.getText(), desc.getText(), null, c,
+                        datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
                         datePicker.getValue().getYear(), Time.valueOf(sTime), Time.valueOf(eTime), location.getText());
 
                 if (!courseChoice.getValue().equals("None")){
-                    e.setCourse(courseChoice.getValue());
+                    newEvent.setCourse(courseChoice.getValue());
                 }
 
-                return e;
+                return newEvent;
             }
             return null;
         });
+        return dialog;
+    }
 
-        Optional<Event> result = dialog.showAndWait();
-
-        result.ifPresent(event -> {
-            System.out.println(event.toString());
-
-            if(event.getTitle() != ""){
-                model.insertEvent(event);
-            }
-        });
-
+    private HBox createTimeBox(Spinner<Integer> hour, Spinner<Integer> minute, ToggleGroup groupAMPM) {
+        HBox timeBox = new HBox();
+        hour.setPrefWidth(70);
+        minute.setPrefWidth(70);
+        RadioButton am = new RadioButton("AM");
+        am.setToggleGroup(groupAMPM);
+        am.setSelected(true);
+        RadioButton pm = new RadioButton("PM");
+        pm.setToggleGroup(groupAMPM);
+        timeBox.getChildren().addAll(hour, minute, am, pm);
+        return timeBox;
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
