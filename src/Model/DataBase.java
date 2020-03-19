@@ -52,6 +52,7 @@ public class DataBase {
                     "eventTitle VARCHAR," +
                     "eventDescription VARCHAR," +
                     "eventLocation VARCHAR," +
+                    "Colour VARCHAR," +
                     "FOREIGN KEY(courseID) REFERENCES course(courseID)" +
                     "ON DELETE CASCADE);");
         }
@@ -93,9 +94,9 @@ public class DataBase {
 
     public void insertEvent(int courseID, String startTime, String endTime,
                             int day, int month, int year, String eventTitle, String eventDescription ,
-                            String eventLocation) throws SQLException {
+                            String eventLocation, String color) throws SQLException {
         PreparedStatement prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
-                " month, year, eventTitle, eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?);");
+                " month, year, eventTitle, eventDescription, eventLocation, Colour) VALUES (?,?,?,?,?,?,?,?,?,?);");
         prep.setInt(1,courseID);
         prep.setString(2,startTime);
         prep.setString(3,endTime);
@@ -105,6 +106,7 @@ public class DataBase {
         prep.setString(7,eventTitle);
         prep.setString(8,eventDescription);
         prep.setString(9,eventLocation);
+        prep.setString(10,color);
         prep.executeUpdate();
     }
 

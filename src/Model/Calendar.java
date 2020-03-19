@@ -12,8 +12,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Date;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Calendar {
@@ -66,7 +64,7 @@ public class Calendar {
        System.out.println(getSelectedMonthsEvents());
    }
 
-    private static void formatEventQuery(ResultSet query, ArrayList<Event> events) throws SQLException, ParseException {
+    private static void formatEventQuery(ResultSet query, ArrayList<Event> events) throws SQLException, ParseException{
         while(query.next()){
             SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
             String startTimeString = query.getString("startTime");
@@ -129,13 +127,12 @@ public class Calendar {
 
    public void insertEvent(Event userInput) throws SQLException,
            ClassNotFoundException {
-       //DataBase db = new DataBase();
-       //db.startUp();
-       //db.insertEvent(1, "", "", userInput.getDay(),
-              // userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
-               //userInput.getLocation());
+       DataBase db = new DataBase();
+       db.startUp();
+       db.insertEvent(1, userInput.getStart().toString(),userInput.getEnd().toString(), userInput.getDay(),
+               userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
+               userInput.getLocation(), userInput.getColor().toString());
        currentDayEvents.add(userInput);
-       System.out.println(getCurrentDayEvents());
        notifySubscribers();
    }
    public void newEvent(String title, String description, Course course, Color color,

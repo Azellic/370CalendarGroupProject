@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.YearMonth;
+import java.awt.*;
 
 
 public class Main extends Application {
@@ -242,6 +243,7 @@ public class Main extends Application {
         int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
         int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
         int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        Color color = new Color(0.0f,0.0f,1.0f);
         if (!eventResult.next()) {
             db.insertEvent(1,
                     "9:30",
@@ -251,7 +253,9 @@ public class Main extends Application {
                     cYear,
                     "CMPT370 Project1",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString()
+                    );
             db.insertEvent(1,
                     "9:30",
                     "11:30",
@@ -260,7 +264,8 @@ public class Main extends Application {
                     cYear,
                     "CMPT370 Project2",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "12:30",
                     "13:30",
@@ -269,7 +274,8 @@ public class Main extends Application {
                     cYear,
                     "CMPT370 Project3",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "10:30",
                     "11:30",
@@ -278,7 +284,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -287,7 +294,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -296,7 +304,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -305,7 +314,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -314,7 +324,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -323,7 +334,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -332,7 +344,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -341,7 +354,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
             db.insertEvent(1,
                     "9:30",
                     "10:30",
@@ -350,7 +364,8 @@ public class Main extends Application {
                     2020,
                     "CMPT370 Project",
                     "Write code for the project",
-                    "STM College");
+                    "STM College",
+                    color.toString());
         }
 
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION

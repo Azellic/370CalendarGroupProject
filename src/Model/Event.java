@@ -48,6 +48,7 @@ public class Event extends CalendarItem {
         return location;
     }
 
+
     public void setStart(Time start) {
         this.start = start;
     }
@@ -69,7 +70,7 @@ public class Event extends CalendarItem {
                 '}';
     }
     public static void createEvent(String startTime, String endTime, int day, int month,
-    int year, String eventTitle, String eventDescription, String eventLocation) throws SQLException, ClassNotFoundException {
+    int year, String eventTitle, String eventDescription, String eventLocation, Color color) throws SQLException, ClassNotFoundException {
         DataBase db = new DataBase();
         db.startUp();
 
@@ -81,7 +82,8 @@ public class Event extends CalendarItem {
                 year,
                 eventTitle,
                 eventDescription,
-                eventLocation);
+                eventLocation,
+                color.toString());
 
     }
 }

@@ -11,7 +11,8 @@ import static org.junit.Assert.*;
 public class MainTest {
     DataBase test = new DataBase();
     @BeforeClass
-    public void setup() throws ClassNotFoundException, SQLException {
+    public static void setup() throws ClassNotFoundException, SQLException {
+        DataBase test = new DataBase();
         test.startUp();
     }
 

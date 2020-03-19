@@ -9,8 +9,8 @@ public class CoursesModel {
     ArrayList<PlannerListener> subscribers;
 
     public CoursesModel() {
-        subscribers = new ArrayList<>();
-    }
+    subscribers = new ArrayList<>();
+}
 
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);

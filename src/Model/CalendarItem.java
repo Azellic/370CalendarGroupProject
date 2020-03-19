@@ -21,7 +21,6 @@ public class CalendarItem {
         this.description = description;
         this.course = course;
         this.color = color;
-
     }
 
     // *** the Getters and Setters ***
