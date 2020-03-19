@@ -18,12 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.awt.event.ActionEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.time.YearMonth;
 
 
 public class Main extends Application {
@@ -128,7 +122,7 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         db = new DataBase();
         db.startUp();
-        ResultSet eventResult = db.displayEvents();
+        ResultSet eventResult = db.getAllEvents();
         int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
         int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
         int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);

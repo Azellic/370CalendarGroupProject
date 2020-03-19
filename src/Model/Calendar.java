@@ -54,7 +54,7 @@ public class Calendar {
        selectedYear = date.getYear();
    }
 
-   public void changeMonthBy(int increment) throws ParseException, SQLException, ClassNotFoundException {
+   public void changeMonthBy(int increment) {
        selectedMonth += increment;
        if(selectedMonth < 1){
            selectedMonth = 12;
@@ -95,6 +95,7 @@ public class Calendar {
             e.printStackTrace();
         }
     }
+
     public void setSelectedMonthsEvents() {
        this.selectedMonthsEvents = getSelectedEvents();
     }
@@ -111,6 +112,7 @@ public class Calendar {
        db.closeConnection();
        return events;
    }
+
    public ArrayList<Event> getSelectedEvents() {
        ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth);
        ArrayList<Event> events = new ArrayList<Event>();
@@ -123,8 +125,9 @@ public class Calendar {
        db.closeConnection();
        return events;
    }
+
    public ArrayList<Event> getMonthsEvents() {
-       ResultSet eventsQuery = db.getMonthsEvents(currentMonth);
+       ResultSet eventsQuery = db.getMonthsEvents(currentMonth, currentYear);
        ArrayList<Event> events = new ArrayList<Event>();
        formatEventQuery(eventsQuery, events);
        try {

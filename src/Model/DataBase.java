@@ -135,8 +135,6 @@ public class DataBase {
         }
     }
 
-
-
     public void insertCourse(String courseName){
         try {
             PreparedStatement prep = con.prepareStatement("INSERT INTO course(courseName) VALUES(?);");
@@ -148,7 +146,7 @@ public class DataBase {
         }
     }
 
-    public ResultSet displayCourses() throws SQLException, ClassNotFoundException {
+    public ResultSet getAllCourses() throws SQLException, ClassNotFoundException {
         if (con == null) {
             getConnection();
         }
@@ -188,26 +186,27 @@ public class DataBase {
         }
     }
 
-    public ResultSet displayEvents() {
+    public ResultSet getAllEvents() {
         ResultSet resultQuery = null;
         try {
             setConnection();
             Statement state = con.createStatement();
             resultQuery = state.executeQuery("SELECT * FROM event;");
         } catch (SQLException e) {
-            System.out.println("Problem in displayEvents");
+            System.out.println("Problem in getting all Events");
             e.printStackTrace();
         }
 
         return resultQuery;
     }
 
-    public ResultSet getMonthsEvents(int month) {
+    public ResultSet getMonthsEvents(int month, int year) {
         ResultSet resultQuery = null;
         try {
             setConnection();
-            PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ?; ");
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ? AND year = ?; ");
             prep.setInt(1, month);
+            prep.setInt(2, year);
             resultQuery = prep.executeQuery();
         } catch (SQLException e) {
             System.out.println("Problem in getMonthsEvents");
@@ -252,7 +251,7 @@ public class DataBase {
             try {
                 con.close();
             } catch (SQLException e) {
-                System.out.println("Problem Closing after displayEvents called");
+                System.out.println("Problem Closing after getSelectedEvents called");
             }
         }
         return resultQuery;
@@ -273,12 +272,18 @@ public class DataBase {
         }
     }
 
-    public ResultSet displayAssessments() throws SQLException, ClassNotFoundException {
-        if (con == null) {
-            getConnection();
+    public ResultSet getAllAssessments() throws SQLException, ClassNotFoundException {
+        ResultSet resultQuery = null;
+        try {
+            setConnection();
+            Statement state = con.createStatement();
+            resultQuery = state.executeQuery("SELECT * FROM assessment");
+        } catch(SQLException e) {
+            System.out.println("Problem getting all assessments");
+            e.printStackTrace();
         }
-        Statement state = con.createStatement();
-        return state.executeQuery("SELECT * FROM assessment");
+
+        return resultQuery;
     }
 
 
@@ -299,12 +304,16 @@ public class DataBase {
         }
     }
 
-    public ResultSet displayTasks() throws SQLException, ClassNotFoundException {
-        if (con == null){
-            getConnection();
+    public ResultSet getAllTasks()  {
+        ResultSet resultQuery = null;
+        try {
+            setConnection();
+            Statement state = con.createStatement();
+            resultQuery = state.executeQuery("SELECT * FROM task");
+        } catch (SQLException e) {
+            System.out.println("Problem getting all tasks");
+            e.printStackTrace();
         }
-        Statement state = con.createStatement();
-        ResultSet resultQuery = state.executeQuery("SELECT * FROM task");
         return resultQuery;
 
     }

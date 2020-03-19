@@ -1,13 +1,7 @@
 package Model;
 import java.awt.*;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 //test
 public class Event extends CalendarItem {
@@ -73,7 +67,7 @@ public class Event extends CalendarItem {
         DataBase db = new DataBase();
         db.startUp();
 
-        ResultSet eventResult =  db.displayEvents();
+        ResultSet eventResult =  db.getAllEvents();
         db.insertEvent(1, startTime,
                 endTime,
                 day,
