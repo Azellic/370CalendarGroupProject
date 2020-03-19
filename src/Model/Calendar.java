@@ -153,7 +153,7 @@ public class Calendar {
    }
 
    public void insertEvent(Event userInput) {
-       db.insertEvent(1, userInput.getStart(), userInput.getEnd(), userInput.getDay(),
+       db.insertEvent(1, userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
               userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
                userInput.getLocation());
        currentDayEvents.add(userInput);

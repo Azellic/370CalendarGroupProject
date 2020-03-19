@@ -23,12 +23,12 @@ public class Event extends CalendarItem {
         this.location = location;
     }
 
-    public String getStart() {
-        return start.toString();
+    public Time getStart() {
+        return start;
     }
 
-    public String getEnd() {
-        return end.toString();
+    public Time getEnd() {
+        return end;
     }
 
     public int getDay() {
@@ -55,6 +55,7 @@ public class Event extends CalendarItem {
     public void setEnd(Time end) {
         this.end = end;
     }
+
 
     @Override
     public String toString() {
