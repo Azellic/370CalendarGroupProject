@@ -32,6 +32,7 @@ public class Calendar {
    private ArrayList<Event> currentMonthEvents;
    private ArrayList<Event> selectedMonthsEvents;
    private DataBase db;
+
    public Calendar() {
        subscribers = new ArrayList<>();
        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
@@ -68,37 +69,37 @@ public class Calendar {
        System.out.println(getSelectedMonthsEvents());
    }
 
-    private static void formatEventQuery(ResultSet query, ArrayList<Event> events) {
-        try {
-            while (query.next()) {
-                SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
-                String startTimeString = query.getString("startTime");
-                String endTimeString = query.getString("endTime");
-                Time startTime = new Time(format1.parse(startTimeString).getTime());
-                Time endTime = new Time(format1.parse(endTimeString).getTime());
+   private static void formatEventQuery(ResultSet query, ArrayList<Event> events) {
+       try {
+           while (query.next()) {
+               SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
+               String startTimeString = query.getString("startTime");
+               String endTimeString = query.getString("endTime");
 
+               Time startTime = new Time(format1.parse(startTimeString).getTime());
+               Time endTime = new Time(format1.parse(endTimeString).getTime());
 
-                Event event = new Event(query.getString("eventTitle"),
-                        query.getString("eventDescription"),
-                        null,
-                        null,
-                        query.getInt("day"),
-                        query.getInt("month"),
-                        query.getInt("year"),
-                        startTime,
-                        endTime,
-                        query.getString("eventLocation"));
-                events.add(event);
-            }
-        } catch (SQLException | ParseException e) {
-            System.out.println("Problem with formatEventQuery");
-            e.printStackTrace();
-        }
-    }
+               Event event = new Event(query.getString("eventTitle"),
+                       query.getString("eventDescription"),
+                       null,
+                       null,
+                       query.getInt("day"),
+                       query.getInt("month"),
+                       query.getInt("year"),
+                       startTime,
+                       endTime,
+                       query.getString("eventLocation"));
+               events.add(event);
+           }
+       } catch (SQLException | ParseException e) {
+           System.out.println("Problem with formatEventQuery");
+           e.printStackTrace();
+       }
+   }
 
-    public void setSelectedMonthsEvents() {
+   public void setSelectedMonthsEvents() {
        this.selectedMonthsEvents = getSelectedEvents();
-    }
+   }
 
    public ArrayList<Event> getDaysEvents() {
        ResultSet eventsQuery = db.getDaysEvents(currentYear, currentMonth, currentDay);
@@ -142,9 +143,11 @@ public class Calendar {
    public ArrayList<Event> getCurrentDayEvents(){
        return currentDayEvents;
    }
+
    public ArrayList<Event> getCurrentMonthEvents(){
        return currentMonthEvents;
    }
+
    public ArrayList<Event> getSelectedMonthsEvents(){
        return selectedMonthsEvents;
    }
@@ -158,29 +161,13 @@ public class Calendar {
        System.out.println(getCurrentDayEvents());
        notifySubscribers();
    }
-   public void newEvent(String title, String description, Course course, Color color,
-                        int day, int month, int year, Time start, Time end, String location ){
-        Event event = new Event(title,description,course,color, day, month, year, start, end, location);
-        addEventToDB(event);
-        addEventToCache(event);
-        notifySubscribers();
-
-    }
-
-    public void addSubscriber (PlannerListener aSub) {
-        subscribers.add(aSub);
+   
+   public void addSubscriber (PlannerListener aSub) {
+       subscribers.add(aSub);
    }
 
    private void notifySubscribers() {
         subscribers.forEach(sub -> sub.modelChanged());
-    }
-
-    private void addEventToCache(Event event){
-
-    }
-
-    private void addEventToDB(Event event){
-
-    }
+   }
 
 }

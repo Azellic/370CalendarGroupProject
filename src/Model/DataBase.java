@@ -214,6 +214,7 @@ public class DataBase {
         }
         return resultQuery;
     }
+
     public ResultSet getDaysEvents(int year, int month, int day) {
         ResultSet resultQuery = null;
         try {
@@ -285,7 +286,6 @@ public class DataBase {
 
         return resultQuery;
     }
-
 
     public void insertTask(int courseID, int dueDay, int dueMonth, int dueYear, String taskTitle) {
         try {

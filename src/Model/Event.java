@@ -22,22 +22,28 @@ public class Event extends CalendarItem {
         this.year = year;
         this.location = location;
     }
+
     public String getStart() {
         return start.toString();
     }
+
     public String getEnd() {
         return end.toString();
     }
+
     public int getDay() {
         return day;
 
     }
+
     public int getMonth() {
         return month;
     }
+
     public int getYear() {
         return year;
     }
+
     public String getLocation(){
         return location;
     }
@@ -49,6 +55,7 @@ public class Event extends CalendarItem {
     public void setEnd(Time end) {
         this.end = end;
     }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -62,20 +69,5 @@ public class Event extends CalendarItem {
                 ", description='" + description + '\'' +
                 '}';
     }
-    public static void createEvent(String startTime, String endTime, int day, int month,
-    int year, String eventTitle, String eventDescription, String eventLocation) {
-        DataBase db = new DataBase();
-        db.startUp();
 
-        ResultSet eventResult =  db.getAllEvents();
-        db.insertEvent(1, startTime,
-                endTime,
-                day,
-                month,
-                year,
-                eventTitle,
-                eventDescription,
-                eventLocation);
-
-    }
 }
