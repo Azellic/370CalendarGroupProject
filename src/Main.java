@@ -1,8 +1,5 @@
 import Controller.*;
-import Model.Calendar;
-import Model.CoursesModel;
-import Model.DataBase;
-import Model.TaskBoardModel;
+import Model.*;
 import View.*;
 import View.FullCalendarView;
 
@@ -21,12 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.awt.event.ActionEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.time.YearMonth;
 
 
 public class Main extends Application {
@@ -50,10 +41,10 @@ public class Main extends Application {
     // The view the calendar is stored in
     BorderPane border;
 
-
+    public static DataBase db;
 
     @Override
-    public void start (Stage primaryStage)  throws Exception {
+    public void start (Stage primaryStage){
         StackPane root = new StackPane();
         border = new BorderPane();
 
@@ -128,9 +119,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
-        DataBase db = new DataBase();
+        db = new DataBase();
         db.startUp();
-        ResultSet eventResult = db.displayEvents();
+        ResultSet eventResult = db.getAllEvents();
         int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
         int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
         int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
@@ -243,8 +234,9 @@ public class Main extends Application {
                     "CMPT370 Project",
                     "Write code for the project",
                     "STM College");
-        }
 
+        }
+        db.closeConnection();
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
         launch(args);
 

@@ -46,15 +46,10 @@ public class DayTabController {
         Optional<Event> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            try {
-                model.insertEvent(event);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
+            System.out.println(event.toString());
 
+            model.insertEvent(event);
+        });
     }
 
     private Dialog<Event> createNewEventDialog(){
