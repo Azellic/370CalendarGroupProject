@@ -61,73 +61,46 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     public void setModel(Calendar newModel) {
         model = newModel;
-        populateList();
+        draw();
     }
 
+    /*
+        On draw, the program will get the applicable events and add them to the sidebar
+     */
     public void draw() {
         populateList();
     }
 
+    /*
+        When the model changes the view is redrawn
+     */
     public void modelChanged() {
         draw();
     }
 
 
-    public void populateList() {
+    /*
+        Function responsible for populating the sidebar lists by retrieving the events from the day sidebar
+     */
+    private void populateList() {
         ArrayList<Event> events = model.getCurrentDayEvents();
         dayListArray = FXCollections.observableArrayList ();
 
         int i = 0;
-        for(Event e :events){
+        for(Event currentEvent :events){
 
-            Label title = new Label(e.getTitle());
-            Label time = new Label("Time: " + e.getStart() + " - " + e.getEnd());
-            Label location = new Label("Location: " + e.getLocation());
+            Label title = new Label(currentEvent.getTitle());
+            Label time = new Label("Time: " + currentEvent.getStart() + " - " + currentEvent.getEnd());
+            Label location = new Label("Location: " + currentEvent.getLocation());
 
             Button button = new Button("Details");
             button.setPrefSize(80,40);
 
-
-            button.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent event) {
-                    final Stage dialog = new Stage();
-                    dialog.initModality(Modality.APPLICATION_MODAL);
-                    dialog.initOwner(primaryStage);
-
-                    VBox top = new VBox();
-                    top.setPrefSize(800, 300);
-
-                    VBox bottom = new VBox();
-
-                    Label date = new Label("Date: " + e.getDay() + "/" + e.getMonth() + "/" + e.getYear());
-                    date.setFont(new Font("Ariel", 20));
-
-                    Label title = new Label(e.getTitle());
-                    title.setFont(new Font("Ariel", 20));
-
-                    Label time = new Label("Time: " + e.getStart() + " - " + e.getEnd());
-                    time.setFont(new Font("Ariel", 15));
-
-                    Label location = new Label("Location: " + e.getLocation());
-                    location.setFont(new Font("Ariel", 15));
-
-                    Label description = new Label(e.getDescription());
-
-                    top.getChildren().addAll(title, date, time, location);
-                    bottom.getChildren().add(description);
-
-                    VBox dialogVbox = new VBox();
-                    dialogVbox.setPrefSize(800, 800);
-                    dialogVbox.getChildren().addAll(top, bottom);
-
-                    Scene dialogScene = new Scene(dialogVbox, 300, 200);
-                    dialog.setScene(dialogScene);
-                    dialog.show();
-                }
-            });
-
+            // Moved details window code to its own function
+            initializeDetailsButton(currentEvent, button);
 
             HBox box = new HBox();
+            box.setPadding(new Insets(2,2,2,2));
 
             VBox left = new VBox(title, time, location);
             left.setPrefSize(200, 50);
@@ -142,7 +115,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             box.setAlignment(Pos.CENTER_LEFT);
             box.setPrefSize(400, 50);
 
-            if(e.getColor() == null) {
+            if(currentEvent.getColor() == null) {
                 if (i % 2 == 0) {
                     box.setStyle("-fx-background-color: lightseagreen");
                 } else {
@@ -150,7 +123,7 @@ public class DaySidebar extends VBox implements PlannerListener {
                 }
             }
             else {
-                String colour = "-fx-background-color: " + getColour(e.getColor());
+                String colour = "-fx-background-color: " + getColour(currentEvent.getColor());
 
                 System.out.println("Colour found: " + colour);
                 box.setStyle(colour);
@@ -174,7 +147,7 @@ public class DaySidebar extends VBox implements PlannerListener {
     }
 
     /*
-        Get the colour of the event and turn it into a string to use
+        Get the colour of the event and turn it into a string to use for colouring the event box
      */
     public String getColour(Color eventColour){
         String colour = "";
@@ -200,5 +173,57 @@ public class DaySidebar extends VBox implements PlannerListener {
         }
 
         return colour;
+    }
+
+    /*
+        Initalize functionality for the "Details" button on the event tab
+        @param: currentEvent (The event the detaisl are added from), button (the button that will pop up the window)
+     */
+    public void initializeDetailsButton(Event currentEvent, Button button){
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent event) {
+                final Stage dialog = new Stage();
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initOwner(primaryStage);
+                dialog.setTitle(currentEvent.getTitle() + " Details");
+
+                VBox top = new VBox();
+                top.setPrefSize(800, 300);
+                top.setPadding(new Insets(5, 5, 5, 5));
+                top.setSpacing(2);
+
+                VBox descriptionBox = new VBox();
+                descriptionBox.setPrefSize(800, 300);
+                descriptionBox.setStyle("-fx-border-color: grey;\n" +
+                        "-fx-border-insets: 2;\n" +
+                        "-fx-border-width: 2;\n" +
+                        "-fx-border-style: solid inside;\n" +
+                        "-fx-background-color: lightgrey;\n");
+                Label date = new Label("Date: " + currentEvent.getDay() + "/" + currentEvent.getMonth() + "/" + currentEvent.getYear());
+                date.setFont(new Font("Arial", 15));
+
+                Label title = new Label(currentEvent.getTitle());
+                title.setFont(new Font("Ariel", 16));
+
+                Label time = new Label("Time: " + currentEvent.getStart() + " - " + currentEvent.getEnd());
+                time.setFont(new Font("Ariel", 15));
+
+                Label location = new Label("Location: " + currentEvent.getLocation());
+                location.setFont(new Font("Ariel", 15));
+
+                Label description = new Label(currentEvent.getDescription());
+
+                top.getChildren().addAll(title, date, time, location);
+                descriptionBox.getChildren().add(description);
+
+                VBox dialogVbox = new VBox();
+                dialogVbox.setPrefSize(800, 800);
+                dialogVbox.getChildren().addAll(top, descriptionBox);
+
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                dialog.setScene(dialogScene);
+                dialog.show();
+            }
+        });
     }
 }
