@@ -126,23 +126,40 @@ public class DataBase {
         }
     }
 
-    public void insertCourse(String courseName){
+    public void insertCourse(String courseName, String courseInstructor, String courseDescription){
+        PreparedStatement prep = null;
         try {
-            PreparedStatement prep = con.prepareStatement("INSERT INTO course(courseName) VALUES(?);");
+            PreparedStatement prep = con.prepareStatement("INSERT INTO course(courseName, " +
+                    "courseInstructor, courseDescription) VALUES(?,?,?);");
             prep.setString(1, courseName);
+            prep.setString(2, courseInstructor);
+            prep.setString(3, courseDescription);
             prep.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Problem inserting course");
             e.printStackTrace();
         }
+        finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing insert course prepared statement");
+                e.printStackTrace();
+            }
+        }
     }
 
-    public ResultSet getAllCourses() throws SQLException, ClassNotFoundException {
-        if (con == null) {
-            getConnection();
+    public ResultSet getAllCourses() {
+        ResultSet resultQuery = null;
+        try {
+            setConnection();
+            Statement state = con.createStatement();
+            resultQuery = state.executeQuery("SELECT * FROM course");
+        } catch (SQLException e) {
+            System.out.println("Problem returning all courses");
+            e.printStackTrace();
         }
-        Statement state = con.createStatement();
-        return state.executeQuery("SELECT * FROM course");
+        return resultQuery;
     }
 
     public void insertEvent(int courseID, String startTime, String endTime,
