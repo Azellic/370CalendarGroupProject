@@ -15,7 +15,6 @@ import java.util.Optional;
 public class TaskTabController {
     TaskBoardModel model;
     CoursesModel courseModel;
-    //Course courseModel;
 
     public void setModel(TaskBoardModel newModel) {
         model = newModel;

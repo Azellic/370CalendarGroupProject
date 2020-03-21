@@ -46,6 +46,7 @@ public class CoursesModel {
         System.out.println(getCourseList());
         notifySubscribers();
     }
+
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);
     }

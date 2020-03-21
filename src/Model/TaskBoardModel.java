@@ -25,7 +25,7 @@ public class TaskBoardModel {
         return tasks;
     }
 
-    public ArrayList<Task> getTasksFromDB(){
+    public ArrayList<Task> getTasksFromDB() {
         ResultSet tasksQuery = db.getAllTasks();
         ArrayList<Task> tasks = new ArrayList<>();
         try {
@@ -38,6 +38,7 @@ public class TaskBoardModel {
                 Color taskColor = new Color(tasksQuery.getInt("colorRedInt"),
                                             tasksQuery.getInt("colorGreenInt"),
                                             tasksQuery.getInt("colorBlueInt"));
+
                 Task task = new Task(tasksQuery.getString("taskTitle"),
                         tasksQuery.getString("taskDescription"),
                         null,
@@ -56,7 +57,7 @@ public class TaskBoardModel {
         return tasks;
     }
 
-    public void insertTask(Task userInput){
+    public void insertTask(Task userInput) {
         db.insertTask(userInput.getTitle(), userInput.getDescription(), 0,
                 userInput.getColor().getRed(), userInput.getColor().getGreen(), userInput.getColor().getBlue(),
                 userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getDueTime().toString());
@@ -65,6 +66,7 @@ public class TaskBoardModel {
         System.out.println(getTasks());
         notifySubscribers();
     }
+
     public void addSubscriber(PlannerListener aSub) {
         subscribers.add(aSub);
     }
