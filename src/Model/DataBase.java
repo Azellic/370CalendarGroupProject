@@ -49,7 +49,9 @@ public class DataBase {
             if (!courseTable.next()) {
                 state.execute("CREATE TABLE course" +
                         "(courseID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "courseName VARCHAR);");
+                        "courseName VARCHAR," +
+                        "courseInstructor VARCHAR, " +
+                        "courseDescription VARCHAR);");
             }
         } catch (SQLException e) {
             System.out.println("Problem creating the course table");
@@ -67,6 +69,9 @@ public class DataBase {
                         "day INTEGER," +
                         "month INTEGER," +
                         "year INTEGER," +
+                        "colorRedInt INTEGER," +
+                        "colorGreenInt INTEGER," +
+                        "colorBlueInt INTEGER," +
                         "eventTitle VARCHAR," +
                         "eventDescription VARCHAR," +
                         "eventLocation VARCHAR," +
@@ -141,22 +146,27 @@ public class DataBase {
     }
 
     public void insertEvent(int courseID, String startTime, String endTime,
-                            int day, int month, int year, String eventTitle, String eventDescription ,
+                            int day, int month, int year, int colorRedInt, int colorGreenInt, int colorBlueInt,
+                            String eventTitle, String eventDescription ,
                             String eventLocation){
         PreparedStatement prep = null;
         try {
             setConnection();
             prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
-                    " month, year, eventTitle, eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?);");
+                    " month, year, colorRedInt, colorGreenInt, colorBlueInt, eventTitle, " +
+                    "eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
             prep.setInt(1, courseID);
             prep.setString(2, startTime);
             prep.setString(3, endTime);
             prep.setInt(4, day);
             prep.setInt(5, month);
             prep.setInt(6, year);
-            prep.setString(7, eventTitle);
-            prep.setString(8, eventDescription);
-            prep.setString(9, eventLocation);
+            prep.setInt(7, colorRedInt);
+            prep.setInt(8, colorGreenInt);
+            prep.setInt(9, colorBlueInt);
+            prep.setString(10, eventTitle);
+            prep.setString(11, eventDescription);
+            prep.setString(12, eventLocation);
             prep.executeUpdate();
         } catch(SQLException e) {
             System.out.println("Problem inserting Event");

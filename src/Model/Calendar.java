@@ -2,20 +2,12 @@ package Model;
 
 import java.awt.*;
 import View.PlannerListener;
-import Model.DataBase;
-import com.sun.tools.javac.Main;
-
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.util.Date;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Calendar {
@@ -79,10 +71,14 @@ public class Calendar {
                Time startTime = new Time(format1.parse(startTimeString).getTime());
                Time endTime = new Time(format1.parse(endTimeString).getTime());
 
+               Color eventColor = new Color(query.getInt("colorRedInt"),
+                                            query.getInt("colorGreenInt"),
+                                            query.getInt("colorBlueInt"));
+
                Event event = new Event(query.getString("eventTitle"),
                        query.getString("eventDescription"),
                        null,
-                       null,
+                       eventColor,
                        query.getInt("day"),
                        query.getInt("month"),
                        query.getInt("year"),
@@ -154,7 +150,8 @@ public class Calendar {
 
    public void insertEvent(Event userInput) {
        db.insertEvent(1, userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
-              userInput.getMonth(), userInput.getYear(), userInput.getTitle(),userInput.getDescription(),
+              userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
+               userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
                userInput.getLocation());
        currentDayEvents.add(userInput);
        db.closeConnection();
