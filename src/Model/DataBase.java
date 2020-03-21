@@ -105,11 +105,16 @@ public class DataBase {
             if(!taskTable.next()) {
                 state.execute("CREATE TABLE task" +
                         "(taskID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "taskTitle VARCHAR," +
+                        "taskDescription VARCHAR," +
                         "courseID INTEGER," +
+                        "colorRedInt INTEGER," +
+                        "colorGreenInt INTEGER," +
+                        "colorBlueInt INTEGER," +
                         "dueDay INTEGER," +
                         "dueMonth INTEGER," +
                         "dueYear INTEGER," +
-                        "taskTitle VARCHAR," +
+                        "dueTime VARCHAR," +
                         "completed VARCHAR," +
                         "FOREIGN KEY(courseID) REFERENCES course(courseID)" +
                         "ON DELETE CASCADE);");
@@ -287,7 +292,7 @@ public class DataBase {
         }
     }
 
-    public ResultSet getAllAssessments() throws SQLException, ClassNotFoundException {
+    public ResultSet getAllAssessments() {
         ResultSet resultQuery = null;
         try {
             setConnection();
@@ -301,20 +306,35 @@ public class DataBase {
         return resultQuery;
     }
 
-    public void insertTask(int courseID, int dueDay, int dueMonth, int dueYear, String taskTitle) {
+    public void insertTask(String taskTitle, String taskDescription, int courseID,
+                           int colorRedInt, int colorGreenInt, int colorBlueInt,
+                           int dueDay, int dueMonth, int dueYear, String dueTime) {
+        PreparedStatement prep = null;
         try {
-            PreparedStatement prep = con.prepareStatement("INSERT INTO task(courseID, dueDay, dueMonth, dueYear," +
-                    " taskTitle,completed) VALUES(?,?,?,?,?,?);");
-            prep.setInt(1, courseID);
-            prep.setInt(2, dueDay);
-            prep.setInt(3, dueMonth);
-            prep.setInt(4, dueYear);
-            prep.setString(5, taskTitle);
-            prep.setInt(6, 0);
+            setConnection();
+            prep = con.prepareStatement("INSERT INTO task(taskTitle, taskDescription, courseID, " +
+                    "colorRedInt, colorGreenInt, colorBlueInt, dueDay, dueMonth, dueYear, dueTime) " +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?);");
+            prep.setString(1, taskTitle);
+            prep.setString(2, taskDescription);
+            prep.setInt(3, courseID);
+            prep.setInt(4, colorRedInt);
+            prep.setInt(5, colorGreenInt);
+            prep.setInt(6, colorBlueInt);
+            prep.setInt(7, dueDay);
+            prep.setInt(8, dueMonth);
+            prep.setInt(9, dueYear);
+            prep.setString(10, dueTime);
             prep.executeUpdate();
         } catch(SQLException e) {
             System.out.println("Problem inserting Task");
             e.printStackTrace();
+        } finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing task statement ");
+            }
         }
     }
 

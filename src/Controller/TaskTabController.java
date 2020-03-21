@@ -33,6 +33,9 @@ public class TaskTabController {
 
         result.ifPresent(event -> {
             //TODO: send new assessment to model
+            System.out.println(event.toString());
+
+            model.insertTask(event);
         });
     }
 }

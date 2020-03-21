@@ -1,18 +1,9 @@
 package Model;
 
-import View.PlannerListener;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 public class Course {
-    private ArrayList<PlannerListener> subscribers;
     private String title;
     private String description;
     private String instructor;
-    //private ArrayList<Course> courseList;
-    //private DataBase db;
 
     public Course(String title, String description, String instructor){
         this.title = title;
@@ -44,7 +35,6 @@ public class Course {
         this.instructor = instructor;
     }
 
-
     @Override
     public String toString() {
         return "Course{" +
@@ -54,12 +44,4 @@ public class Course {
                 '}';
     }
 
-    public void addSubscriber (PlannerListener aSub) {
-        subscribers.add(aSub);
-        notifySubscribers();
-    }
-
-    private void notifySubscribers() {
-        subscribers.forEach(sub -> sub.modelChanged());
-    }
 }
