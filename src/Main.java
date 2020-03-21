@@ -65,6 +65,7 @@ public class Main extends Application {
         daytabController.setCoursesModel(coursesModel);
         gradeController.setModel(coursesModel);
         taskController.setModel(taskModel);
+        taskController.setCoursesModel(coursesModel);
 
         Screen screen = Screen.getPrimary();
         Rectangle2D wBounds = screen.getVisualBounds();

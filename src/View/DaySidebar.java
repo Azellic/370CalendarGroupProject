@@ -41,7 +41,7 @@ public class DaySidebar extends VBox implements PlannerListener {
 
 
         addEventbutton = new Button("New Event");
-        addEventbutton.setPrefHeight(120);
+        addEventbutton.setPrefHeight(60);
         addEventbutton.setPrefWidth(100);
 
         VBox buttonBar = new VBox(addEventbutton);
