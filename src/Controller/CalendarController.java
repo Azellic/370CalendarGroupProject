@@ -29,13 +29,13 @@ public class CalendarController {
         model.setSelectedDay(date);
     }
 
-    public void previousMonthClicked(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
+    public void previousMonthClicked(ActionEvent actionEvent) {
         System.out.println("Go back a month");
         model.changeMonthBy(-1);
         model.setSelectedMonthsEvents();
     }
 
-    public void nextMonthClicked(ActionEvent actionEvent) throws ParseException, SQLException, ClassNotFoundException {
+    public void nextMonthClicked(ActionEvent actionEvent) {
         System.out.println("Go forward a month");
         model.changeMonthBy(+1);
         model.setSelectedMonthsEvents();

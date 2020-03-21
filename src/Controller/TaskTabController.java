@@ -2,6 +2,7 @@ package Controller;
 
 import Model.CoursesModel;
 import Model.Task;
+import Model.Course;
 import Model.TaskBoardModel;
 import View.NewTaskDialog;
 import javafx.collections.FXCollections;
@@ -31,6 +32,9 @@ public class TaskTabController {
 
         result.ifPresent(event -> {
             //TODO: send new assessment to model
+            System.out.println(event.toString());
+
+            model.insertTask(event);
         });
     }
 }
