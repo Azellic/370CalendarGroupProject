@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class Calendar {
    private ArrayList<PlannerListener> subscribers;
-   private ArrayList<Day> days;
    private int selectedDay;
    private int selectedMonth;
    private int selectedYear;
