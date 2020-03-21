@@ -2,6 +2,7 @@ package Controller;
 
 import Model.CoursesModel;
 import Model.Task;
+import Model.Course;
 import Model.TaskBoardModel;
 import View.NewTaskDialog;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class TaskTabController {
     TaskBoardModel model;
     CoursesModel courseModel;
+    //Course courseModel;
 
     public void setModel(TaskBoardModel newModel) {
         model = newModel;

@@ -38,6 +38,9 @@ public class GradeTabController {
 
         result.ifPresent(event -> {
             //TODO: send new course to model
+            System.out.println(event.toString());
+
+            model.insertCourse(event);
         });
     }
 }

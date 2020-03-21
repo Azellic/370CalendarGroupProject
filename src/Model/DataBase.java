@@ -129,7 +129,8 @@ public class DataBase {
     public void insertCourse(String courseName, String courseInstructor, String courseDescription){
         PreparedStatement prep = null;
         try {
-            PreparedStatement prep = con.prepareStatement("INSERT INTO course(courseName, " +
+            setConnection();
+            prep = con.prepareStatement("INSERT INTO course(courseName, " +
                     "courseInstructor, courseDescription) VALUES(?,?,?);");
             prep.setString(1, courseName);
             prep.setString(2, courseInstructor);
