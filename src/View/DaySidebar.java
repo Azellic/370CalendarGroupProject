@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class DaySidebar extends VBox implements PlannerListener {
@@ -140,11 +141,19 @@ public class DaySidebar extends VBox implements PlannerListener {
 
             box.setAlignment(Pos.CENTER_LEFT);
             box.setPrefSize(400, 50);
-            if(i%2 == 0){
-                box.setStyle("-fx-background-color: lightseagreen");
+
+            if(e.getColor() == null) {
+                if (i % 2 == 0) {
+                    box.setStyle("-fx-background-color: lightseagreen");
+                } else {
+                    box.setStyle("-fx-background-color: lightslategrey");
+                }
             }
             else {
-                box.setStyle("-fx-background-color: lightslategrey");
+                String colour = "-fx-background-color: " + getColour(e.getColor());
+
+                System.out.println("Colour found: " + colour);
+                box.setStyle(colour);
             }
 
 
@@ -162,5 +171,34 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     public void setButtonController(DayTabController controller) {
         addEventbutton.setOnAction(controller::handleAddEventClicked);
+    }
+
+    /*
+        Get the colour of the event and turn it into a string to use
+     */
+    public String getColour(Color eventColour){
+        String colour = "";
+
+        System.out.println("Colour given: " + eventColour);
+        if (Color.GREEN.equals(eventColour)) {
+            colour = "green";
+        }
+        else if (Color.BLUE.equals(eventColour)) {
+            colour = "blue";
+        }
+        else if (Color.RED.equals(eventColour)) {
+            colour = "red";
+        }
+        else if (Color.ORANGE.equals(eventColour)) {
+            colour = "orange";
+        }
+        else if (Color.YELLOW.equals(eventColour)) {
+            colour = "yellow";
+        }
+        else {
+            colour = "violet";  //default if not set to any of the of the acceptable colours
+        }
+
+        return colour;
     }
 }
