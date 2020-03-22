@@ -92,6 +92,10 @@ public class DataBase {
                         "weight INTEGER," +
                         "grade REAL," +
                         "assessmentTitle VARCHAR," +
+                        "description VARCHAR," +
+                        "day INTEGER," +
+                        "month INTEGER," +
+                        "year INTEGER," +
                         "FOREIGN KEY(courseID) REFERENCES course(courseID)" +
                         "ON DELETE CASCADE);");
             }
@@ -278,14 +282,20 @@ public class DataBase {
         return resultQuery;
     }
 
-    public void insertAssessment(int courseID, int weight, double grade, String assessmentTitle) {
+    public void insertAssessment(int courseID, int weight, double grade, String assessmentTitle, String description,
+                                 int day, int month, int year) {
         try {
             PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
-                    "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?);");
+                    "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?,?,?,?,?);");
             prep.setInt(1, courseID);
             prep.setInt(2, weight);
             prep.setDouble(3, grade);
             prep.setString(4, assessmentTitle);
+            prep.setString(5, description);
+            prep.setInt(6, day);
+            prep.setInt(7, month);
+            prep.setInt(8, year);
+
             prep.executeUpdate();
         } catch(SQLException e) {
             System.out.println("Problem inserting assessment");

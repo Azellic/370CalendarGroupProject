@@ -68,7 +68,15 @@ public class Assessment {
         this.weight = weight;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Assessment{" +
+                "title='" + title + '\'' +
+                ", course=" + course +
+                ", mark=" + mark +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 }
