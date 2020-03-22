@@ -1,16 +1,17 @@
 package View;
 
+import Controller.TaskTabController;
 import Model.TaskBoardModel;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 public class TaskSidebar extends VBox implements PlannerListener  {
     TaskBoardModel model;
-    Button addTasksbutton;
+    Button addTaskbutton;
     ListView tasksList;
 
 
@@ -21,17 +22,15 @@ public class TaskSidebar extends VBox implements PlannerListener  {
         tasksList.setPrefHeight(700);
         tasksList.fixedCellSizeProperty();
 
-        addTasksbutton = new Button("New Task");
-        addTasksbutton.setPrefHeight(60);
-        addTasksbutton.setPrefWidth(100);
+        addTaskbutton = new Button("New Task");
+        addTaskbutton.setPrefHeight(60);
+        addTaskbutton.setPrefWidth(100);
 
-        //this.setPrefWidth(100);
-        //this.setPrefSize(100, bounds.getHeight());
-        //this.setAlignment(Pos.CENTER_LEFT);
+        this.setPadding(new Insets(2,5,5,2));
         this.setPrefSize(100,800);
         this.setAlignment(Pos.TOP_LEFT);
         this.getChildren().add(tasksList);
-        this.getChildren().add(addTasksbutton);
+        this.getChildren().add(addTaskbutton);
     }
 
     public void setModel(TaskBoardModel newModel) {
@@ -44,5 +43,9 @@ public class TaskSidebar extends VBox implements PlannerListener  {
 
     public void modelChanged() {
         draw();
+    }
+
+    public void setButtonController(TaskTabController controller) {
+        addTaskbutton.setOnAction(controller::handleAddTaskClicked);
     }
 }

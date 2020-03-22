@@ -57,7 +57,6 @@ public class Event extends CalendarItem {
         this.end = end;
     }
 
-
     @Override
     public String toString() {
         return "Event{" +
@@ -66,6 +65,7 @@ public class Event extends CalendarItem {
                 ", day=" + day +
                 ", month=" + month +
                 ", year=" + year +
+                ", color="+ super.getColor() +
                 ", location='" + location + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +

@@ -39,7 +39,6 @@ public class Main extends Application {
     FullCalendarView calendarView;
 
     // The view the calendar is stored in
-    FullCalendarView calendarv;
     BorderPane border;
 
     public static DataBase db;
@@ -57,15 +56,16 @@ public class Main extends Application {
         taskController = new TaskTabController();
 
         calendarModel = new Calendar();
-        //System.out.println(calendarModel.getCurrentDayEvents());
         coursesModel = new CoursesModel();
         taskModel = new TaskBoardModel();
 
         //Set up the controllers with respective models
         calController.setModel(calendarModel);
         daytabController.setModel(calendarModel);
+        daytabController.setCoursesModel(coursesModel);
         gradeController.setModel(coursesModel);
         taskController.setModel(taskModel);
+        taskController.setCoursesModel(coursesModel);
 
         Screen screen = Screen.getPrimary();
         Rectangle2D wBounds = screen.getVisualBounds();
@@ -94,14 +94,14 @@ public class Main extends Application {
         taskModel.addSubscriber(taskView);
         coursesModel.addSubscriber(gradeView);
 
+        //Establish controller - add-button relationship
         dayView.setButtonController(daytabController);
+        gradeView.setButtonController(gradeController);
+        taskView.setButtonController(taskController);
+
 
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
-
-
-        //root.setPrefWidth(bounds.getWidth());
-        //root.setPrefHeight(bounds.getHeight());
 
 
         // Set the window size based on the screen bounds
@@ -134,118 +134,10 @@ public class Main extends Application {
                     cDay,
                     cMonth,
                     cYear,
+                    0,
+                    0,
+                    255,
                     "CMPT370 Project1",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString()
-                    );
-            db.insertEvent(1,
-                    "9:30",
-                    "11:30",
-                    cDay,
-                    cMonth,
-                    cYear,
-                    "CMPT370 Project2",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "12:30",
-                    "13:30",
-                    cDay,
-                    cMonth,
-                    cYear,
-                    "CMPT370 Project3",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "10:30",
-                    "11:30",
-                    5,
-                    2,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    2,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    2,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    5,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    5,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College",
-                    color.toString());
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    5,
-                    2020,
-                    "CMPT370 Project",
                     "Write code for the project",
                     "STM College");
         }
