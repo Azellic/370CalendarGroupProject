@@ -197,15 +197,15 @@ public class DataBase {
             prep.setString(12, eventLocation);
             prep.executeUpdate();
         } catch(SQLException e) {
-            System.out.println("Problem inserting Event");
-            e.printStackTrace();
+        System.out.println("Problem inserting Event");
+        e.printStackTrace();
         }
         finally {
             try {
-                prep.close();
+            prep.close();
             } catch (SQLException e) {
-                System.out.println("Problem closing prepared statement for insert");
-                e.printStackTrace();
+            System.out.println("Problem closing prepared statement for insert");
+            e.printStackTrace();
             }
         }
     }
@@ -284,8 +284,10 @@ public class DataBase {
 
     public void insertAssessment(int courseID, int weight, double grade, String assessmentTitle, String description,
                                  int day, int month, int year) {
+        PreparedStatement prep = null;
         try {
-            PreparedStatement prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
+            setConnection();
+            prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
                     "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?,?,?,?,?);");
             prep.setInt(1, courseID);
             prep.setInt(2, weight);
@@ -295,11 +297,18 @@ public class DataBase {
             prep.setInt(6, day);
             prep.setInt(7, month);
             prep.setInt(8, year);
-
             prep.executeUpdate();
         } catch(SQLException e) {
-            System.out.println("Problem inserting assessment");
+            System.out.println("Problem inserting Assessment");
             e.printStackTrace();
+        }
+        finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing prepared statement for insertAssessment");
+                e.printStackTrace();
+            }
         }
     }
 
