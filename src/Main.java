@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.YearMonth;
+import java.awt.Color;
 
 // JavaFX packages we need
 import javafx.application.Application;
@@ -18,7 +19,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 
 public class Main extends Application {
     //Models
@@ -126,6 +126,7 @@ public class Main extends Application {
         int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
         int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
         int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        Color color = new Color(0.0f,0.0f,1.0f);
         if (!eventResult.next()) {
             db.insertEvent(1,
                     "9:30",

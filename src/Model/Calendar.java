@@ -60,6 +60,7 @@ public class Calendar {
        System.out.println(getSelectedMonthsEvents());
    }
 
+
    private static void formatEventQuery(ResultSet query, ArrayList<Event> events) {
        try {
            while (query.next()) {
@@ -146,6 +147,7 @@ public class Calendar {
    public ArrayList<Event> getSelectedMonthsEvents(){
        return selectedMonthsEvents;
    }
+
 
    public void insertEvent(Event userInput) {
        db.insertEvent(1, userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),

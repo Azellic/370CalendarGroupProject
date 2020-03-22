@@ -44,9 +44,10 @@ public class Event extends CalendarItem {
         return year;
     }
 
-    public String getLocation(){
+    public String getLocation() {
         return location;
     }
+
 
     public void setStart(Time start) {
         this.start = start;
