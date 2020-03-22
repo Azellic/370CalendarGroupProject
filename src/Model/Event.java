@@ -1,13 +1,7 @@
 package Model;
 import java.awt.*;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 //test
 public class Event extends CalendarItem {
@@ -28,23 +22,29 @@ public class Event extends CalendarItem {
         this.year = year;
         this.location = location;
     }
+
     public Time getStart() {
         return start;
     }
+
     public Time getEnd() {
         return end;
     }
+
     public int getDay() {
         return day;
 
     }
+
     public int getMonth() {
         return month;
     }
+
     public int getYear() {
         return year;
     }
-    public String getLocation(){
+
+    public String getLocation() {
         return location;
     }
 
@@ -56,6 +56,8 @@ public class Event extends CalendarItem {
     public void setEnd(Time end) {
         this.end = end;
     }
+
+
     @Override
     public String toString() {
         return "Event{" +
@@ -69,21 +71,5 @@ public class Event extends CalendarItem {
                 ", description='" + description + '\'' +
                 '}';
     }
-    public static void createEvent(String startTime, String endTime, int day, int month,
-    int year, String eventTitle, String eventDescription, String eventLocation, Color color) throws SQLException, ClassNotFoundException {
-        DataBase db = new DataBase();
-        db.startUp();
 
-        ResultSet eventResult = db.displayEvents();
-        db.insertEvent(1, startTime,
-                endTime,
-                day,
-                month,
-                year,
-                eventTitle,
-                eventDescription,
-                eventLocation,
-                color.toString());
-
-    }
 }

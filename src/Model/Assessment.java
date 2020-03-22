@@ -11,13 +11,6 @@ public class Assessment {
     private String description;
     private float weight;
 
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
 
     public Assessment(String title, Course course, int mark, Date date, String description, float weight){
         this.title = title;
@@ -65,6 +58,14 @@ public class Assessment {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
 
