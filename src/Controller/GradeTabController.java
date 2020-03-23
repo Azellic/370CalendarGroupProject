@@ -18,6 +18,8 @@ public class GradeTabController {
         model = newModel;
     }
 
+
+
     public void handleAddGradeClicked(ActionEvent actionEvent) {
         ObservableList<String> courses = FXCollections.observableArrayList("None");
         //TODO: Generate the list of courses using course model
@@ -29,6 +31,7 @@ public class GradeTabController {
             //TODO: send new assessment to model
         });
     }
+
 
 
     public void handleAddCourseClicked(ActionEvent actionEvent) {
