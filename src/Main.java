@@ -87,6 +87,7 @@ public class Main extends Application {
         gradeView.setModel(coursesModel);
 
         dayView.setStage(primaryStage);
+        taskView.setStage(primaryStage);
 
         //Set up model-view subscriber relationship
         calendarModel.addSubscriber(dayView);

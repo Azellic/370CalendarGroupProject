@@ -76,8 +76,27 @@ public class NewTaskDialog extends InputDialog {
         if (dialogButton == doneButtonType) {
             Color c;
             try {
-                Field field = Class.forName("java.awt.Color").getField(colourChoice.getValue());
-                c = (Color)field.get(null);
+                String input = colourChoice.getValue();
+                // Field field = Class.forName("java.awt.Color").getField(colourChoice.getValue());
+                // Reads the value from colour choice and assigns the appropriate value
+                if("Green".equals(input)){
+                    c = Color.GREEN;
+                }
+                else if("Blue".equals(input)){
+                    c = Color.BLUE;
+                }
+                else if("Red".equals(input)){
+                    c = Color.RED;
+                }
+                else if("Orange".equals(input)){
+                    c = Color.ORANGE;
+                }
+                else if("Yellow".equals(input)){
+                    c = Color.YELLOW;
+                }
+                else {
+                    c = Color.PINK;
+                }
             } catch (Exception e) {
                 c = Color.GREEN; // Not chosen was not defined
             }

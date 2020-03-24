@@ -96,7 +96,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             Button button = new Button("Details");
             button.setPrefSize(80,40);
 
-            // Moved details window code to its own function
+            // Moved details window code to its own function to fully view the event
             initializeDetailsButton(currentEvent, button);
 
             HBox box = new HBox();
@@ -125,7 +125,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             else {
                 String colour = "-fx-background-color: " + getColour(currentEvent.getColor());
 
-                System.out.println("Colour found: " + colour);
+                //System.out.println("Colour found: " + colour);
                 box.setStyle(colour);
             }
 
@@ -152,7 +152,7 @@ public class DaySidebar extends VBox implements PlannerListener {
     public String getColour(Color eventColour){
         String colour = "";
 
-        System.out.println("Colour given: " + eventColour);
+        // System.out.println("Colour given: " + eventColour);
         if (Color.GREEN.equals(eventColour)) {
             colour = "green";
         }
@@ -212,6 +212,8 @@ public class DaySidebar extends VBox implements PlannerListener {
                 location.setFont(new Font("Ariel", 15));
 
                 Label description = new Label(currentEvent.getDescription());
+                // Allows text to wrap to a second line if neccesary
+                description.setWrapText(true);
 
                 top.getChildren().addAll(title, date, time, location);
                 descriptionBox.getChildren().add(description);

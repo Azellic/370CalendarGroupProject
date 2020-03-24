@@ -66,9 +66,10 @@ public class NewGradeDialog extends InputDialog {
                 }
 
                 //TODO: properly create new grade, using all input
-                Assessment newGrade = new Assessment();
+              // Assessment newGrade = new Assessment();
 
-                return newGrade;
+                //return newGrade;
+                return null;
             }
             return null;
         });
