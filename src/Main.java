@@ -76,7 +76,7 @@ public class Main extends Application {
         taskView = new TaskSidebar(bounds);
 
         calendarView = new FullCalendarView(YearMonth.now(), calController);
-        gradeView = new GradeSidebar(bounds);
+        gradeView = new GradeSidebar(bounds, coursesModel);
 
         dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
 
@@ -84,7 +84,6 @@ public class Main extends Application {
         dayView.setModel(calendarModel);
         taskView.setModel(taskModel);
         calendarView.setModel(calendarModel);
-        gradeView.setModel(coursesModel);
 
         dayView.setStage(primaryStage);
 

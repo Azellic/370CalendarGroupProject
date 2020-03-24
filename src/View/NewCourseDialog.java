@@ -50,7 +50,6 @@ public class NewCourseDialog extends InputDialog {
                 return null;
             }
 
-            //TODO: properly create new course, using all input
             Course newCourse = new Course(title.getText(), prof.getText(), desc.getText());
 
             return newCourse;
