@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.YearMonth;
+import java.awt.Color;
 
 // JavaFX packages we need
 import javafx.application.Application;
@@ -18,7 +19,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 
 public class Main extends Application {
     //Models
@@ -65,6 +65,7 @@ public class Main extends Application {
         daytabController.setCoursesModel(coursesModel);
         gradeController.setModel(coursesModel);
         taskController.setModel(taskModel);
+        taskController.setCoursesModel(coursesModel);
 
         Screen screen = Screen.getPrimary();
         Rectangle2D wBounds = screen.getVisualBounds();
@@ -125,6 +126,7 @@ public class Main extends Application {
         int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
         int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
         int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        Color color = new Color(0.0f,0.0f,1.0f);
         if (!eventResult.next()) {
             db.insertEvent(1,
                     "9:30",
@@ -132,109 +134,12 @@ public class Main extends Application {
                     cDay,
                     cMonth,
                     cYear,
+                    0,
+                    0,
+                    255,
                     "CMPT370 Project1",
                     "Write code for the project",
                     "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "11:30",
-                    cDay,
-                    cMonth,
-                    cYear,
-                    "CMPT370 Project2",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "12:30",
-                    "13:30",
-                    cDay,
-                    cMonth,
-                    cYear,
-                    "CMPT370 Project3",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "10:30",
-                    "11:30",
-                    5,
-                    2,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    2,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    2,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    4,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    1,
-                    5,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    5,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    5,
-                    5,
-                    2020,
-                    "CMPT370 Project",
-                    "Write code for the project",
-                    "STM College");
-
         }
         db.closeConnection();
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION

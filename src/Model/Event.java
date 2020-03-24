@@ -44,9 +44,10 @@ public class Event extends CalendarItem {
         return year;
     }
 
-    public String getLocation(){
+    public String getLocation() {
         return location;
     }
+
 
     public void setStart(Time start) {
         this.start = start;
@@ -56,7 +57,6 @@ public class Event extends CalendarItem {
         this.end = end;
     }
 
-
     @Override
     public String toString() {
         return "Event{" +
@@ -65,6 +65,7 @@ public class Event extends CalendarItem {
                 ", day=" + day +
                 ", month=" + month +
                 ", year=" + year +
+                ", color="+ super.getColor() +
                 ", location='" + location + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +

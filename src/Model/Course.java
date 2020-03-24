@@ -1,12 +1,14 @@
 package Model;
 
 public class Course {
-    protected String title;
+    private String title;
+    private String description;
+    private String instructor;
 
-    //private assessments;
-
-    public Course(String title){
+    public Course(String title, String description, String instructor){
         this.title = title;
+        this.description = description;
+        this.instructor = instructor;
     }
 
     public String getTitle() {
@@ -16,4 +18,30 @@ public class Course {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", instructor='" + instructor + '\'' +
+                '}';
+    }
+
 }
