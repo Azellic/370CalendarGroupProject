@@ -173,7 +173,7 @@ public class DataBase {
     }
 
 
-    public void insertEvent(int courseID, String startTime, String endTime,
+    public void insertEvent(String courseName, String startTime, String endTime,
                             int day, int month, int year, int colorRedInt, int colorGreenInt, int colorBlueInt,
                             String eventTitle, String eventDescription ,
                             String eventLocation){
@@ -182,8 +182,9 @@ public class DataBase {
             setConnection();
             prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
                     " month, year, colorRedInt, colorGreenInt, colorBlueInt, eventTitle, " +
-                    "eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
-            prep.setInt(1, courseID);
+                    "eventDescription, eventLocation) VALUES ((SELECT courseID from course where courseName = ?)" +
+                    ",?,?,?,?,?,?,?,?,?,?,?);");
+            prep.setString(1, courseName);
             prep.setString(2, startTime);
             prep.setString(3, endTime);
             prep.setInt(4, day);
@@ -282,14 +283,16 @@ public class DataBase {
         return resultQuery;
     }
 
-    public void insertAssessment(int courseID, float weight, int grade, String assessmentTitle, String description,
+    public void insertAssessment(String courseName, float weight, int grade, String assessmentTitle, String description,
                                  int day, int month, int year) {
         PreparedStatement prep = null;
         try {
             setConnection();
             prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
-                    "GRADE, ASSESSMENTTITLE, description, day, month, year) VALUES(?,?,?,?,?,?,?,?);");
-            prep.setInt(1, courseID);
+                    "GRADE, ASSESSMENTTITLE, description, day, month, year) VALUES(" +
+                    "(SELECT courseID from course where courseName = ?)" +
+                    ",?,?,?,?,?,?,?);");
+            prep.setString(1, courseName);
             prep.setFloat(2, weight);
             prep.setDouble(3, grade);
             prep.setString(4, assessmentTitle);
@@ -325,7 +328,7 @@ public class DataBase {
         return resultQuery;
     }
 
-    public void insertTask(String taskTitle, String taskDescription, int courseID,
+    public void insertTask(String taskTitle, String taskDescription, String courseName,
                            int colorRedInt, int colorGreenInt, int colorBlueInt,
                            int dueDay, int dueMonth, int dueYear, String dueTime) {
         PreparedStatement prep = null;
@@ -333,10 +336,12 @@ public class DataBase {
             setConnection();
             prep = con.prepareStatement("INSERT INTO task(taskTitle, taskDescription, courseID, " +
                     "colorRedInt, colorGreenInt, colorBlueInt, dueDay, dueMonth, dueYear, dueTime) " +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?);");
+                    "VALUES(?,?," +
+                    "(SELECT courseID from course where courseName = ?)," +
+                    "?,?,?,?,?,?,?);");
             prep.setString(1, taskTitle);
             prep.setString(2, taskDescription);
-            prep.setInt(3, courseID);
+            prep.setString(3, courseName);
             prep.setInt(4, colorRedInt);
             prep.setInt(5, colorGreenInt);
             prep.setInt(6, colorBlueInt);

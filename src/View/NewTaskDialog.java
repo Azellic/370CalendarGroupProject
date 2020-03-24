@@ -96,12 +96,9 @@ public class NewTaskDialog extends InputDialog {
             Task newTask =  new Task(title.getText(), desc.getText(), null, c,
                     datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
                     datePicker.getValue().getYear(), Time.valueOf(eTime));
-                    //TODO: change the constructor to accept all fields
-                    //datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
-                    //datePicker.getValue().getYear(),  Time.valueOf(eTime));
 
             if (!courseChoice.getValue().equals("None")){
-                newTask.setCourse(courseChoice.getValue());
+                newTask.setCourseName(courseChoice.getValue());
             }
 
             return newTask;

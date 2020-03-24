@@ -9,9 +9,9 @@ public class Task extends CalendarItem {
     int year;
     Time dueTime;
 
-    public Task(String title, String description, Course course, Color color,
+    public Task(String title, String description, String courseName, Color color,
                 int day, int month, int year, Time dueTime) {
-        super(title, description, course, color);
+        super(title, description, courseName, color);
         this.day = day;
         this.month = month;
         this.year = year;
@@ -53,7 +53,9 @@ public class Task extends CalendarItem {
     @Override
     public String toString() {
         return "Task{" +
-                "day=" + day +
+                "title=" + title +
+                ", courseName=" + getCourseName() +
+                ", day=" + day +
                 ", month=" + month +
                 ", year=" + year +
                 ", dueTime=" + dueTime +

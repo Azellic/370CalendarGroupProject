@@ -12,9 +12,9 @@ public class Event extends CalendarItem {
     protected int year;
     protected String location;
 
-    public Event(String title, String description, Course course, Color color,
+    public Event(String title, String description, String courseName, Color color,
                  int day, int month, int year, Time start, Time end, String location) {
-        super(title, description, course, color);
+        super(title, description, courseName, color);
         this.start = start;
         this.end = end;
         this.day = day;
@@ -59,15 +59,16 @@ public class Event extends CalendarItem {
     @Override
     public String toString() {
         return "Event{" +
-                "start=" + start +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", course='" + getCourseName() + '\'' +
+                ", start=" + start +
                 ", end=" + end +
                 ", day=" + day +
                 ", month=" + month +
                 ", year=" + year +
                 ", color="+ super.getColor() +
-                ", location='" + location + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
                 '}';
     }
 

@@ -121,25 +121,6 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         db = new DataBase();
         db.startUp();
-        ResultSet eventResult = db.getAllEvents();
-        int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
-        int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
-        int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-        Color color = new Color(0.0f,0.0f,1.0f);
-        if (!eventResult.next()) {
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    cDay,
-                    cMonth,
-                    cYear,
-                    0,
-                    0,
-                    255,
-                    "CMPT370 Project1",
-                    "Write code for the project",
-                    "STM College");
-        }
         db.closeConnection();
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
         launch(args);
