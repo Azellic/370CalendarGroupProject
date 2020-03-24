@@ -7,17 +7,23 @@ public class Assessment {
     private String title;
     private Course course;
     private int mark;
-    private Date date;
+    private int day;
+    private int month;
+    private int year;
     private String description;
     private float weight;
 
 
-    public Assessment(String title, Course course, int mark, Date date, String description, float weight){
+    public Assessment(String title, Course course, int mark, int day, int month, int year,
+                      String description, float weight){
         this.title = title;
         this.course = course;
         this.mark = mark;
-        this.date = date;
+        this.day = day;
+        this.month = month;
+        this.year = year;
         this.description = description;
+        this.weight = weight;
     }
 
     public String getTitle() {
@@ -36,12 +42,28 @@ public class Assessment {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public int getDay() {
+        return day;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public int getMark() {
@@ -74,7 +96,9 @@ public class Assessment {
                 "title='" + title + '\'' +
                 ", course=" + course +
                 ", mark=" + mark +
-                ", date=" + date +
+                ", day=" + day +
+                ", month=" + month +
+                ", year=" + year +
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
                 '}';

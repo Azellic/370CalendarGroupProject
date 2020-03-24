@@ -89,8 +89,8 @@ public class DataBase {
                 state.execute("CREATE TABLE assessment" +
                         "(assessmentID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "courseID INTEGER," +
-                        "weight INTEGER," +
-                        "grade REAL," +
+                        "weight REAL," +
+                        "grade INTEGER," +
                         "assessmentTitle VARCHAR," +
                         "description VARCHAR," +
                         "day INTEGER," +
@@ -282,15 +282,15 @@ public class DataBase {
         return resultQuery;
     }
 
-    public void insertAssessment(int courseID, int weight, double grade, String assessmentTitle, String description,
+    public void insertAssessment(int courseID, float weight, int grade, String assessmentTitle, String description,
                                  int day, int month, int year) {
         PreparedStatement prep = null;
         try {
             setConnection();
             prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
-                    "GRADE, ASSESSMENTTITLE) VALUES(?,?,?,?,?,?,?,?);");
+                    "GRADE, ASSESSMENTTITLE, description, day, month, year) VALUES(?,?,?,?,?,?,?,?);");
             prep.setInt(1, courseID);
-            prep.setInt(2, weight);
+            prep.setFloat(2, weight);
             prep.setDouble(3, grade);
             prep.setString(4, assessmentTitle);
             prep.setString(5, description);
@@ -322,7 +322,6 @@ public class DataBase {
             System.out.println("Problem getting all assessments");
             e.printStackTrace();
         }
-
         return resultQuery;
     }
 

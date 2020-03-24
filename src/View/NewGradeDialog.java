@@ -64,9 +64,12 @@ public class NewGradeDialog extends InputDialog {
                 if(title.getText().isEmpty() || mark.getText().isEmpty() || courseChoice.getValue().equals("None")){
                     return null;
                 }
-
+                int markInt = Integer.parseInt(mark.getText());
+                float weightFloat = Float.parseFloat(weight.getText());
                 //TODO: properly create new grade, using all input
-                Assessment newGrade = new Assessment();
+                Assessment newGrade = new Assessment(title.getText(), null, markInt,
+                        finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),
+                        finishDate.getValue().getYear(), desc.getText(), weightFloat);
 
                 return newGrade;
             }

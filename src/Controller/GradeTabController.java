@@ -24,11 +24,14 @@ public class GradeTabController {
         ObservableList<String> courses = FXCollections.observableArrayList("None");
         //TODO: Generate the list of courses using course model
         Dialog<Assessment> dialog = new NewGradeDialog(courses);
-
+        System.out.println("gradeClicked");
         Optional<Assessment> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
             //TODO: send new assessment to model
+            System.out.println(event.toString());
+
+            model.insertAssessment(event);
         });
     }
 
