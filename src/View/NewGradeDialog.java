@@ -2,6 +2,7 @@ package View;
 
 import Model.Assessment;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class NewGradeDialog extends InputDialog {
     ButtonType doneButtonType;
@@ -19,7 +21,7 @@ public class NewGradeDialog extends InputDialog {
     DatePicker finishDate;
 
 
-    public NewGradeDialog(ObservableList<String> courses) {
+    public NewGradeDialog(ArrayList<String> courseStrings) {
         this.setTitle("Enter A Grade");
 
         doneButtonType = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
@@ -42,6 +44,7 @@ public class NewGradeDialog extends InputDialog {
         weight.setPromptText("Weight");
         weight.setPrefWidth(80);
         Tooltip.install(mark, new Tooltip("Not limited to 0-100. Go ahead, give 110%!"));
+        ObservableList<String> courses = FXCollections.observableArrayList(courseStrings);
         ComboBox<String> courseChoice = new ComboBox<>(courses);
         courseChoice.setValue("None");
         desc = new TextField();
@@ -66,7 +69,7 @@ public class NewGradeDialog extends InputDialog {
                 }
                 int markInt = Integer.parseInt(mark.getText());
                 float weightFloat = Float.parseFloat(weight.getText());
-                //TODO: properly create new grade, using all input
+
                 Assessment newGrade = new Assessment(title.getText(), null, markInt,
                         finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),
                         finishDate.getValue().getYear(), desc.getText(), weightFloat);

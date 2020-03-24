@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class TaskTabController {
@@ -25,8 +26,13 @@ public class TaskTabController {
     }
 
     public void handleAddTaskClicked(ActionEvent actionEvent) {
-        ObservableList<String> courses = FXCollections.observableArrayList("None");
-        Dialog<Task> dialog = new NewTaskDialog(courses);  //TODO:pass list of courses to the dialog
+        ArrayList<String> courseStrings = new ArrayList<>();
+        ArrayList<Course> courses = courseModel.getCourseList();
+        courseStrings.add("None");
+        for(Course c : courses){
+            courseStrings.add(c.getTitle());
+        }
+        Dialog<Task> dialog = new NewTaskDialog(courseStrings);  //TODO:pass list of courses to the dialog
 
         Optional<Task> result = dialog.showAndWait();
 
