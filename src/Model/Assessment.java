@@ -5,7 +5,7 @@ import java.util.Date;
 public class Assessment {
 
     private String title;
-    private Course course;
+    private String courseTitle;
     private int mark;
     private int day;
     private int month;
@@ -14,10 +14,10 @@ public class Assessment {
     private float weight;
 
 
-    public Assessment(String title, Course course, int mark, int day, int month, int year,
+    public Assessment(String title, String courseTitle, int mark, int day, int month, int year,
                       String description, float weight){
         this.title = title;
-        this.course = course;
+        this.courseTitle = courseTitle;
         this.mark = mark;
         this.day = day;
         this.month = month;
@@ -74,12 +74,12 @@ public class Assessment {
         this.mark = mark;
     }
 
-    public Course getCourse() {
-        return course;
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
     public float getWeight() {
@@ -94,7 +94,7 @@ public class Assessment {
     public String toString() {
         return "Assessment{" +
                 "title='" + title + '\'' +
-                ", course=" + course +
+                ", courseTitle=" + courseTitle +
                 ", mark=" + mark +
                 ", day=" + day +
                 ", month=" + month +

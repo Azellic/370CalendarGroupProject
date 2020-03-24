@@ -70,7 +70,7 @@ public class NewGradeDialog extends InputDialog {
                 int markInt = Integer.parseInt(mark.getText());
                 float weightFloat = Float.parseFloat(weight.getText());
 
-                Assessment newGrade = new Assessment(title.getText(), null, markInt,
+                Assessment newGrade = new Assessment(title.getText(), courseChoice.getValue(), markInt,
                         finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),
                         finishDate.getValue().getYear(), desc.getText(), weightFloat);
 

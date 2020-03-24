@@ -33,7 +33,6 @@ public class Event extends CalendarItem {
 
     public int getDay() {
         return day;
-
     }
 
     public int getMonth() {

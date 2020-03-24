@@ -75,6 +75,7 @@ public class CoursesModel {
     }
 
     public void insertAssessment(Assessment userInput) {
+
         db.insertAssessment(0, userInput.getWeight(), userInput.getMark(),
                 userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
                 userInput.getYear());

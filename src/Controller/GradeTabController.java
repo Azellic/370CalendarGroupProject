@@ -34,7 +34,7 @@ public class GradeTabController {
         Optional<Assessment> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            //TODO: send new assessment to model
+
             System.out.println(event.toString());
 
             model.insertAssessment(event);
@@ -49,7 +49,7 @@ public class GradeTabController {
         Optional<Course> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            //TODO: send new course to model
+
             System.out.println(event.toString());
 
             model.insertCourse(event);
