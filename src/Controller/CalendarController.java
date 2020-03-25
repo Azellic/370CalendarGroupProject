@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Calendar;
+import View.DaySidebar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;

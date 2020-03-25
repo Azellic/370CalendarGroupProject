@@ -39,7 +39,6 @@ public class DaySidebar extends VBox implements PlannerListener {
         dayList.setPrefHeight(700);
         dayList.fixedCellSizeProperty();
 
-
         addEventbutton = new Button("New Event");
         addEventbutton.setPrefHeight(60);
         addEventbutton.setPrefWidth(100);
@@ -201,6 +200,9 @@ public class DaySidebar extends VBox implements PlannerListener {
                 Label title = new Label(currentEvent.getTitle());
                 title.setFont(new Font("Ariel", 16));
 
+                Label course = new Label("Course: " + currentEvent.getCourseName());
+                course.setFont(new Font("Arial", 15));
+
                 Label time = new Label("Time: " + currentEvent.getStart() + " - " + currentEvent.getEnd());
                 time.setFont(new Font("Ariel", 15));
 
@@ -211,7 +213,7 @@ public class DaySidebar extends VBox implements PlannerListener {
                 // Allows text to wrap to a second line if neccesary
                 description.setWrapText(true);
 
-                top.getChildren().addAll(title, date, time, location);
+                top.getChildren().addAll(title, course, date, time, location);
                 descriptionBox.getChildren().add(description);
 
                 VBox dialogVbox = new VBox();
