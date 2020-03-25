@@ -132,22 +132,22 @@ public class TaskSidebar extends VBox implements PlannerListener  {
 
         System.out.println("Colour given: " + eventColour);
         if (Color.GREEN.equals(eventColour)) {
-            colour = "green";
+            colour = "limeGreen";
         }
         else if (Color.BLUE.equals(eventColour)) {
-            colour = "blue";
+            colour = "skyBlue";
         }
         else if (Color.RED.equals(eventColour)) {
-            colour = "red";
+            colour = "crimson";
         }
         else if (Color.ORANGE.equals(eventColour)) {
-            colour = "orange";
+            colour = "darkOrange";
         }
         else if (Color.YELLOW.equals(eventColour)) {
-            colour = "yellow";
+            colour = "gold";
         }
         else {
-            colour = "violet";  //default if not set to any of the of the acceptable colours
+            colour = "plum";  //default if not set to any of the of the acceptable colours
         }
 
         return colour;

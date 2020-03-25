@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -148,12 +149,16 @@ public class GradeSidebar extends VBox implements PlannerListener {
         }
     }
 
-    public void generateSummary() {
+    private void generateSummary() {
         Label summaryTitle = new Label("Summary");
-        summaryTitle.setFont(new Font("Ariel", 15));
+        summaryTitle.setFont(new Font("Ariel",20));
+        //summaryTitle.setStyle("-fx-font-weight: bold");
         summaryTitle.setUnderline(true);
         Label averageGrade = new Label("Average Grade = " + model.getAverageGrade());
         Label minimumGrade = new Label("Minimum Grade = " + model.getMinimumGrade());
+        //summary.setBackground(Background.EMPTY);
+        summary.setStyle("-fx-background-color: rgba(255, 230, 204, 1);");
+        summary.setPadding(new Insets(5, 5, 5, 5));
         summary.getChildren().setAll(summaryTitle, averageGrade, minimumGrade);
         summary.setPrefHeight(120);
     }
@@ -221,7 +226,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
         gradesList.setItems(assessmentsListArray);
     }
 
-    public void initializeDetailsButton(Assessment currentAssessment, Button button) {
+    private void initializeDetailsButton(Assessment currentAssessment, Button button) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
