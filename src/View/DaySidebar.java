@@ -80,7 +80,7 @@ public class DaySidebar extends VBox implements PlannerListener {
         Function responsible for populating the sidebar lists by retrieving the events from the day sidebar
      */
     private void populateList() {
-        ArrayList<Event> events = model.getCurrentDayEvents();
+        ArrayList<Event> events = model.getEvents();
         dayListArray = FXCollections.observableArrayList ();
 
         int i = 0;

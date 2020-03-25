@@ -172,7 +172,6 @@ public class DataBase {
         return resultQuery;
     }
 
-
     public void insertEvent(String courseName, String startTime, String endTime,
                             int day, int month, int year, int colorRedInt, int colorGreenInt, int colorBlueInt,
                             String eventTitle, String eventDescription ,
@@ -225,27 +224,27 @@ public class DataBase {
         return resultQuery;
     }
 
-    public ResultSet getMonthsEvents(int month, int year) {
-        ResultSet resultQuery = null;
-        try {
-            setConnection();
-            PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ? AND year = ?; ");
-            prep.setInt(1, month);
-            prep.setInt(2, year);
-            resultQuery = prep.executeQuery();
-        } catch (SQLException e) {
-            System.out.println("Problem in getMonthsEvents");
-            e.printStackTrace();
-        }
-        return resultQuery;
-    }
-
-    public ResultSet getDaysEvents(int year, int month, int day) {
+    public ResultSet getEvents(int year, int month, int day) {
         ResultSet resultQuery = null;
         try {
             setConnection();
             PreparedStatement prep = con.prepareStatement(
-                    "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;");
+                    "SELECT e.eventTitle," +
+                            "e.eventDescription," +
+                            "c.courseName," +
+                            "e.day," +
+                            "e.month," +
+                            "e.year," +
+                            "e.startTime," +
+                            "e.endTime," +
+                            "e.colorRedInt," +
+                            "e.colorGreenInt," +
+                            "e.colorBlueInt," +
+                            "e.eventLocation " +
+                            "FROM event e " +
+                            "INNER JOIN course c on e.courseID = c.courseID " +
+                            "WHERE year = ? AND month = ? AND day = ?; ");
+
             prep.setInt(1, year);
             prep.setInt(2, month);
             prep.setInt(3, day);
@@ -253,25 +252,6 @@ public class DataBase {
 
         } catch(SQLException e){
             System.out.println("Problem with getDaysEvents");
-            e.printStackTrace();
-        }
-
-        return resultQuery;
-    }
-
-    public ResultSet getSelectedEvents(int year, int month, int day){
-        ResultSet resultQuery = null;
-        try {
-            setConnection();
-            PreparedStatement prep = con.prepareStatement(
-                    "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;"
-            );
-            prep.setInt(1, year);
-            prep.setInt(2, month);
-            prep.setInt(3, day);
-            resultQuery = prep.executeQuery();
-        } catch (SQLException e) {
-            System.out.println("Problem with getSelectedEvents");
             e.printStackTrace();
         }
 
@@ -364,7 +344,19 @@ public class DataBase {
         try {
             setConnection();
             Statement state = con.createStatement();
-            resultQuery = state.executeQuery("SELECT * FROM task");
+            resultQuery = state.executeQuery("SELECT " +
+                    "t.taskTitle," +
+                    "t.taskDescription," +
+                    "c.courseName," +
+                    "t.colorRedInt," +
+                    "t.colorBlueInt," +
+                    "t.colorGreenInt," +
+                    "t.dueDay," +
+                    "t.dueMonth," +
+                    "t.dueYear," +
+                    "t.dueTime " +
+                    "FROM task t " +
+                    "INNER JOIN course c on t.courseID = c.courseID;");
         } catch (SQLException e) {
             System.out.println("Problem getting all tasks");
             e.printStackTrace();

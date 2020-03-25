@@ -17,36 +17,22 @@ public class Calendar {
    private int selectedDay;
    private int selectedMonth;
    private int selectedYear;
-   //The current calendar day (today)
-   private int currentDay;
-   private int currentMonth;
-   private int currentYear;
    private ArrayList<Event> currentDayEvents;
-   private ArrayList<Event> currentMonthEvents;
-   private ArrayList<Event> selectedMonthsEvents;
    private DataBase db;
 
    public Calendar() {
        subscribers = new ArrayList<>();
-       int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-       int currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
-       int currentDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
-       this.currentYear = currentYear;
-       this.currentMonth = currentMonth;
-       this.currentDay = currentDay;
-       this.selectedDay = currentDay;
-       this.selectedMonth = currentMonth;
-       this.selectedYear = currentYear;
+       this.selectedDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
+       this.selectedMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
+       this.selectedYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
        this.db = new DataBase();
-       this.currentDayEvents = getDaysEvents();
-       this.currentMonthEvents = getMonthsEvents();
    }
 
    public void setSelectedDay(LocalDate date){
        selectedDay = date.getDayOfMonth();
        selectedMonth = date.getMonthValue();
        selectedYear = date.getYear();
-       currentDayEvents = getSelectedEvents();
+       currentDayEvents = getEvents();
        notifySubscribers();
    }
 
@@ -60,10 +46,7 @@ public class Calendar {
             selectedMonth = 1;
             selectedYear += 1;
        }
-       this.selectedMonthsEvents = getSelectedEvents();
-       System.out.println(getSelectedMonthsEvents());
    }
-
 
    private ArrayList<Event> formatEventQuery(ResultSet query, ArrayList<Event> events) {
        try {
@@ -81,7 +64,7 @@ public class Calendar {
 
                Event event = new Event(query.getString("eventTitle"),
                        query.getString("eventDescription"),
-                       null,
+                       query.getString("courseName"),
                        eventColor,
                        query.getInt("day"),
                        query.getInt("month"),
@@ -108,38 +91,10 @@ public class Calendar {
        return events;
    }
 
-   public void setSelectedMonthsEvents() {
-       this.selectedMonthsEvents = getSelectedEvents();
-   }
-
-   public ArrayList<Event> getDaysEvents() {
-       ResultSet eventsQuery = db.getDaysEvents(currentYear, currentMonth, currentDay);
+   public ArrayList<Event> getEvents() {
+       ResultSet eventsQuery = db.getEvents(selectedYear, selectedMonth, selectedDay);
        ArrayList<Event> events = new ArrayList<Event>();
        return formatEventQuery(eventsQuery, events);
-   }
-
-   public ArrayList<Event> getSelectedEvents() {
-       ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth, selectedDay);
-       ArrayList<Event> events = new ArrayList<Event>();
-       return formatEventQuery(eventsQuery, events);
-   }
-
-   public ArrayList<Event> getMonthsEvents() {
-       ResultSet eventsQuery = db.getMonthsEvents(currentMonth, currentYear);
-       ArrayList<Event> events = new ArrayList<Event>();
-       return formatEventQuery(eventsQuery, events);
-   }
-
-   public ArrayList<Event> getCurrentDayEvents(){
-       return currentDayEvents;
-   }
-
-   public ArrayList<Event> getCurrentMonthEvents(){
-       return currentMonthEvents;
-   }
-
-   public ArrayList<Event> getSelectedMonthsEvents(){
-       return selectedMonthsEvents;
    }
 
    public void insertEvent(Event userInput) {
@@ -149,7 +104,6 @@ public class Calendar {
                userInput.getLocation());
        currentDayEvents.add(userInput);
        db.closeConnection();
-       System.out.println(getCurrentDayEvents());
        notifySubscribers();
    }
 

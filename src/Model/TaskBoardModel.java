@@ -41,7 +41,7 @@ public class TaskBoardModel {
 
                 Task task = new Task(tasksQuery.getString("taskTitle"),
                         tasksQuery.getString("taskDescription"),
-                        null,
+                        tasksQuery.getString("courseName"),
                         taskColor,
                         tasksQuery.getInt("dueDay"),
                         tasksQuery.getInt("dueMonth"),
