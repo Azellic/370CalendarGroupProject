@@ -131,7 +131,6 @@ public class CoursesModel {
         db.insertCourse(userInput.getTitle(), userInput.getDescription(), userInput.getInstructor());
         getCourseList().add(userInput);
         db.closeConnection();
-        System.out.println(getCourseList());
         notifySubscribers();
     }
 

@@ -87,6 +87,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 if(oldValue!= null && newValue != null && !oldValue.equals(newValue)){
                     model.setSelectedCourse(newValue);
+                    modelChanged();
                 }
             }
         });
@@ -119,19 +120,11 @@ public class GradeSidebar extends VBox implements PlannerListener {
         }
         assessmentsListArray = FXCollections.observableArrayList();
 
-        // TODO: change to the number of grades to generate when those vcan be retrieved
-        // Change to: Event currentEvent :events
         int i = 0;
         for(Assessment currentAssessment : assessments) {
-            /*
-                Generate the elements to be added to to the sidebar that will be viewed
-             */
-            // Main title of the grade
-            //Label title = new Label("Grade Title");
-            Label title = new Label(currentAssessment.getTitle());
 
-            // TODO: Get the values of the grade and the total marks
-            Label value = new Label("Grade: " + "Get the value / Total Marks");
+            Label title = new Label(currentAssessment.getTitle());
+            Label value = new Label(currentAssessment.getMark() +"%");
 
             // The box that will be added to the
             HBox box = new HBox();
@@ -144,7 +137,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
             // Generates alternating colours for the boxes
             if (i % 2 == 0) {
-                gradeDisplayInfo.setStyle("-fx-background-color: lightseagreen");
+                gradeDisplayInfo.setStyle("-fx-background-color: lavender");
             } else {
                 gradeDisplayInfo.setStyle("-fx-background-color: lightslategrey");
             }
@@ -155,6 +148,20 @@ public class GradeSidebar extends VBox implements PlannerListener {
             assessmentsListArray.add(box);
             i++;
         }
+        Label title = new Label("Cumulative Grades");
+        Label value = new Label("Current avg = "+ model.getAverageGrade() +
+                "    Min Weight = " + model.getMinimumGrade());
+
+        // The box that will be added to the
+        HBox box = new HBox();
+        VBox gradeDisplayInfo = new VBox();
+        gradeDisplayInfo.setPadding(new Insets(2,2,2,2));
+        gradeDisplayInfo.setPrefSize(500, 50);
+        gradeDisplayInfo.getChildren().addAll(title, value);
+        gradeDisplayInfo.setStyle("-fx-background-color: #ffa7b8");
+        box.getChildren().add(gradeDisplayInfo);
+
+        assessmentsListArray.add(box);
 
         gradesList.setItems(assessmentsListArray);
     }
