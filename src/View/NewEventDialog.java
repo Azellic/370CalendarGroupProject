@@ -94,8 +94,28 @@ public class NewEventDialog extends InputDialog {
         if (dialogButton == doneButtonType) {
             Color c;
             try {
-                Field field = Class.forName("java.awt.Color").getField(colourChoice.getValue());
-                c = (Color)field.get(null);
+                String input = colourChoice.getValue();
+                // Field field = Class.forName("java.awt.Color").getField(colourChoice.getValue());
+                if("Green".equals(input)){
+                    c = Color.GREEN;
+                }
+                else if("Blue".equals(input)){
+                    c = Color.BLUE;
+                }
+                else if("Red".equals(input)){
+                    c = Color.RED;
+                }
+                else if("Orange".equals(input)){
+                    c = Color.ORANGE;
+                }
+                else if("Yellow".equals(input)){
+                    c = Color.YELLOW;
+                }
+                else {
+                    c = Color.PINK;
+                }
+                // System.out.println("NewEventDialog in Try: Just before Assignment");
+                // c = (Color)field.get(null);
             } catch (Exception e) {
                 c = Color.GREEN; // Not defined
             }

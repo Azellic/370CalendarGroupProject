@@ -41,7 +41,7 @@ public class DayTabController {
         Optional<Event> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            System.out.println(event.toString());
+            //System.out.println("DayTabController: " + event.toString());
 
             model.insertEvent(event);
         });
