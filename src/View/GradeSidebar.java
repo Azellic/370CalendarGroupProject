@@ -34,15 +34,9 @@ public class GradeSidebar extends VBox implements PlannerListener {
         super();
         model = mdl;
         //Initialize and fill list of courses
-        ArrayList<String> courseStrings = new ArrayList<>();
-        ArrayList<Course> allCourses = model.getCourseList();
-        courseStrings.add("None");
-        for(Course c : allCourses){
-            courseStrings.add(c.getTitle());
-        }
-        courses = FXCollections.observableArrayList(courseStrings);
-        courseChoice = new ComboBox<>(courses);
+        courseChoice = new ComboBox<>();
         courseChoice.setValue("None");
+        populateCoursesList();
         courseChoice.setPrefWidth(700);
 
         // Initialize the list
@@ -77,9 +71,11 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     public void draw() {
         generateGradesList();
+        populateCoursesList();
     }
 
     public void modelChanged() {
+        System.out.println("Model changed");
         draw();
     }
 
@@ -89,13 +85,29 @@ public class GradeSidebar extends VBox implements PlannerListener {
         courseChoice.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                if(!oldValue.equals(newValue)){
-
+                if(oldValue!= null && newValue != null && !oldValue.equals(newValue)){
                     model.setSelectedCourse(newValue);
-                    model.updateAssessmentList();
                 }
             }
         });
+    }
+
+    private void populateCoursesList(){
+        String currentChoice;
+        ArrayList<String> courseStrings = new ArrayList<>();
+        ArrayList<Course> allCourses = model.getCourseList();
+        courseStrings.add("None");
+        for(Course c : allCourses){
+            courseStrings.add(c.getTitle());
+        }
+        System.out.println(courseStrings.toString());
+        courses = FXCollections.observableArrayList(courseStrings);
+        if(courseChoice != null){
+            currentChoice = courseChoice.getValue();
+            courseChoice.getItems().clear();
+            courseChoice.getItems().addAll(courses);
+            courseChoice.setValue(currentChoice);
+        }
     }
 
     private void generateGradesList(){
