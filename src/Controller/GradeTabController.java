@@ -20,8 +20,6 @@ public class GradeTabController {
         model = newModel;
     }
 
-
-
     public void handleAddGradeClicked(ActionEvent actionEvent) {
         ArrayList<String> courseStrings = new ArrayList<>();
         ArrayList<Course> courses = model.getCourseList();
@@ -40,8 +38,6 @@ public class GradeTabController {
             model.insertAssessment(event);
         });
     }
-
-
 
     public void handleAddCourseClicked(ActionEvent actionEvent) {
         Dialog<Course> dialog = new NewCourseDialog();

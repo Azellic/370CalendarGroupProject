@@ -87,6 +87,7 @@ public class Main extends Application {
 
         dayView.setStage(primaryStage);
         taskView.setStage(primaryStage);
+        gradeView.setStage(primaryStage);
 
         //Set up model-view subscriber relationship
         calendarModel.addSubscriber(dayView);
@@ -99,10 +100,8 @@ public class Main extends Application {
         gradeView.setButtonController(gradeController);
         taskView.setButtonController(taskController);
 
-
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
-
 
         // Set the window size based on the screen bounds
         primaryStage.setX(wBounds.getMinX());
@@ -116,8 +115,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         db = new DataBase();

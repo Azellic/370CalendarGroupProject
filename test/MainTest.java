@@ -83,9 +83,6 @@ public class MainTest {
             " ", 1);
             courseModel.insertAssessment(assessment);
         }
-//        for (for i = ) {
-//            courseModel.insertAssessment(lotsOfAssessments.get(i));
-//        }
     }
 
     @Test

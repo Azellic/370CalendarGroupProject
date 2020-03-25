@@ -22,6 +22,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -32,7 +33,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     private CoursesModel model;
     ListView gradesList;
-    ObservableList<VBox> summaryObservable;
     VBox summary = new VBox();
     ObservableList<HBox> assessmentsListArray;
     private Button addGradeButton, addCourseButton;
@@ -61,7 +61,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
         addCourseButton = new Button("New Course");
         addCourseButton.setPrefHeight(60);
         addCourseButton.setPrefWidth(100);
-
 
         // Initialize the grade button
         addGradeButton = new Button("New Grade");
@@ -114,7 +113,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
     }
 
     public void modelChanged() {
-        System.out.println("Model changed");
         draw();
     }
 
@@ -152,11 +150,12 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     public void generateSummary() {
         Label summaryTitle = new Label("Summary");
+        summaryTitle.setFont(new Font("Ariel", 15));
+        summaryTitle.setUnderline(true);
         Label averageGrade = new Label("Average Grade = " + model.getAverageGrade());
         Label minimumGrade = new Label("Minimum Grade = " + model.getMinimumGrade());
         summary.getChildren().setAll(summaryTitle, averageGrade, minimumGrade);
-        summary.setPrefHeight(100);
-
+        summary.setPrefHeight(120);
     }
 
     public void setStage(Stage primaryStage) {
@@ -219,9 +218,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
             assessmentsListArray.add(box);
             i++;
         }
-
         gradesList.setItems(assessmentsListArray);
-
     }
 
     public void initializeDetailsButton(Assessment currentAssessment, Button button) {

@@ -29,7 +29,6 @@ public class DaySidebar extends VBox implements PlannerListener {
     Button addEventbutton;
     ListView dayList;
     ObservableList<HBox> dayListArray;
-
     Stage primaryStage;
 
     public DaySidebar(Rectangle2D bounds) {
