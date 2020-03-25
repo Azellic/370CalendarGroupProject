@@ -32,6 +32,8 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     private CoursesModel model;
     ListView gradesList;
+    ObservableList<VBox> summaryObservable;
+    VBox summary = new VBox();
     ObservableList<HBox> assessmentsListArray;
     private Button addGradeButton, addCourseButton;
     ObservableList<String> courses;
@@ -93,13 +95,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
         HBox buttonBar = new HBox(addGradeButton, addCourseButton);
         buttonBar.setPrefHeight(100);
 
-        // Summary
-        Label summaryTitle = new Label("Summary");
-        Label averageGrade = new Label("Average Grade = " + model.getAverageGrade());
-        Label minimumGrade = new Label("Minimum Grade = " + model.getMinimumGrade());
-
-        VBox summary = new VBox(summaryTitle, averageGrade, minimumGrade);
-        summary.setPrefHeight(100);
+        generateSummary();
 
         this.setPadding(new Insets(2, 5, 5, 2));
         this.setPrefSize(100, bounds.getHeight());
@@ -114,6 +110,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
     public void draw() {
         generateGradesList();
         populateCoursesList();
+        generateSummary();
     }
 
     public void modelChanged() {
@@ -153,13 +150,21 @@ public class GradeSidebar extends VBox implements PlannerListener {
         }
     }
 
+    public void generateSummary() {
+        Label summaryTitle = new Label("Summary");
+        Label averageGrade = new Label("Average Grade = " + model.getAverageGrade());
+        Label minimumGrade = new Label("Minimum Grade = " + model.getMinimumGrade());
+        summary.getChildren().setAll(summaryTitle, averageGrade, minimumGrade);
+        summary.setPrefHeight(100);
+
+    }
+
     public void setStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     private void generateGradesList() {
         ArrayList<Assessment> assessments = model.getAssessmentList();
-        System.out.println(assessments);
         if (assessments == null) {
             return;
         }
@@ -179,24 +184,23 @@ public class GradeSidebar extends VBox implements PlannerListener {
             HBox box = new HBox();
             box.setPadding(new Insets(2,2,2,2));
 
-            VBox left = new VBox(title);
+            HBox left = new HBox(title);
             left.setAlignment(Pos.CENTER_LEFT);
-            left.setPrefSize(100, 40);
+            left.setPrefSize(100, 50);
 
-            VBox center = new VBox(value);
+            HBox center = new HBox(value);
             center.setAlignment(Pos.CENTER);
-            center.setPrefSize(100, 40);
+            center.setPrefSize(100, 50);
 
-            VBox rightText = new VBox(weight);
+            HBox rightText = new HBox(weight);
             rightText.setAlignment(Pos.CENTER_RIGHT);
-            rightText.setPrefSize(60, 40);
+            rightText.setPrefSize(100, 50);
 
-            VBox right = new VBox(button);
-            right.setPrefSize(100, 40);
-            right.setAlignment(Pos.BOTTOM_RIGHT);
+            HBox right = new HBox(button);
+            right.setPrefSize(100, 50);
+            right.setAlignment(Pos.CENTER_RIGHT);
 
-
-            VBox gradeDisplayInfo = new VBox();
+            HBox gradeDisplayInfo = new HBox();
             gradeDisplayInfo.setPadding(new Insets(2, 2, 2, 2));
             gradeDisplayInfo.setPrefSize(400, 50);
             gradeDisplayInfo.getChildren().addAll(left, center, rightText, right);
@@ -215,22 +219,9 @@ public class GradeSidebar extends VBox implements PlannerListener {
             assessmentsListArray.add(box);
             i++;
         }
-        Label title = new Label("Cumulative Grades");
-        Label value = new Label("Current avg = " + model.getAverageGrade() +
-                "    Min Weight = " + model.getMinimumGrade());
-
-
-        HBox box = new HBox();
-        VBox gradeDisplayInfo = new VBox();
-        gradeDisplayInfo.setPadding(new Insets(2, 2, 2, 2));
-        gradeDisplayInfo.setPrefSize(500, 50);
-        gradeDisplayInfo.getChildren().addAll(title, value);
-        gradeDisplayInfo.setStyle("-fx-background-color: #ffa7b8");
-        box.getChildren().add(gradeDisplayInfo);
-
-        assessmentsListArray.add(box);
 
         gradesList.setItems(assessmentsListArray);
+
     }
 
     public void initializeDetailsButton(Assessment currentAssessment, Button button) {
@@ -256,6 +247,9 @@ public class GradeSidebar extends VBox implements PlannerListener {
                 Label weight = new Label("Weight: " + currentAssessment.getWeight());
                 weight.setFont(new Font("Ariel", 15));
 
+                Label mark = new Label("Mark: "+ currentAssessment.getMark() + "%");
+                mark.setFont(new Font("Ariel", 15));
+
                 Label title = new Label(currentAssessment.getTitle());
                 title.setFont(new Font("Ariel", 16));
 
@@ -266,7 +260,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
                 description.setFont(new Font("Ariel", 15));
                 description.setWrapText(true);
 
-                top.getChildren().addAll(title, course, weight);
+                top.getChildren().addAll(title, course, weight, mark);
                 descriptionBox.getChildren().add(description);
 
                 VBox dialogVbox = new VBox();

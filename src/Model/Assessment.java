@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.Date;
-
 public class Assessment {
 
     private String title;
@@ -12,7 +10,6 @@ public class Assessment {
     private int year;
     private String description;
     private double weight;
-
 
     public Assessment(String title, String courseTitle, double mark, int day, int month, int year,
                       String description, double weight){
