@@ -61,7 +61,7 @@ public class Calendar {
    }
 
 
-   private static void formatEventQuery(ResultSet query, ArrayList<Event> events) {
+   private ArrayList<Event> formatEventQuery(ResultSet query, ArrayList<Event> events) {
        try {
            while (query.next()) {
                SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
@@ -91,6 +91,16 @@ public class Calendar {
            System.out.println("Problem with formatEventQuery");
            e.printStackTrace();
        }
+       finally {
+           try {
+               query.close();
+           } catch (SQLException e) {
+               System.out.println("Problem Closing formatEventQuery");
+               e.printStackTrace();
+           }
+       }
+       db.closeConnection();
+       return events;
    }
 
    public void setSelectedMonthsEvents() {
@@ -100,40 +110,19 @@ public class Calendar {
    public ArrayList<Event> getDaysEvents() {
        ResultSet eventsQuery = db.getDaysEvents(currentYear, currentMonth, currentDay);
        ArrayList<Event> events = new ArrayList<Event>();
-       formatEventQuery(eventsQuery, events);
-       try {
-           eventsQuery.close();
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       db.closeConnection();
-       return events;
+       return formatEventQuery(eventsQuery, events);
    }
 
    public ArrayList<Event> getSelectedEvents() {
        ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth);
        ArrayList<Event> events = new ArrayList<Event>();
-       formatEventQuery(eventsQuery, events);
-       try {
-           eventsQuery.close();
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       db.closeConnection();
-       return events;
+       return formatEventQuery(eventsQuery, events);
    }
 
    public ArrayList<Event> getMonthsEvents() {
        ResultSet eventsQuery = db.getMonthsEvents(currentMonth, currentYear);
        ArrayList<Event> events = new ArrayList<Event>();
-       formatEventQuery(eventsQuery, events);
-       try {
-           eventsQuery.close();
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       db.closeConnection();
-       return events;
+       return formatEventQuery(eventsQuery, events);
    }
 
    public ArrayList<Event> getCurrentDayEvents(){
@@ -148,9 +137,8 @@ public class Calendar {
        return selectedMonthsEvents;
    }
 
-
    public void insertEvent(Event userInput) {
-       db.insertEvent("hello", userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
+       db.insertEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
               userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
                userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
                userInput.getLocation());

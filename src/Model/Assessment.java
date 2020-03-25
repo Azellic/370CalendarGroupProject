@@ -6,16 +6,16 @@ public class Assessment {
 
     private String title;
     private String courseTitle;
-    private int mark;
+    private double mark;
     private int day;
     private int month;
     private int year;
     private String description;
-    private float weight;
+    private double weight;
 
 
-    public Assessment(String title, String courseTitle, int mark, int day, int month, int year,
-                      String description, float weight){
+    public Assessment(String title, String courseTitle, double mark, int day, int month, int year,
+                      String description, double weight){
         this.title = title;
         this.courseTitle = courseTitle;
         this.mark = mark;
@@ -66,7 +66,7 @@ public class Assessment {
         this.year = year;
     }
 
-    public int getMark() {
+    public double getMark() {
         return mark;
     }
 
@@ -82,7 +82,7 @@ public class Assessment {
         this.courseTitle = courseTitle;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 

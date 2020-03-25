@@ -90,7 +90,7 @@ public class DataBase {
                         "(assessmentID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "courseID INTEGER," +
                         "weight REAL," +
-                        "grade INTEGER," +
+                        "grade REAL," +
                         "assessmentTitle VARCHAR," +
                         "description VARCHAR," +
                         "day INTEGER," +
@@ -283,7 +283,7 @@ public class DataBase {
         return resultQuery;
     }
 
-    public void insertAssessment(String courseName, float weight, int grade, String assessmentTitle, String description,
+    public void insertAssessment(String courseName, double weight, double grade, String assessmentTitle, String description,
                                  int day, int month, int year) {
         PreparedStatement prep = null;
         try {
@@ -293,7 +293,7 @@ public class DataBase {
                     "(SELECT courseID from course where courseName = ?)" +
                     ",?,?,?,?,?,?,?);");
             prep.setString(1, courseName);
-            prep.setFloat(2, weight);
+            prep.setDouble(2, weight);
             prep.setDouble(3, grade);
             prep.setString(4, assessmentTitle);
             prep.setString(5, description);
@@ -313,6 +313,29 @@ public class DataBase {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ResultSet getSpecificCourseAssessments(String courseName) {
+        ResultSet resultQuery = null;
+        try {
+            setConnection();
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM assessment WHERE courseID = " +
+                    "(SELECT courseID FROM course WHERE courseName = ?);");
+            prep.setString(1, courseName);
+            resultQuery = prep.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Problem getting assessment with specific course");
+            e.printStackTrace();
+        }
+//        } finally {
+//            try {
+//                con.close();
+//            } catch (SQLException e) {
+//                System.out.println("Problem closing getSpecificCourseAssessments");
+//                e.printStackTrace();
+//            }
+//        }
+        return resultQuery;
     }
 
     public ResultSet getAllAssessments() {

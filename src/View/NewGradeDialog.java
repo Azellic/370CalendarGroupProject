@@ -67,12 +67,17 @@ public class NewGradeDialog extends InputDialog {
                 if(title.getText().isEmpty() || mark.getText().isEmpty() || courseChoice.getValue().equals("None")){
                     return null;
                 }
-                int markInt = Integer.parseInt(mark.getText());
-                float weightFloat = Float.parseFloat(weight.getText());
+                double markDouble = Double.parseDouble(mark.getText());
+                double weightDouble;
+                if(weight.getText().isEmpty()){
+                    weightDouble = 0;
+                } else {
+                    weightDouble = Double.parseDouble(weight.getText());
+                }
 
-                Assessment newGrade = new Assessment(title.getText(), courseChoice.getValue(), markInt,
+                Assessment newGrade = new Assessment(title.getText(), courseChoice.getValue(), markDouble,
                         finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),
-                        finishDate.getValue().getYear(), desc.getText(), weightFloat);
+                        finishDate.getValue().getYear(), desc.getText(), weightDouble);
 
                 return newGrade;
             }
