@@ -29,16 +29,12 @@ public class CoursesModel {
         this.assessments = assessments;
     }
 
+    public String getSelectedCourse() {
+        return selectedCourse;
+    }
+
     public void setSelectedCourse(String selectedCourse) {
         this.selectedCourse = selectedCourse;
-        System.out.println(selectedCourse);
-        ArrayList<Assessment> assessments = getSpecificCourseAssessmentList(selectedCourse);
-        setAssessmentsList(assessments);
-        System.out.println(getAssessmentList());
-        setMinimumGrade(assessments);
-        setAverageGrade(assessments);
-        System.out.println("averageGrade = " + getAverageGrade());
-        System.out.println("minimumGrade = " + getMinimumGrade());
     }
 
     public void setMinimumGrade(ArrayList<Assessment> assessments) {
@@ -50,7 +46,7 @@ public class CoursesModel {
     }
 
     public double getMinimumGrade() {
-        return this.minimumGrade;
+        return minimumGrade;
     }
 
     public void setAverageGrade(ArrayList<Assessment> assessments) {
@@ -64,18 +60,19 @@ public class CoursesModel {
     }
 
     public double getAverageGrade() {
-        return this.averageGrade;
+        return averageGrade;
     }
 
     public ArrayList<Assessment> getAssessmentList() {
         return assessments;
     }
 
-    private ArrayList<Assessment> formatAssessmentQuery(ResultSet query, ArrayList<Assessment> assessments){
+    private ArrayList<Assessment> formatAssessmentQuery(ResultSet query, ArrayList<Assessment> assessments,
+                                                        String courseName){
         try {
             while(query.next()) {
                 Assessment assessment = new Assessment(query.getString("assessmentTitle"),
-                        null, query.getInt("grade"),
+                        courseName, query.getInt("grade"),
                         query.getInt("day"), query.getInt("month"),
                         query.getInt("year"),
                         query.getString("description"),
@@ -100,13 +97,7 @@ public class CoursesModel {
     public ArrayList<Assessment> getSpecificCourseAssessmentList(String courseName) {
         ResultSet assessmentsQuery = db.getSpecificCourseAssessments(courseName);
         ArrayList<Assessment> assessments = new ArrayList<>();
-        return formatAssessmentQuery(assessmentsQuery, assessments);
-    }
-
-    public ArrayList<Assessment> getAssessmentsFromDB() {
-        ResultSet assessmentsQuery = db.getAllAssessments();
-        ArrayList<Assessment> assessments = new ArrayList<>();
-        return formatAssessmentQuery(assessmentsQuery, assessments);
+        return formatAssessmentQuery(assessmentsQuery, assessments, courseName);
     }
 
     public ArrayList<Course> getCoursesFromDB() {
@@ -127,6 +118,13 @@ public class CoursesModel {
         return courses;
     }
 
+    public void updateAssessmentList() {
+        ArrayList<Assessment> assessments = getSpecificCourseAssessmentList(getSelectedCourse());
+        setAssessmentsList(assessments);
+        setMinimumGrade(assessments);
+        setAverageGrade(assessments);
+    }
+
     public void insertCourse(Course userInput) {
         db.insertCourse(userInput.getTitle(), userInput.getDescription(), userInput.getInstructor());
         getCourseList().add(userInput);
@@ -139,9 +137,7 @@ public class CoursesModel {
         db.insertAssessment(userInput.getCourseTitle(), userInput.getWeight(), userInput.getMark(),
                 userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
                 userInput.getYear());
-        getAssessmentList().add(userInput);
         db.closeConnection();
-        System.out.println(getAssessmentList());
         notifySubscribers();
     }
 

@@ -327,27 +327,6 @@ public class DataBase {
             System.out.println("Problem getting assessment with specific course");
             e.printStackTrace();
         }
-//        } finally {
-//            try {
-//                con.close();
-//            } catch (SQLException e) {
-//                System.out.println("Problem closing getSpecificCourseAssessments");
-//                e.printStackTrace();
-//            }
-//        }
-        return resultQuery;
-    }
-
-    public ResultSet getAllAssessments() {
-        ResultSet resultQuery = null;
-        try {
-            setConnection();
-            Statement state = con.createStatement();
-            resultQuery = state.executeQuery("SELECT * FROM assessment");
-        } catch(SQLException e) {
-            System.out.println("Problem getting all assessments");
-            e.printStackTrace();
-        }
         return resultQuery;
     }
 

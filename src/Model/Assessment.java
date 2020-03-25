@@ -108,6 +108,6 @@ public class Assessment {
         return this.getTitle().equals(assessment.getTitle()) &&
                 this.getCourseTitle().equals(assessment.getCourseTitle()) &&
                 this.getMark() == assessment.getMark() &&
-                this.getWeight() == assessment.getMark();
+                this.getWeight() == assessment.getWeight();
     }
 }

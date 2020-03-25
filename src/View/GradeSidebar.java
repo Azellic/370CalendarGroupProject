@@ -1,11 +1,11 @@
 package View;
 
 import Controller.GradeTabController;
+import Model.Assessment;
 import Model.Course;
 import Model.CoursesModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import Model.Event;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -24,6 +24,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     private CoursesModel model;
     ListView gradesList;
+    ObservableList<HBox> assessmentsListArray;
     private Button addGradeButton, addCourseButton;
     ObservableList<String> courses;
     ComboBox<String> courseChoice;
@@ -91,6 +92,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
                 if(!oldValue.equals(newValue)){
 
                     model.setSelectedCourse(newValue);
+                    model.updateAssessmentList();
                 }
             }
         });
@@ -98,17 +100,23 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     private void generateGradesList(){
         // TODO: Get the courses and grades from the model to generate the list of courses
-        //ArrayList<Event> events = model.getGrades();
-        gradesListArray = FXCollections.observableArrayList ();
+        ArrayList<Assessment> assessments = model.getAssessmentList();
+        System.out.println(assessments);
+        if (assessments == null) {
+            return;
+        }
+        assessmentsListArray = FXCollections.observableArrayList();
 
         // TODO: change to the number of grades to generate when those vcan be retrieved
         // Change to: Event currentEvent :events
-        for(int i=0; i < 1; i++) {
+        int i = 0;
+        for(Assessment currentAssessment : assessments) {
             /*
                 Generate the elements to be added to to the sidebar that will be viewed
              */
             // Main title of the grade
-            Label title = new Label("Grade Title");
+            //Label title = new Label("Grade Title");
+            Label title = new Label(currentAssessment.getTitle());
 
             // TODO: Get the values of the grade and the total marks
             Label value = new Label("Grade: " + "Get the value / Total Marks");
@@ -132,9 +140,10 @@ public class GradeSidebar extends VBox implements PlannerListener {
             // Add the new box to the array to display
             box.getChildren().add(gradeDisplayInfo);
 
-            gradesListArray.add(box);
+            assessmentsListArray.add(box);
+            i++;
         }
 
-        gradesList.setItems(gradesListArray);
+        gradesList.setItems(assessmentsListArray);
     }
 }
