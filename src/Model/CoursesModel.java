@@ -8,44 +8,98 @@ import java.util.ArrayList;
 
 public class CoursesModel {
     ArrayList<Course> courses;
+    String selectedCourse;
     ArrayList<Assessment> assessments;
     ArrayList<PlannerListener> subscribers;
     DataBase db;
+    double minimumGrade;
+    double averageGrade;
 
     public CoursesModel() {
         subscribers = new ArrayList<>();
         db = new DataBase();
         courses = getCoursesFromDB();
-        assessments = getAssessmentsFromDB();
     }
 
     public ArrayList<Course> getCourseList() {
         return courses;
     }
 
+    public void setAssessmentsList(ArrayList<Assessment> assessments){
+        this.assessments = assessments;
+    }
+
+    public String getSelectedCourse() {
+        return selectedCourse;
+    }
+
+    public void setSelectedCourse(String selectedCourse) {
+        this.selectedCourse = selectedCourse;
+        System.out.println("Selected course changed to:" + selectedCourse);
+        updateAssessmentList();
+    }
+
+    public void setMinimumGrade(ArrayList<Assessment> assessments) {
+        double weightedGrade = 0;
+        for (Assessment assessment : assessments) {
+            weightedGrade = weightedGrade + (assessment.getMark() * (assessment.getWeight()/100));
+        }
+        this.minimumGrade = weightedGrade;
+    }
+
+    public double getMinimumGrade() {
+        return minimumGrade;
+    }
+
+    public void setAverageGrade(ArrayList<Assessment> assessments) {
+        double averageGrade = 0;
+        double runningWeight = 0;
+        for(Assessment assessment : assessments) {
+            runningWeight += assessment.getWeight();
+            averageGrade = averageGrade + (assessment.getMark() * (assessment.getWeight()/100));
+        }
+        this.averageGrade = (averageGrade / runningWeight) * 100;
+    }
+
+    public double getAverageGrade() {
+        return averageGrade;
+    }
+
     public ArrayList<Assessment> getAssessmentList() {
         return assessments;
     }
 
-    public ArrayList<Assessment> getAssessmentsFromDB() {
-        ResultSet assessmentsQuery = db.getAllAssessments();
-        ArrayList<Assessment> assessments = new ArrayList<>();
+    private ArrayList<Assessment> formatAssessmentQuery(ResultSet query, ArrayList<Assessment> assessments,
+                                                        String courseName){
         try {
-            while(assessmentsQuery.next()) {
-                Assessment assessment = new Assessment(assessmentsQuery.getString("assessmentTitle"),
-                        null, assessmentsQuery.getInt("grade"),
-                        assessmentsQuery.getInt("day"), assessmentsQuery.getInt("month"),
-                        assessmentsQuery.getInt("year"),
-                        assessmentsQuery.getString("description"),
-                        assessmentsQuery.getFloat("weight"));
+            while(query.next()) {
+                Assessment assessment = new Assessment(query.getString("assessmentTitle"),
+                        courseName, query.getInt("grade"),
+                        query.getInt("day"), query.getInt("month"),
+                        query.getInt("year"),
+                        query.getString("description"),
+                        query.getFloat("weight"));
                 assessments.add(assessment);
             }
         } catch (SQLException e) {
             System.out.println("Problem adding Assessments to assessmentList");
             e.printStackTrace();
+        } finally {
+            try {
+                query.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing formatAssessmentQuery");
+                e.printStackTrace();
+            }
         }
         db.closeConnection();
         return assessments;
+    }
+
+    public ArrayList<Assessment> getSpecificCourseAssessmentList(String courseName) {
+        ResultSet assessmentsQuery = db.getSpecificCourseAssessments(courseName);
+        ArrayList<Assessment> assessments = new ArrayList<>();
+        return formatAssessmentQuery(assessmentsQuery, assessments, courseName);
     }
 
     public ArrayList<Course> getCoursesFromDB() {
@@ -66,21 +120,28 @@ public class CoursesModel {
         return courses;
     }
 
+    public void updateAssessmentList() {
+        ArrayList<Assessment> assessments = getSpecificCourseAssessmentList(getSelectedCourse());
+        setAssessmentsList(assessments);
+        setMinimumGrade(assessments);
+        setAverageGrade(assessments);
+    }
+
     public void insertCourse(Course userInput) {
-        db.insertCourse(userInput.getTitle(), userInput.getInstructor(), userInput.getDescription());
+        db.insertCourse(userInput.getTitle(), userInput.getDescription(), userInput.getInstructor());
         getCourseList().add(userInput);
         db.closeConnection();
-        System.out.println(getCourseList());
         notifySubscribers();
     }
 
     public void insertAssessment(Assessment userInput) {
-        db.insertAssessment(0, userInput.getWeight(), userInput.getMark(),
+        db.insertAssessment(userInput.getCourseTitle(), userInput.getWeight(), userInput.getMark(),
                 userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
                 userInput.getYear());
-        getAssessmentList().add(userInput);
         db.closeConnection();
-        System.out.println(getAssessmentList());
+        if (userInput.getCourseTitle() == getSelectedCourse()) {
+            updateAssessmentList();
+        }
         notifySubscribers();
     }
 

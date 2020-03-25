@@ -90,7 +90,7 @@ public class DataBase {
                         "(assessmentID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "courseID INTEGER," +
                         "weight REAL," +
-                        "grade INTEGER," +
+                        "grade REAL," +
                         "assessmentTitle VARCHAR," +
                         "description VARCHAR," +
                         "day INTEGER," +
@@ -172,8 +172,7 @@ public class DataBase {
         return resultQuery;
     }
 
-
-    public void insertEvent(int courseID, String startTime, String endTime,
+    public void insertEvent(String courseName, String startTime, String endTime,
                             int day, int month, int year, int colorRedInt, int colorGreenInt, int colorBlueInt,
                             String eventTitle, String eventDescription ,
                             String eventLocation){
@@ -182,8 +181,9 @@ public class DataBase {
             setConnection();
             prep = con.prepareStatement("INSERT INTO event(courseID, startTime, endTime, day," +
                     " month, year, colorRedInt, colorGreenInt, colorBlueInt, eventTitle, " +
-                    "eventDescription, eventLocation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
-            prep.setInt(1, courseID);
+                    "eventDescription, eventLocation) VALUES ((SELECT courseID from course where courseName = ?)" +
+                    ",?,?,?,?,?,?,?,?,?,?,?);");
+            prep.setString(1, courseName);
             prep.setString(2, startTime);
             prep.setString(3, endTime);
             prep.setInt(4, day);
@@ -224,27 +224,27 @@ public class DataBase {
         return resultQuery;
     }
 
-    public ResultSet getMonthsEvents(int month, int year) {
-        ResultSet resultQuery = null;
-        try {
-            setConnection();
-            PreparedStatement prep = con.prepareStatement("SELECT * FROM event WHERE month = ? AND year = ?; ");
-            prep.setInt(1, month);
-            prep.setInt(2, year);
-            resultQuery = prep.executeQuery();
-        } catch (SQLException e) {
-            System.out.println("Problem in getMonthsEvents");
-            e.printStackTrace();
-        }
-        return resultQuery;
-    }
-
-    public ResultSet getDaysEvents(int year, int month, int day) {
+    public ResultSet getEvents(int year, int month, int day) {
         ResultSet resultQuery = null;
         try {
             setConnection();
             PreparedStatement prep = con.prepareStatement(
-                    "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;");
+                    "SELECT e.eventTitle," +
+                            "e.eventDescription," +
+                            "c.courseName," +
+                            "e.day," +
+                            "e.month," +
+                            "e.year," +
+                            "e.startTime," +
+                            "e.endTime," +
+                            "e.colorRedInt," +
+                            "e.colorGreenInt," +
+                            "e.colorBlueInt," +
+                            "e.eventLocation " +
+                            "FROM event e " +
+                            "INNER JOIN course c on e.courseID = c.courseID " +
+                            "WHERE year = ? AND month = ? AND day = ?; ");
+
             prep.setInt(1, year);
             prep.setInt(2, month);
             prep.setInt(3, day);
@@ -258,39 +258,17 @@ public class DataBase {
         return resultQuery;
     }
 
-    public ResultSet getSelectedEvents(int year, int month){
-        ResultSet resultQuery = null;
-        try {
-            setConnection();
-            PreparedStatement prep = con.prepareStatement(
-                    "SELECT * FROM event WHERE year = ? AND month = ?;"
-            );
-            prep.setInt(1, year);
-            prep.setInt(2, month);
-            resultQuery = prep.executeQuery();
-        } catch (SQLException e) {
-            System.out.println("Problem with getSelectedEvents");
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                System.out.println("Problem Closing after getSelectedEvents called");
-            }
-        }
-        return resultQuery;
-    }
-
-    public void insertAssessment(int courseID, float weight, int grade, String assessmentTitle, String description,
+    public void insertAssessment(String courseName, double weight, double grade, String assessmentTitle, String description,
                                  int day, int month, int year) {
         PreparedStatement prep = null;
         try {
             setConnection();
             prep = con.prepareStatement("INSERT INTO assessment(courseID, WEIGHT, " +
-                    "GRADE, ASSESSMENTTITLE, description, day, month, year) VALUES(?,?,?,?,?,?,?,?);");
-            prep.setInt(1, courseID);
-            prep.setFloat(2, weight);
+                    "GRADE, ASSESSMENTTITLE, description, day, month, year) VALUES(" +
+                    "(SELECT courseID from course where courseName = ?)" +
+                    ",?,?,?,?,?,?,?);");
+            prep.setString(1, courseName);
+            prep.setDouble(2, weight);
             prep.setDouble(3, grade);
             prep.setString(4, assessmentTitle);
             prep.setString(5, description);
@@ -312,20 +290,22 @@ public class DataBase {
         }
     }
 
-    public ResultSet getAllAssessments() {
+    public ResultSet getSpecificCourseAssessments(String courseName) {
         ResultSet resultQuery = null;
         try {
             setConnection();
-            Statement state = con.createStatement();
-            resultQuery = state.executeQuery("SELECT * FROM assessment");
-        } catch(SQLException e) {
-            System.out.println("Problem getting all assessments");
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM assessment WHERE courseID = " +
+                    "(SELECT courseID FROM course WHERE courseName = ?);");
+            prep.setString(1, courseName);
+            resultQuery = prep.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Problem getting assessment with specific course");
             e.printStackTrace();
         }
         return resultQuery;
     }
 
-    public void insertTask(String taskTitle, String taskDescription, int courseID,
+    public void insertTask(String taskTitle, String taskDescription, String courseName,
                            int colorRedInt, int colorGreenInt, int colorBlueInt,
                            int dueDay, int dueMonth, int dueYear, String dueTime) {
         PreparedStatement prep = null;
@@ -333,10 +313,12 @@ public class DataBase {
             setConnection();
             prep = con.prepareStatement("INSERT INTO task(taskTitle, taskDescription, courseID, " +
                     "colorRedInt, colorGreenInt, colorBlueInt, dueDay, dueMonth, dueYear, dueTime) " +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?);");
+                    "VALUES(?,?," +
+                    "(SELECT courseID from course where courseName = ?)," +
+                    "?,?,?,?,?,?,?);");
             prep.setString(1, taskTitle);
             prep.setString(2, taskDescription);
-            prep.setInt(3, courseID);
+            prep.setString(3, courseName);
             prep.setInt(4, colorRedInt);
             prep.setInt(5, colorGreenInt);
             prep.setInt(6, colorBlueInt);
@@ -362,7 +344,19 @@ public class DataBase {
         try {
             setConnection();
             Statement state = con.createStatement();
-            resultQuery = state.executeQuery("SELECT * FROM task");
+            resultQuery = state.executeQuery("SELECT " +
+                    "t.taskTitle," +
+                    "t.taskDescription," +
+                    "c.courseName," +
+                    "t.colorRedInt," +
+                    "t.colorBlueInt," +
+                    "t.colorGreenInt," +
+                    "t.dueDay," +
+                    "t.dueMonth," +
+                    "t.dueYear," +
+                    "t.dueTime " +
+                    "FROM task t " +
+                    "INNER JOIN course c on t.courseID = c.courseID;");
         } catch (SQLException e) {
             System.out.println("Problem getting all tasks");
             e.printStackTrace();

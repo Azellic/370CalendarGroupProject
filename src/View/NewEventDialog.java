@@ -140,12 +140,12 @@ public class NewEventDialog extends InputDialog {
                 eTime = sTime;
             }
 
-            Event newEvent =  new Event(title.getText(), desc.getText(), null, c,
+            Event newEvent =  new Event(title.getText(), desc.getText(), courseChoice.getValue(), c,
                     datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
                     datePicker.getValue().getYear(), Time.valueOf(sTime), Time.valueOf(eTime), location.getText());
 
             if (!courseChoice.getValue().equals("None")){
-                newEvent.setCourse(courseChoice.getValue());
+                newEvent.setCourseName(courseChoice.getValue());
             }
 
             return newEvent;

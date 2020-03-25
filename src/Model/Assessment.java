@@ -1,23 +1,20 @@
 package Model;
 
-import java.util.Date;
-
 public class Assessment {
 
     private String title;
-    private Course course;
-    private int mark;
+    private String courseTitle;
+    private double mark;
     private int day;
     private int month;
     private int year;
     private String description;
-    private float weight;
+    private double weight;
 
-
-    public Assessment(String title, Course course, int mark, int day, int month, int year,
-                      String description, float weight){
+    public Assessment(String title, String courseTitle, double mark, int day, int month, int year,
+                      String description, double weight){
         this.title = title;
-        this.course = course;
+        this.courseTitle = courseTitle;
         this.mark = mark;
         this.day = day;
         this.month = month;
@@ -66,7 +63,7 @@ public class Assessment {
         this.year = year;
     }
 
-    public int getMark() {
+    public double getMark() {
         return mark;
     }
 
@@ -74,15 +71,15 @@ public class Assessment {
         this.mark = mark;
     }
 
-    public Course getCourse() {
-        return course;
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 
@@ -94,7 +91,7 @@ public class Assessment {
     public String toString() {
         return "Assessment{" +
                 "title='" + title + '\'' +
-                ", course=" + course +
+                ", courseTitle=" + courseTitle +
                 ", mark=" + mark +
                 ", day=" + day +
                 ", month=" + month +
@@ -102,5 +99,12 @@ public class Assessment {
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
                 '}';
+    }
+
+    public boolean equalsByField(Assessment assessment) {
+        return this.getTitle().equals(assessment.getTitle()) &&
+                this.getCourseTitle().equals(assessment.getCourseTitle()) &&
+                this.getMark() == assessment.getMark() &&
+                this.getWeight() == assessment.getWeight();
     }
 }

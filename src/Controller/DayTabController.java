@@ -35,8 +35,7 @@ public class DayTabController {
             courseStrings.add(c.getTitle());
         }
 
-        Dialog<Event> dialog = new NewEventDialog(courseStrings);    //TODO:Going to need to pass the courseModel or list of courses
-                                                        // in order to generate list of courses
+        Dialog<Event> dialog = new NewEventDialog(courseStrings);// in order to generate list of courses
 
         Optional<Event> result = dialog.showAndWait();
 

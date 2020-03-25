@@ -25,6 +25,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TaskSidebar extends VBox implements PlannerListener  {
+
     TaskBoardModel model;
     Button addTaskbutton;
     ListView tasksList;
@@ -53,6 +54,7 @@ public class TaskSidebar extends VBox implements PlannerListener  {
 
     public void setModel(TaskBoardModel newModel) {
         model = newModel;
+        draw();
     }
 
     public void draw() {
@@ -132,22 +134,22 @@ public class TaskSidebar extends VBox implements PlannerListener  {
 
         System.out.println("Colour given: " + eventColour);
         if (Color.GREEN.equals(eventColour)) {
-            colour = "green";
+            colour = "limeGreen";
         }
         else if (Color.BLUE.equals(eventColour)) {
-            colour = "blue";
+            colour = "skyBlue";
         }
         else if (Color.RED.equals(eventColour)) {
-            colour = "red";
+            colour = "crimson";
         }
         else if (Color.ORANGE.equals(eventColour)) {
-            colour = "orange";
+            colour = "darkOrange";
         }
         else if (Color.YELLOW.equals(eventColour)) {
-            colour = "yellow";
+            colour = "gold";
         }
         else {
-            colour = "violet";  //default if not set to any of the of the acceptable colours
+            colour = "plum";  //default if not set to any of the of the acceptable colours
         }
 
         return colour;
@@ -183,6 +185,9 @@ public class TaskSidebar extends VBox implements PlannerListener  {
                 Label title = new Label(currentTask.getTitle());
                 title.setFont(new Font("Ariel", 16));
 
+                Label course = new Label("Course: " + currentTask.getCourseName());
+                course.setFont(new Font("Arial", 15));
+
                 Label day = new Label("Day: " + currentTask.getDay() + "/" + currentTask.getMonth() + "/" + currentTask.getYear());
                 day.setFont(new Font("Ariel", 15));
 
@@ -192,7 +197,7 @@ public class TaskSidebar extends VBox implements PlannerListener  {
                 Label description = new Label(currentTask.getDescription());
                 description.setWrapText(true);
 
-                top.getChildren().addAll(title, date, day, dueDate);
+                top.getChildren().addAll(title, course, date, day, dueDate);
                 descriptionBox.getChildren().add(description);
 
                 VBox dialogVbox = new VBox();

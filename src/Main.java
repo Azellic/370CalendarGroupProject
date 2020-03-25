@@ -87,6 +87,7 @@ public class Main extends Application {
 
         dayView.setStage(primaryStage);
         taskView.setStage(primaryStage);
+        gradeView.setStage(primaryStage);
 
         //Set up model-view subscriber relationship
         calendarModel.addSubscriber(dayView);
@@ -99,10 +100,8 @@ public class Main extends Application {
         gradeView.setButtonController(gradeController);
         taskView.setButtonController(taskController);
 
-
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
-
 
         // Set the window size based on the screen bounds
         primaryStage.setX(wBounds.getMinX());
@@ -117,30 +116,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-
     public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
         db = new DataBase();
         db.startUp();
-        ResultSet eventResult = db.getAllEvents();
-        int cDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
-        int cMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
-        int cYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-        Color color = new Color(0.0f,0.0f,1.0f);
-        if (!eventResult.next()) {
-            db.insertEvent(1,
-                    "9:30",
-                    "10:30",
-                    cDay,
-                    cMonth,
-                    cYear,
-                    0,
-                    0,
-                    255,
-                    "CMPT370 Project1",
-                    "Write code for the project",
-                    "STM College");
-        }
         db.closeConnection();
         //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
         launch(args);

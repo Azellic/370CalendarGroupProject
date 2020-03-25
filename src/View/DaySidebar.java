@@ -29,7 +29,6 @@ public class DaySidebar extends VBox implements PlannerListener {
     Button addEventbutton;
     ListView dayList;
     ObservableList<HBox> dayListArray;
-
     Stage primaryStage;
 
     public DaySidebar(Rectangle2D bounds) {
@@ -39,7 +38,6 @@ public class DaySidebar extends VBox implements PlannerListener {
         dayList.setPrefWidth(100);
         dayList.setPrefHeight(700);
         dayList.fixedCellSizeProperty();
-
 
         addEventbutton = new Button("New Event");
         addEventbutton.setPrefHeight(60);
@@ -78,12 +76,11 @@ public class DaySidebar extends VBox implements PlannerListener {
         draw();
     }
 
-
     /*
         Function responsible for populating the sidebar lists by retrieving the events from the day sidebar
      */
     private void populateList() {
-        ArrayList<Event> events = model.getCurrentDayEvents();
+        ArrayList<Event> events = model.getEvents();
         dayListArray = FXCollections.observableArrayList ();
 
         int i = 0;
@@ -129,7 +126,6 @@ public class DaySidebar extends VBox implements PlannerListener {
                 box.setStyle(colour);
             }
 
-
             dayListArray.add(box);
             i++;
         }
@@ -152,24 +148,23 @@ public class DaySidebar extends VBox implements PlannerListener {
     public String getColour(Color eventColour){
         String colour = "";
 
-        // System.out.println("Colour given: " + eventColour);
         if (Color.GREEN.equals(eventColour)) {
-            colour = "green";
+            colour = "limeGreen";
         }
         else if (Color.BLUE.equals(eventColour)) {
-            colour = "blue";
+            colour = "skyBlue";
         }
         else if (Color.RED.equals(eventColour)) {
-            colour = "red";
+            colour = "crimson";
         }
         else if (Color.ORANGE.equals(eventColour)) {
-            colour = "orange";
+            colour = "darkOrange";
         }
         else if (Color.YELLOW.equals(eventColour)) {
-            colour = "yellow";
+            colour = "gold";
         }
         else {
-            colour = "violet";  //default if not set to any of the of the acceptable colours
+            colour = "plum";  //default if not set to any of the of the acceptable colours
         }
 
         return colour;
@@ -205,6 +200,9 @@ public class DaySidebar extends VBox implements PlannerListener {
                 Label title = new Label(currentEvent.getTitle());
                 title.setFont(new Font("Ariel", 16));
 
+                Label course = new Label("Course: " + currentEvent.getCourseName());
+                course.setFont(new Font("Arial", 15));
+
                 Label time = new Label("Time: " + currentEvent.getStart() + " - " + currentEvent.getEnd());
                 time.setFont(new Font("Ariel", 15));
 
@@ -215,7 +213,7 @@ public class DaySidebar extends VBox implements PlannerListener {
                 // Allows text to wrap to a second line if neccesary
                 description.setWrapText(true);
 
-                top.getChildren().addAll(title, date, time, location);
+                top.getChildren().addAll(title, course, date, time, location);
                 descriptionBox.getChildren().add(description);
 
                 VBox dialogVbox = new VBox();

@@ -1,6 +1,8 @@
 package Model;
 
 import java.awt.*;
+
+import View.DaySidebar;
 import View.PlannerListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,35 +17,23 @@ public class Calendar {
    private int selectedDay;
    private int selectedMonth;
    private int selectedYear;
-   //The current calendar day (today)
-   private int currentDay;
-   private int currentMonth;
-   private int currentYear;
    private ArrayList<Event> currentDayEvents;
-   private ArrayList<Event> currentMonthEvents;
-   private ArrayList<Event> selectedMonthsEvents;
    private DataBase db;
 
    public Calendar() {
        subscribers = new ArrayList<>();
-       int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-       int currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
-       int currentDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
-       this.currentYear = currentYear;
-       this.currentMonth = currentMonth;
-       this.currentDay = currentDay;
-       this.selectedDay = currentDay;
-       this.selectedMonth = currentMonth;
-       this.selectedYear = currentYear;
+       this.selectedDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
+       this.selectedMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
+       this.selectedYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
        this.db = new DataBase();
-       this.currentDayEvents = getDaysEvents();
-       this.currentMonthEvents = getMonthsEvents();
    }
 
    public void setSelectedDay(LocalDate date){
        selectedDay = date.getDayOfMonth();
        selectedMonth = date.getMonthValue();
        selectedYear = date.getYear();
+       currentDayEvents = getEvents();
+       notifySubscribers();
    }
 
    public void changeMonthBy(int increment) {
@@ -56,12 +46,9 @@ public class Calendar {
             selectedMonth = 1;
             selectedYear += 1;
        }
-       this.selectedMonthsEvents = getSelectedEvents();
-       System.out.println(getSelectedMonthsEvents());
    }
 
-
-   private static void formatEventQuery(ResultSet query, ArrayList<Event> events) {
+   private ArrayList<Event> formatEventQuery(ResultSet query, ArrayList<Event> events) {
        try {
            while (query.next()) {
                SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
@@ -77,7 +64,7 @@ public class Calendar {
 
                Event event = new Event(query.getString("eventTitle"),
                        query.getString("eventDescription"),
-                       null,
+                       query.getString("courseName"),
                        eventColor,
                        query.getInt("day"),
                        query.getInt("month"),
@@ -91,72 +78,32 @@ public class Calendar {
            System.out.println("Problem with formatEventQuery");
            e.printStackTrace();
        }
-   }
-
-   public void setSelectedMonthsEvents() {
-       this.selectedMonthsEvents = getSelectedEvents();
-   }
-
-   public ArrayList<Event> getDaysEvents() {
-       ResultSet eventsQuery = db.getDaysEvents(currentYear, currentMonth, currentDay);
-       ArrayList<Event> events = new ArrayList<Event>();
-       formatEventQuery(eventsQuery, events);
-       try {
-           eventsQuery.close();
-       } catch (SQLException e) {
-           e.printStackTrace();
+       finally {
+           try {
+               query.close();
+           } catch (SQLException e) {
+               System.out.println("Problem Closing formatEventQuery");
+               e.printStackTrace();
+           }
        }
        db.closeConnection();
+       System.out.println(events);
        return events;
    }
 
-   public ArrayList<Event> getSelectedEvents() {
-       ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth);
+   public ArrayList<Event> getEvents() {
+       ResultSet eventsQuery = db.getEvents(selectedYear, selectedMonth, selectedDay);
        ArrayList<Event> events = new ArrayList<Event>();
-       formatEventQuery(eventsQuery, events);
-       try {
-           eventsQuery.close();
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       db.closeConnection();
-       return events;
+       return formatEventQuery(eventsQuery, events);
    }
-
-   public ArrayList<Event> getMonthsEvents() {
-       ResultSet eventsQuery = db.getMonthsEvents(currentMonth, currentYear);
-       ArrayList<Event> events = new ArrayList<Event>();
-       formatEventQuery(eventsQuery, events);
-       try {
-           eventsQuery.close();
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       db.closeConnection();
-       return events;
-   }
-
-   public ArrayList<Event> getCurrentDayEvents(){
-       return currentDayEvents;
-   }
-
-   public ArrayList<Event> getCurrentMonthEvents(){
-       return currentMonthEvents;
-   }
-
-   public ArrayList<Event> getSelectedMonthsEvents(){
-       return selectedMonthsEvents;
-   }
-
 
    public void insertEvent(Event userInput) {
-       db.insertEvent(1, userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
+       db.insertEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
               userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
                userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
                userInput.getLocation());
        currentDayEvents.add(userInput);
        db.closeConnection();
-       System.out.println(getCurrentDayEvents());
        notifySubscribers();
    }
 

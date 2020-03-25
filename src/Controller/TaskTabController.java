@@ -32,12 +32,12 @@ public class TaskTabController {
         for(Course c : courses){
             courseStrings.add(c.getTitle());
         }
-        Dialog<Task> dialog = new NewTaskDialog(courseStrings);  //TODO:pass list of courses to the dialog
+        Dialog<Task> dialog = new NewTaskDialog(courseStrings);
 
         Optional<Task> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            //TODO: send new assessment to model
+
             System.out.println(event.toString());
 
             model.insertTask(event);

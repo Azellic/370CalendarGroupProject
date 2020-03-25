@@ -41,7 +41,7 @@ public class TaskBoardModel {
 
                 Task task = new Task(tasksQuery.getString("taskTitle"),
                         tasksQuery.getString("taskDescription"),
-                        null,
+                        tasksQuery.getString("courseName"),
                         taskColor,
                         tasksQuery.getInt("dueDay"),
                         tasksQuery.getInt("dueMonth"),
@@ -58,7 +58,7 @@ public class TaskBoardModel {
     }
 
     public void insertTask(Task userInput) {
-        db.insertTask(userInput.getTitle(), userInput.getDescription(), 0,
+        db.insertTask(userInput.getTitle(), userInput.getDescription(), userInput.getCourseName(),
                 userInput.getColor().getRed(), userInput.getColor().getGreen(), userInput.getColor().getBlue(),
                 userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getDueTime().toString());
         getTasks().add(userInput);

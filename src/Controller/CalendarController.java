@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Calendar;
+import View.DaySidebar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -32,12 +33,10 @@ public class CalendarController {
     public void previousMonthClicked(ActionEvent actionEvent) {
         System.out.println("Go back a month");
         model.changeMonthBy(-1);
-        model.setSelectedMonthsEvents();
     }
 
     public void nextMonthClicked(ActionEvent actionEvent) {
         System.out.println("Go forward a month");
         model.changeMonthBy(+1);
-        model.setSelectedMonthsEvents();
     }
 }

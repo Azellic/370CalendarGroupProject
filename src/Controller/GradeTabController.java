@@ -20,8 +20,6 @@ public class GradeTabController {
         model = newModel;
     }
 
-
-
     public void handleAddGradeClicked(ActionEvent actionEvent) {
         ArrayList<String> courseStrings = new ArrayList<>();
         ArrayList<Course> courses = model.getCourseList();
@@ -34,14 +32,12 @@ public class GradeTabController {
         Optional<Assessment> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            //TODO: send new assessment to model
+
             System.out.println(event.toString());
 
             model.insertAssessment(event);
         });
     }
-
-
 
     public void handleAddCourseClicked(ActionEvent actionEvent) {
         Dialog<Course> dialog = new NewCourseDialog();
@@ -49,7 +45,7 @@ public class GradeTabController {
         Optional<Course> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            //TODO: send new course to model
+
             System.out.println(event.toString());
 
             model.insertCourse(event);
