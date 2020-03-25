@@ -259,27 +259,22 @@ public class DataBase {
         return resultQuery;
     }
 
-    public ResultSet getSelectedEvents(int year, int month){
+    public ResultSet getSelectedEvents(int year, int month, int day){
         ResultSet resultQuery = null;
         try {
             setConnection();
             PreparedStatement prep = con.prepareStatement(
-                    "SELECT * FROM event WHERE year = ? AND month = ?;"
+                    "SELECT * FROM event WHERE year = ? AND month = ? AND day = ?;"
             );
             prep.setInt(1, year);
             prep.setInt(2, month);
+            prep.setInt(3, day);
             resultQuery = prep.executeQuery();
         } catch (SQLException e) {
             System.out.println("Problem with getSelectedEvents");
             e.printStackTrace();
         }
-        finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                System.out.println("Problem Closing after getSelectedEvents called");
-            }
-        }
+
         return resultQuery;
     }
 

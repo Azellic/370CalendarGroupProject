@@ -1,6 +1,8 @@
 package Model;
 
 import java.awt.*;
+
+import View.DaySidebar;
 import View.PlannerListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,6 +46,8 @@ public class Calendar {
        selectedDay = date.getDayOfMonth();
        selectedMonth = date.getMonthValue();
        selectedYear = date.getYear();
+       currentDayEvents = getSelectedEvents();
+       notifySubscribers();
    }
 
    public void changeMonthBy(int increment) {
@@ -100,6 +104,7 @@ public class Calendar {
            }
        }
        db.closeConnection();
+       System.out.println(events);
        return events;
    }
 
@@ -114,7 +119,7 @@ public class Calendar {
    }
 
    public ArrayList<Event> getSelectedEvents() {
-       ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth);
+       ResultSet eventsQuery = db.getSelectedEvents(selectedYear, selectedMonth, selectedDay);
        ArrayList<Event> events = new ArrayList<Event>();
        return formatEventQuery(eventsQuery, events);
    }
