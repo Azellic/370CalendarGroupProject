@@ -52,7 +52,7 @@ public class NewGradeDialog extends InputDialog {
 
         Region r = new Region();
         r.setPrefWidth(20);
-        HBox markBox = new HBox(new Label("Mark (*):"),mark, r, new Label("Weight:"), weight);
+        HBox markBox = new HBox(new Label("Mark (*):"),mark, r, new Label("Weight (*):"), weight);
         markBox.setAlignment(Pos.CENTER_LEFT);
         addGradeBox.getChildren().addAll(mainLabel, new Label("(Must enter all starred fields)"),
                 new Label("Title (*):"), title, new Label("Course (*):"), courseChoice, markBox,
@@ -64,16 +64,12 @@ public class NewGradeDialog extends InputDialog {
         // Convert the result to an assessment when the done button is clicked.
         this.setResultConverter(dialogButton -> {
             if (dialogButton == doneButtonType) {
-                if(title.getText().isEmpty() || mark.getText().isEmpty() || courseChoice.getValue().equals("None")){
+                if(title.getText().isEmpty() || mark.getText().isEmpty() || courseChoice.getValue().equals("None")
+                || weight.getText().isEmpty()) {
                     return null;
                 }
                 double markDouble = Double.parseDouble(mark.getText());
-                double weightDouble;
-                if(weight.getText().isEmpty()){
-                    weightDouble = 0;
-                } else {
-                    weightDouble = Double.parseDouble(weight.getText());
-                }
+                double weightDouble = Double.parseDouble(mark.getText());
 
                 Assessment newGrade = new Assessment(title.getText(), courseChoice.getValue(), markDouble,
                         finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),

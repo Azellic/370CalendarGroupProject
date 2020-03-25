@@ -44,4 +44,10 @@ public class Course {
                 '}';
     }
 
+    public boolean equalsByField(Course course) {
+        return this.getTitle().equals(course.getTitle()) &&
+                this.getDescription().equals(course.getDescription()) &&
+                this.getInstructor().equals(course.getInstructor());
+    }
+
 }

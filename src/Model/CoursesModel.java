@@ -42,15 +42,8 @@ public class CoursesModel {
     }
 
     public void setMinimumGrade(ArrayList<Assessment> assessments) {
-        float weightLeft;
-        int nonWeightedMark = 0;
-        int countOfNoWeight = 0;
         double weightedGrade = 0;
         for (Assessment assessment : assessments) {
-            if (assessment.getWeight() == 0) {
-                countOfNoWeight += 1;
-                nonWeightedMark += assessment.getMark();
-            }
             weightedGrade = weightedGrade + (assessment.getMark() * (assessment.getWeight()/100));
         }
         this.minimumGrade = weightedGrade;
@@ -135,7 +128,7 @@ public class CoursesModel {
     }
 
     public void insertCourse(Course userInput) {
-        db.insertCourse(userInput.getTitle(), userInput.getInstructor(), userInput.getDescription());
+        db.insertCourse(userInput.getTitle(), userInput.getDescription(), userInput.getInstructor());
         getCourseList().add(userInput);
         db.closeConnection();
         System.out.println(getCourseList());

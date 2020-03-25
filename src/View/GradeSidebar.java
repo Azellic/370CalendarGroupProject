@@ -84,7 +84,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 if(!oldValue.equals(newValue)){
-                    //TODO: tell the model that a new course has been selected, so that the view can draw the change
+
                     model.setSelectedCourse(newValue);
                 }
             }

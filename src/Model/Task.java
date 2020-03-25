@@ -61,4 +61,11 @@ public class Task extends CalendarItem {
                 ", dueTime=" + dueTime +
                 '}';
     }
+
+    public boolean equalsByField(Task task) {
+        return this.getTitle().equals(task.getTitle()) &&
+                this.getCourseName().equals(task.getCourseName()) &&
+                this.getDay() == task.getDay() &&
+                this.getDueTime().equals(task.getDueTime());
+    }
 }

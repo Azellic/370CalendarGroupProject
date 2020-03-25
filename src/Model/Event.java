@@ -72,4 +72,11 @@ public class Event extends CalendarItem {
                 '}';
     }
 
+    public boolean equalsByField(Event event) {
+        return this.getTitle().equals(event.getTitle()) &&
+                this.getDescription().equals(event.getDescription()) &&
+                this.getStart().equals(event.getStart()) &&
+                this.getEnd().equals(event.getEnd());
+    }
+
 }
