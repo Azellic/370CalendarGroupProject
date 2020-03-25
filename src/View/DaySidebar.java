@@ -78,7 +78,6 @@ public class DaySidebar extends VBox implements PlannerListener {
         draw();
     }
 
-
     /*
         Function responsible for populating the sidebar lists by retrieving the events from the day sidebar
      */
@@ -128,7 +127,6 @@ public class DaySidebar extends VBox implements PlannerListener {
                 //System.out.println("Colour found: " + colour);
                 box.setStyle(colour);
             }
-
 
             dayListArray.add(box);
             i++;

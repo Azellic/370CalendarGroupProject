@@ -139,6 +139,9 @@ public class CoursesModel {
                 userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
                 userInput.getYear());
         db.closeConnection();
+        if (userInput.getCourseTitle() == getSelectedCourse()) {
+            updateAssessmentList();
+        }
         notifySubscribers();
     }
 

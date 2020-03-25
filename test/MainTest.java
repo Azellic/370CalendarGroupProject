@@ -38,8 +38,8 @@ public class MainTest {
         db.startUp();
         courseModel = new CoursesModel();
         course1 = new Course("CMPT370", "Software Engineering", "Kevin");
-        course2 = new Course("CMPT360", "Mondal", "Algorithms");
-        course3 = new Course("CMPT340", "Nadeem", "Programming Paradigms");
+        course2 = new Course("CMPT360", "Algorithms","Mondal");
+        course3 = new Course("CMPT340", "Programming Paradigms", "Nadeem");
         courseModel.insertCourse(course1);
         courseModel.insertCourse(course2);
         courseModel.insertCourse(course3);
@@ -73,6 +73,19 @@ public class MainTest {
         courseModel.insertAssessment(assessment8);
         courseModel.insertAssessment(assessment9);
         courseModel.insertAssessment(assessment10);
+        // Testing to create a lot of assignments so we have to scroll through them
+        Course course4 = new Course("MATH364", "Number Theory", "Cam");
+        //ArrayList<Assessment> lotsOfAssessments = new ArrayList<>();
+        courseModel.insertCourse(course4);
+        for (int i = 0 ; i < 50; i++) {
+            String title = "" + i;
+            Assessment assessment = new Assessment(title, "MATH364", 1,1,1,1,
+            " ", 1);
+            courseModel.insertAssessment(assessment);
+        }
+//        for (for i = ) {
+//            courseModel.insertAssessment(lotsOfAssessments.get(i));
+//        }
     }
 
     @Test
