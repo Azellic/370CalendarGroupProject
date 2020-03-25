@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class GradeTabController {
@@ -21,14 +23,21 @@ public class GradeTabController {
 
 
     public void handleAddGradeClicked(ActionEvent actionEvent) {
-        ObservableList<String> courses = FXCollections.observableArrayList("None");
-        //TODO: Generate the list of courses using course model
-        Dialog<Assessment> dialog = new NewGradeDialog(courses);
-
+        ArrayList<String> courseStrings = new ArrayList<>();
+        ArrayList<Course> courses = model.getCourseList();
+        courseStrings.add("None");
+        for(Course c : courses){
+            courseStrings.add(c.getTitle());
+        }
+        Dialog<Assessment> dialog = new NewGradeDialog(courseStrings);
+        System.out.println("gradeClicked");
         Optional<Assessment> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
             //TODO: send new assessment to model
+            System.out.println(event.toString());
+
+            model.insertAssessment(event);
         });
     }
 

@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 
 public class NewEventDialog extends InputDialog {
@@ -30,7 +31,7 @@ public class NewEventDialog extends InputDialog {
     Spinner<Integer> startHour, startMinute, endHour, endMinute;
     TextField location;
 
-    public NewEventDialog() {
+    public NewEventDialog(ArrayList<String> courseStrings) {
         super();
         this.setTitle("Create an Event");
 
@@ -48,8 +49,7 @@ public class NewEventDialog extends InputDialog {
         desc = new TextField();
         desc.setPromptText("Description");
 
-        ObservableList<String> courses = FXCollections.observableArrayList("None");
-        //TODO: Generate the list of courses using course model
+        ObservableList<String> courses = FXCollections.observableArrayList(courseStrings);
         courseChoice = new ComboBox<>(courses);
         courseChoice.setValue("None");
 

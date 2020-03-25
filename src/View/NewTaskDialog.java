@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class NewTaskDialog extends InputDialog {
     private final ButtonType doneButtonType;
@@ -27,7 +28,7 @@ public class NewTaskDialog extends InputDialog {
     DatePicker datePicker;
     Spinner<Integer> hour, minute;
 
-    public NewTaskDialog(ObservableList<String> courses) {
+    public NewTaskDialog(ArrayList<String> courseStrings) {
         this.setTitle("Create A Task");
 
         doneButtonType = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
@@ -41,8 +42,7 @@ public class NewTaskDialog extends InputDialog {
         title = new TextField();
         title.setPromptText("Title");
         Tooltip.install(title, new Tooltip("Hitting done with an empty title is the same as hitting cancel"));
-
-        //TODO: Generate the list of courses using course model
+        ObservableList<String> courses = FXCollections.observableArrayList(courseStrings);
         courseChoice = new ComboBox<>(courses);
         courseChoice.setValue("None");
         ObservableList<String> colours = FXCollections.observableArrayList("Green", "Blue", "Red",

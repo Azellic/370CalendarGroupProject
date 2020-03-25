@@ -1,6 +1,7 @@
 package View;
 
 import Controller.GradeTabController;
+import Model.Course;
 import Model.CoursesModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,15 +28,18 @@ public class GradeSidebar extends VBox implements PlannerListener {
     ObservableList<String> courses;
     ComboBox<String> courseChoice;
 
-    ObservableList<HBox> gradesListArray;
-
-    public GradeSidebar(Rectangle2D bounds) {
+    public GradeSidebar(Rectangle2D bounds, CoursesModel mdl) {
         //Initialize the component for the grades type
         super();
-
+        model = mdl;
         //Initialize and fill list of courses
-        courses = FXCollections.observableArrayList("None");
-        //TODO: Generate the list of courses using course model
+        ArrayList<String> courseStrings = new ArrayList<>();
+        ArrayList<Course> allCourses = model.getCourseList();
+        courseStrings.add("None");
+        for(Course c : allCourses){
+            courseStrings.add(c.getTitle());
+        }
+        courses = FXCollections.observableArrayList(courseStrings);
         courseChoice = new ComboBox<>(courses);
         courseChoice.setValue("None");
         courseChoice.setPrefWidth(700);
@@ -68,10 +72,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
         // Draw will draw the sidebar with all the grades
         draw();
-    }
-
-    public void setModel(CoursesModel newModel) {
-        model = newModel;
     }
 
     public void draw() {
