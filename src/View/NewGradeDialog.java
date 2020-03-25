@@ -74,7 +74,8 @@ public class NewGradeDialog extends InputDialog {
                         finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),
                         finishDate.getValue().getYear(), desc.getText(), weightFloat);
 
-                return newGrade;
+                //return newGrade;
+                return null;
             }
             return null;
         });

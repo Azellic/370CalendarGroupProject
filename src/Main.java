@@ -86,6 +86,7 @@ public class Main extends Application {
         calendarView.setModel(calendarModel);
 
         dayView.setStage(primaryStage);
+        taskView.setStage(primaryStage);
 
         //Set up model-view subscriber relationship
         calendarModel.addSubscriber(dayView);
