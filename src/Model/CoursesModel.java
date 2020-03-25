@@ -35,6 +35,8 @@ public class CoursesModel {
 
     public void setSelectedCourse(String selectedCourse) {
         this.selectedCourse = selectedCourse;
+        System.out.println("Selected course changed to:" + selectedCourse);
+        updateAssessmentList();
     }
 
     public void setMinimumGrade(ArrayList<Assessment> assessments) {
