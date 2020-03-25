@@ -69,7 +69,7 @@ public class NewGradeDialog extends InputDialog {
                     return null;
                 }
                 double markDouble = Double.parseDouble(mark.getText());
-                double weightDouble = Double.parseDouble(mark.getText());
+                double weightDouble = Double.parseDouble(weight.getText());
 
                 Assessment newGrade = new Assessment(title.getText(), courseChoice.getValue(), markDouble,
                         finishDate.getValue().getDayOfMonth(), finishDate.getValue().getMonthValue(),
