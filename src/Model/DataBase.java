@@ -244,7 +244,6 @@ public class DataBase {
                             "FROM event e " +
                             "INNER JOIN course c on e.courseID = c.courseID " +
                             "WHERE year = ? AND month = ? AND day = ?; ");
-
             prep.setInt(1, year);
             prep.setInt(2, month);
             prep.setInt(3, day);
