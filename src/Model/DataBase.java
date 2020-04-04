@@ -52,6 +52,7 @@ public class DataBase {
                         "courseName VARCHAR," +
                         "courseInstructor VARCHAR, " +
                         "courseDescription VARCHAR);");
+                insertCourse("Default", "N/A", "N/A");
             }
         } catch (SQLException e) {
             System.out.println("Problem creating the course table");
@@ -133,8 +134,6 @@ public class DataBase {
             System.out.println("Problem closing after initializing");
             e.printStackTrace();
         }
-        // Need to insert a default course for non class related inserts
-        insertCourse("Default", "N/A", "N/A");
     }
 
     public void insertCourse(String courseName, String courseInstructor, String courseDescription){
