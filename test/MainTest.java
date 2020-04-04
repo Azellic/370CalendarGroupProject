@@ -303,14 +303,14 @@ public class MainTest {
         assertEquals(7, tasks.size());
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        File file = new File("plannerDB.db");
-        if (file.delete()) {
-            System.out.println("Done testing deleting DataBase");
-        } else {
-            System.out.println("Failed to delete DataBase after testing.");
-            System.out.println("Please manually delete the database from the directory");
-        }
-    }
+//    @AfterClass
+//    public static void cleanUp() {
+//        File file = new File("plannerDB.db");
+//        if (file.delete()) {
+//            System.out.println("Done testing deleting DataBase");
+//        } else {
+//            System.out.println("Failed to delete DataBase after testing.");
+//            System.out.println("Please manually delete the database from the directory");
+//        }
+//    }
 }

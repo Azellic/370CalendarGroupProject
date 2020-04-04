@@ -82,6 +82,7 @@ public class Main extends Application {
 
         //Set up each view with the model it will draw
         dayView.setController(daytabController);
+        taskView.setController(taskController);
         dayView.setModel(calendarModel);
         taskView.setModel(taskModel);
         calendarView.setModel(calendarModel);

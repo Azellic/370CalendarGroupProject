@@ -16,6 +16,7 @@ import java.util.Optional;
 public class TaskTabController {
     TaskBoardModel model;
     CoursesModel courseModel;
+    Task taskToDelete;
 
     public void setModel(TaskBoardModel newModel) {
         model = newModel;
@@ -23,6 +24,10 @@ public class TaskTabController {
 
     public void setCoursesModel(CoursesModel newModel) {
         courseModel = newModel;
+    }
+
+    public void setTaskToDelete(Task task) {
+        this.taskToDelete = task;
     }
 
     public void handleAddTaskClicked(ActionEvent actionEvent) {
@@ -42,5 +47,9 @@ public class TaskTabController {
 
             model.insertTask(event);
         });
+    }
+
+    public void handleRemoveTaskClicked(ActionEvent actionEvent) {
+        model.deleteTask(taskToDelete);
     }
 }

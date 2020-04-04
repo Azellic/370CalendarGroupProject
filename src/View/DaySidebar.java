@@ -3,6 +3,7 @@ package View;
 import Controller.DayTabController;
 import Model.Calendar;
 import Model.Event;
+import Model.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -243,7 +244,13 @@ public class DaySidebar extends VBox implements PlannerListener {
     }
 
     public void initializeRemoveButton(Event currentEvent, Button button) {
-        controller.setEventToDelete(currentEvent);
-        button.setOnAction(controller::handleRemoveEventClicked);
+        Event buttonEvent = currentEvent;
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.setEventToDelete(buttonEvent);
+                controller.handleRemoveEventClicked(actionEvent);
+            }
+        });
     }
 }

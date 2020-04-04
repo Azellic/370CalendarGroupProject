@@ -71,7 +71,7 @@ public class TaskBoardModel {
                 userInput.getColor().getRed(), userInput.getColor().getGreen(), userInput.getColor().getBlue(),
                 userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getDueTime().toString());
         db.closeConnection();
-        //notifySubscribers();
+        notifySubscribers();
     }
 
     public void addSubscriber(PlannerListener aSub) {
