@@ -25,7 +25,6 @@ public class Calendar {
        this.selectedDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
        this.selectedMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
        this.selectedYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-       //this.currentDayEvents = getEvents();
        this.db = new DataBase();
    }
 
@@ -90,6 +89,12 @@ public class Calendar {
        db.closeConnection();
        return events;
    }
+   // method for testing purposes
+   public ArrayList<Event> getAllEvents() {
+       ResultSet eventsQuery = db.getAllEvents();
+       ArrayList<Event> events = new ArrayList<Event>();
+       return formatEventQuery(eventsQuery, events);
+   }
 
    public ArrayList<Event> getEvents() {
        ResultSet eventsQuery = db.getEvents(selectedYear, selectedMonth, selectedDay);
@@ -105,6 +110,15 @@ public class Calendar {
        db.closeConnection();
        currentDayEvents = getEvents();
        notifySubscribers();
+   }
+
+   public void deleteEvent(Event userInput) {
+       db.deleteEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
+               userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
+               userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
+               userInput.getLocation());
+       db.closeConnection();
+       //notifySubscribers();
    }
 
    public void addSubscriber (PlannerListener aSub) {

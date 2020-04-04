@@ -211,12 +211,64 @@ public class DataBase {
         }
     }
 
+    public void deleteEvent(String courseName, String startTime, String endTime,
+                            int day, int month, int year, int colorRedInt, int colorGreenInt, int colorBlueInt,
+                            String eventTitle, String eventDescription ,
+                            String eventLocation){
+        PreparedStatement prep = null;
+        try {
+            setConnection();
+            prep = con.prepareStatement("DELETE FROM event WHERE " +
+                    "startTime = ? AND endTime = ? AND day = ? AND month = ? AND year = ? " +
+                    "AND colorRedInt = ? AND colorGreenInt = ? AND colorBlueInt = ? " +
+                    "AND eventTitle = ? AND eventDescription = ? AND eventLocation = ? " +
+                    "AND (SELECT courseID from course where courseName = ?);");
+            prep.setString(1, startTime);
+            prep.setString(2, endTime);
+            prep.setInt(3, day);
+            prep.setInt(4, month);
+            prep.setInt(5, year);
+            prep.setInt(6, colorRedInt);
+            prep.setInt(7, colorGreenInt);
+            prep.setInt(8, colorBlueInt);
+            prep.setString(9, eventTitle);
+            prep.setString(10, eventDescription);
+            prep.setString(11, eventLocation);
+            prep.setString(12, courseName);
+            prep.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Problem deleting event");
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing deleting event query");
+                e.printStackTrace();
+            }
+        }
+    }
+
     public ResultSet getAllEvents() {
         ResultSet resultQuery = null;
         try {
             setConnection();
             Statement state = con.createStatement();
-            resultQuery = state.executeQuery("SELECT * FROM event;");
+            resultQuery = state.executeQuery("SELECT e.eventTitle," +
+                    "e.eventDescription," +
+                    "c.courseName," +
+                    "e.day," +
+                    "e.month," +
+                    "e.year," +
+                    "e.startTime," +
+                    "e.endTime," +
+                    "e.colorRedInt," +
+                    "e.colorGreenInt," +
+                    "e.colorBlueInt," +
+                    "e.eventLocation " +
+                    "FROM event e " +
+                    "INNER JOIN course c on e.courseID = c.courseID;");
         } catch (SQLException e) {
             System.out.println("Problem in getting all Events");
             e.printStackTrace();

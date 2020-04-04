@@ -1,13 +1,14 @@
-import Model.Assessment;
-import Model.Course;
-import Model.CoursesModel;
-import Model.DataBase;
+import Model.*;
+import Model.Event;
 import org.junit.*;
 
 
+import java.awt.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -16,6 +17,7 @@ import static org.junit.Assert.*;
 public class MainTest {
     private static DataBase db;
     private static CoursesModel courseModel;
+    private static Calendar calendarModel;
     public static Course course1;
     public static Course course2;
     public static Course course3;
@@ -29,6 +31,17 @@ public class MainTest {
     public static Assessment assessment8;
     public static Assessment assessment9;
     public static Assessment assessment10;
+    public static Event event1;
+    public static Event event2;
+    public static Event event3;
+    public static Event event4;
+    public static Event event5;
+    public static Event event6;
+    public static Event event7;
+    public static Event event8;
+    public static Event event9;
+    public static Event event10;
+
 
 
     @BeforeClass
@@ -37,12 +50,18 @@ public class MainTest {
         db = new DataBase();
         db.startUp();
         courseModel = new CoursesModel();
+        /**
+         * Inserting Courses, Tests will check if succeeded
+         */
         course1 = new Course("CMPT370", "Software Engineering", "Kevin");
         course2 = new Course("CMPT360", "Algorithms","Mondal");
         course3 = new Course("CMPT340", "Programming Paradigms", "Nadeem");
         courseModel.insertCourse(course1);
         courseModel.insertCourse(course2);
         courseModel.insertCourse(course3);
+        /**
+         * Inserting Assessments, Tests will check if succeeded
+         */
         assessment1 = new Assessment("A1", "CMPT340", 35, 1,1,1,
                 " ", 10);
         assessment2 = new Assessment("A2", "CMPT340", 75, 1,1,1,
@@ -83,6 +102,53 @@ public class MainTest {
             " ", 1);
             courseModel.insertAssessment(assessment);
         }
+        /**
+         * Inserting Events
+         */
+        calendarModel = new Calendar();
+        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
+        String startTimeString = "9:30";
+        String endTimeString = "12:30";
+        Time startTime;
+        Time endTime;
+        try {
+            startTime = new Time(format1.parse(startTimeString).getTime());
+            endTime = new Time(format1.parse(endTimeString).getTime());
+        } catch (ParseException e) {
+            System.out.println("Problem in parsing dates for testing events, setting time to null");
+            startTime = null;
+            endTime = null;
+        }
+        event1 = new Event("Class1", "test1", "CMPT340", Color.GREEN, 5,
+                4, 2020, startTime, endTime, "Thorv");
+        event2 = new Event("Class2", "test2", "CMPT340", Color.GREEN, 8,
+                4, 2020, startTime, endTime, "Thorv");
+        event3 = new Event("Class3", "test3", "CMPT340", Color.GREEN, 5,
+                4, 2020, startTime, endTime, "Thorv");
+        event4 = new Event("Class4", "test4", "CMPT370", Color.BLUE, 8,
+                4, 2020, startTime, endTime, "Arts");
+        event5 = new Event("Class5", "test5", "CMPT370", Color.BLUE, 5,
+                4, 2020, startTime, endTime, "Arts");
+        event6 = new Event("Class6", "test6", "CMPT370", Color.BLUE, 8,
+                4, 2020, startTime, endTime, "Arts");
+        event7 = new Event("Class7", "test7", "CMPT360", Color.RED, 7,
+                4, 2020, startTime, endTime, "Physics");
+        event8 = new Event("Class8", "test8", "CMPT360", Color.RED, 9,
+                4, 2020, startTime, endTime, "Physics");
+        event9 = new Event("Class9", "test9", "MATH364", Color.ORANGE, 9,
+                4, 2020, startTime, endTime, "Arts");
+        event10 = new Event("Class10", "test10", "MATH364", Color.ORANGE, 7,
+                4, 2020, startTime, endTime, "Arts");
+        calendarModel.insertEvent(event1);
+        calendarModel.insertEvent(event2);
+        calendarModel.insertEvent(event3);
+        calendarModel.insertEvent(event4);
+        calendarModel.insertEvent(event5);
+        calendarModel.insertEvent(event6);
+        calendarModel.insertEvent(event7);
+        calendarModel.insertEvent(event8);
+        calendarModel.insertEvent(event9);
+        calendarModel.insertEvent(event10);
     }
 
     @Test
@@ -94,9 +160,9 @@ public class MainTest {
     public void insertCoursesTest() {
         ArrayList<Course> coursesDB;
         coursesDB = courseModel.getCoursesFromDB();
-        assertTrue(course1.equalsByField(coursesDB.get(0)));
-        assertTrue(course2.equalsByField(coursesDB.get(1)));
-        assertTrue(course3.equalsByField(coursesDB.get(2)));
+        assertTrue(course1.equalsByField(coursesDB.get(1)));
+        assertTrue(course2.equalsByField(coursesDB.get(2)));
+        assertTrue(course3.equalsByField(coursesDB.get(3)));
     }
 
     @Test
@@ -120,7 +186,7 @@ public class MainTest {
     }
 
     @Test
-    public void gradesTest(){
+    public void gradesTest() {
         courseModel.setSelectedCourse("CMPT340");
         courseModel.updateAssessmentList();
         assertEquals(62.0, courseModel.getAverageGrade(), 0.5);
@@ -135,8 +201,32 @@ public class MainTest {
         courseModel.updateAssessmentList();
         assertEquals(100, courseModel.getAverageGrade(), 0.5);
         assertEquals(75.0, courseModel.getMinimumGrade(), 0.5);
-
     }
 
+    @Test
+    public void eventsTest() {
+        ArrayList<Event> events = calendarModel.getAllEvents();
+        assertEquals(10, events.size());
+        assertTrue(event1.equalsByField(events.get(0)));
+        assertTrue(event2.equalsByField(events.get(1)));
+        assertTrue(event3.equalsByField(events.get(2)));
+        assertTrue(event4.equalsByField(events.get(3)));
+        assertTrue(event5.equalsByField(events.get(4)));
+        assertTrue(event6.equalsByField(events.get(5)));
+        assertTrue(event7.equalsByField(events.get(6)));
+        assertTrue(event8.equalsByField(events.get(7)));
+        assertTrue(event9.equalsByField(events.get(8)));
+        assertTrue(event10.equalsByField(events.get(9)));
 
+        calendarModel.deleteEvent(event1);
+        events = calendarModel.getAllEvents();
+        assertEquals(9, events.size());
+        assertFalse(event1.equalsByField(events.get(0)));
+
+        calendarModel.deleteEvent(event10);
+        calendarModel.deleteEvent(event9);
+        events = calendarModel.getAllEvents();
+        assertEquals(7, events.size());
+
+    }
 }
