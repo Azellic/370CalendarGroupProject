@@ -133,6 +133,8 @@ public class DataBase {
             System.out.println("Problem closing after initializing");
             e.printStackTrace();
         }
+        // Need to insert a default course for non class related inserts
+        insertCourse("Default", "N/A", "N/A");
     }
 
     public void insertCourse(String courseName, String courseInstructor, String courseDescription){
