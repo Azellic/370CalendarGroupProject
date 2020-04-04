@@ -18,6 +18,7 @@ public class MainTest {
     private static DataBase db;
     private static CoursesModel courseModel;
     private static Calendar calendarModel;
+    private static TaskBoardModel taskModel;
     public static Course course1;
     public static Course course2;
     public static Course course3;
@@ -41,6 +42,16 @@ public class MainTest {
     public static Event event8;
     public static Event event9;
     public static Event event10;
+    public static Task task1;
+    public static Task task2;
+    public static Task task3;
+    public static Task task4;
+    public static Task task5;
+    public static Task task6;
+    public static Task task7;
+    public static Task task8;
+    public static Task task9;
+    public static Task task10;
 
 
 
@@ -149,11 +160,48 @@ public class MainTest {
         calendarModel.insertEvent(event8);
         calendarModel.insertEvent(event9);
         calendarModel.insertEvent(event10);
-    }
-
-    @Test
-    public void exampleTest(){
-        assertEquals(4, 2 + 2);
+        /**
+         * Inserting tasks
+         */
+        taskModel = new TaskBoardModel();
+        String dueTimeString = "18:00";
+        Time dueTime;
+        try {
+            dueTime = new Time(format1.parse(dueTimeString).getTime());
+        } catch(ParseException e) {
+            System.out.println("Problem setting dueTime, Setting dueTime to null");
+            dueTime = null;
+        }
+        task1 = new Task("task1", "test1", "CMPT340", Color.GREEN,
+                7, 4, 2020, dueTime);
+        task2 = new Task("task2", "test2", "CMPT340", Color.GREEN,
+                7, 4, 2020, dueTime);
+        task3 = new Task("task3", "test3", "CMPT340", Color.GREEN,
+                7, 4, 2020, dueTime);
+        task4 = new Task("task4", "test4", "CMPT340", Color.GREEN,
+                7, 4, 2020, dueTime);
+        task5 = new Task("task5", "test5", "CMPT360", Color.RED,
+                7, 4, 2020, dueTime);
+        task6 = new Task("task6", "test6", "CMPT360", Color.RED,
+                7, 4, 2020, dueTime);
+        task7 = new Task("task7", "test7", "CMPT360", Color.RED,
+                7, 4, 2020, dueTime);
+        task8 = new Task("task8", "test8", "CMPT370", Color.BLUE,
+                7, 4, 2020, dueTime);
+        task9 = new Task("task9", "test9", "CMPT370", Color.BLUE,
+                7, 4, 2020, dueTime);
+        task10 = new Task("task10", "test10", "CMPT370", Color.BLUE,
+                7, 4, 2020, dueTime);
+        taskModel.insertTask(task1);
+        taskModel.insertTask(task2);
+        taskModel.insertTask(task3);
+        taskModel.insertTask(task4);
+        taskModel.insertTask(task5);
+        taskModel.insertTask(task6);
+        taskModel.insertTask(task7);
+        taskModel.insertTask(task8);
+        taskModel.insertTask(task9);
+        taskModel.insertTask(task10);
     }
 
     @Test
@@ -227,6 +275,42 @@ public class MainTest {
         calendarModel.deleteEvent(event9);
         events = calendarModel.getAllEvents();
         assertEquals(7, events.size());
+    }
 
+    @Test
+    public void tasksTest(){
+        ArrayList<Task> tasks = taskModel.getTasksFromDB();
+        assertEquals(10, tasks.size());
+        assertTrue(task1.equalsByField(tasks.get(0)));
+        assertTrue(task2.equalsByField(tasks.get(1)));
+        assertTrue(task3.equalsByField(tasks.get(2)));
+        assertTrue(task4.equalsByField(tasks.get(3)));
+        assertTrue(task5.equalsByField(tasks.get(4)));
+        assertTrue(task6.equalsByField(tasks.get(5)));
+        assertTrue(task7.equalsByField(tasks.get(6)));
+        assertTrue(task8.equalsByField(tasks.get(7)));
+        assertTrue(task9.equalsByField(tasks.get(8)));
+        assertTrue(task10.equalsByField(tasks.get(9)));
+
+        taskModel.deleteTask(task1);
+        tasks = taskModel.getTasksFromDB();
+        assertEquals(9, tasks.size());
+        assertFalse(task1.equalsByField(tasks.get(0)));
+
+        taskModel.deleteTask(task8);
+        taskModel.deleteTask(task10);
+        tasks = taskModel.getTasksFromDB();
+        assertEquals(7, tasks.size());
+    }
+
+    @AfterClass
+    public static void cleanUp() {
+        File file = new File("plannerDB.db");
+        if (file.delete()) {
+            System.out.println("Done testing deleting DataBase");
+        } else {
+            System.out.println("Failed to delete DataBase after testing.");
+            System.out.println("Please manually delete the database from the directory");
+        }
     }
 }

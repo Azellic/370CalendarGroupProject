@@ -391,6 +391,40 @@ public class DataBase {
         }
     }
 
+    public void deleteTask(String taskTitle, String taskDescription, String courseName,
+                           int colorRedInt, int colorGreenInt, int colorBlueInt,
+                           int dueDay, int dueMonth, int dueYear, String dueTime) {
+        PreparedStatement prep = null;
+        try {
+            setConnection();
+            prep = con.prepareStatement("DELETE FROM task WHERE " +
+                    "taskTitle = ? AND taskDescription = ? AND colorRedInt = ? " +
+                    "AND colorGreenInt = ? AND colorBlueInt = ? " +
+                    "AND dueDay = ? AND dueMonth = ? AND dueYear = ? AND dueTime = ? " +
+                    "AND (SELECT courseID from course where courseName = ?)");
+            prep.setString(1, taskTitle);
+            prep.setString(2, taskDescription);
+            prep.setInt(3, colorRedInt);
+            prep.setInt(4, colorGreenInt);
+            prep.setInt(5, colorBlueInt);
+            prep.setInt(6, dueDay);
+            prep.setInt(7, dueMonth);
+            prep.setInt(8, dueYear);
+            prep.setString(9, dueTime);
+            prep.setString(10, courseName);
+            prep.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Problem removing task from database");
+            e.printStackTrace();
+        } finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing deleteTask prepared statement");
+            }
+        }
+    }
+
     public ResultSet getAllTasks()  {
         ResultSet resultQuery = null;
         try {
