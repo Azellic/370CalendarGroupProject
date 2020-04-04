@@ -103,22 +103,22 @@ public class Calendar {
    }
 
    public void insertEvent(Event userInput) {
-       db.insertEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
-              userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
-               userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
-               userInput.getLocation());
+       db.insertEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(),
+               userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(),
+               userInput.getColor().getGreen(), userInput.getColor().getBlue(), userInput.getTitle(),
+               userInput.getDescription(), userInput.getLocation());
        db.closeConnection();
        currentDayEvents = getEvents();
        notifySubscribers();
    }
 
    public void deleteEvent(Event userInput) {
-       db.deleteEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(), userInput.getDay(),
-               userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
-               userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
-               userInput.getLocation());
+       db.deleteEvent(userInput.getCourseName(), userInput.getStart().toString(), userInput.getEnd().toString(),
+               userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(),
+               userInput.getColor().getGreen(), userInput.getColor().getBlue(), userInput.getTitle(),
+               userInput.getDescription(), userInput.getLocation());
        db.closeConnection();
-       //notifySubscribers();
+       notifySubscribers();
    }
 
    public void addSubscriber (PlannerListener aSub) {

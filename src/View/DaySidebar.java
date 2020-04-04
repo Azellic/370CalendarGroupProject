@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -30,6 +31,7 @@ public class DaySidebar extends VBox implements PlannerListener {
     ListView dayList;
     ObservableList<HBox> dayListArray;
     Stage primaryStage;
+    DayTabController controller;
 
     public DaySidebar(Rectangle2D bounds) {
         // Initialize Components for the day tab
@@ -90,11 +92,15 @@ public class DaySidebar extends VBox implements PlannerListener {
             Label time = new Label("Time: " + currentEvent.getStart() + " - " + currentEvent.getEnd());
             Label location = new Label("Location: " + currentEvent.getLocation());
 
-            Button button = new Button("Details");
-            button.setPrefSize(80,40);
+            Button detailsButton = new Button("Details");
+            detailsButton.setPrefSize(60, 40);
+
+            Button removeButton = new Button("Remove");
+            removeButton.setPrefSize(80, 40);
 
             // Moved details window code to its own function to fully view the event
-            initializeDetailsButton(currentEvent, button);
+            initializeDetailsButton(currentEvent, detailsButton);
+            initializeRemoveButton(currentEvent, removeButton);
 
             HBox box = new HBox();
             box.setPadding(new Insets(2,2,2,2));
@@ -103,11 +109,16 @@ public class DaySidebar extends VBox implements PlannerListener {
             left.setPrefSize(200, 50);
             left.setAlignment(Pos.CENTER_LEFT);
 
-            VBox right = new VBox(button);
-            right.setPrefSize(200, 50);
-            right.setAlignment(Pos.CENTER_RIGHT);
+            VBox detailsButtonBox = new VBox(detailsButton);
+            detailsButtonBox.setPrefSize(100, 50);
+            //detailsButtonBox.setStyle("-fx-background-color: Black");
+            detailsButtonBox.setAlignment(Pos.CENTER);
 
-            box.getChildren().addAll(left, right);
+            VBox removeButtonBox = new VBox(removeButton);
+            removeButtonBox.setPrefSize(200, 50);
+            //removeButtonBox.setStyle("-fx-background-color: White");
+            removeButtonBox.setAlignment(Pos.CENTER_RIGHT);
+            box.getChildren().addAll(left, detailsButtonBox, removeButtonBox);
 
             box.setAlignment(Pos.CENTER_LEFT);
             box.setPrefSize(400, 50);
@@ -136,6 +147,10 @@ public class DaySidebar extends VBox implements PlannerListener {
 
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
+    }
+
+    public void setController(DayTabController controller){
+        this.controller = controller;
     }
 
     public void setButtonController(DayTabController controller) {
@@ -225,5 +240,10 @@ public class DaySidebar extends VBox implements PlannerListener {
                 dialog.show();
             }
         });
+    }
+
+    public void initializeRemoveButton(Event currentEvent, Button button) {
+        controller.setEventToDelete(currentEvent);
+        button.setOnAction(controller::handleRemoveEventClicked);
     }
 }

@@ -81,6 +81,7 @@ public class Main extends Application {
         dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
 
         //Set up each view with the model it will draw
+        dayView.setController(daytabController);
         dayView.setModel(calendarModel);
         taskView.setModel(taskModel);
         calendarView.setModel(calendarModel);
@@ -99,6 +100,9 @@ public class Main extends Application {
         dayView.setButtonController(daytabController);
         gradeView.setButtonController(gradeController);
         taskView.setButtonController(taskController);
+
+        // needed for remove
+
 
         // Set the title
         primaryStage.setTitle("CMPT370 Project");
