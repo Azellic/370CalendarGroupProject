@@ -25,6 +25,7 @@ public class Calendar {
        this.selectedDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
        this.selectedMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
        this.selectedYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+       //this.currentDayEvents = getEvents();
        this.db = new DataBase();
        this.currentDayEvents = new ArrayList<Event>();
    }
@@ -88,7 +89,6 @@ public class Calendar {
            }
        }
        db.closeConnection();
-       System.out.println(events);
        return events;
    }
 
@@ -103,8 +103,8 @@ public class Calendar {
               userInput.getMonth(), userInput.getYear(), userInput.getColor().getRed(), userInput.getColor().getGreen(),
                userInput.getColor().getBlue(), userInput.getTitle(),userInput.getDescription(),
                userInput.getLocation());
-       currentDayEvents.add(userInput);
        db.closeConnection();
+       currentDayEvents = getEvents();
        notifySubscribers();
    }
 
