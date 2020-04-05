@@ -26,6 +26,7 @@ public class Calendar {
        this.selectedMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;
        this.selectedYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
        this.db = new DataBase();
+       this.currentDayEvents = new ArrayList<Event>();
    }
 
    public void setSelectedDay(LocalDate date){
@@ -112,7 +113,7 @@ public class Calendar {
    }
 
    private void notifySubscribers() {
-        subscribers.forEach(sub -> sub.modelChanged());
+        subscribers.forEach(PlannerListener::modelChanged);
    }
 
 }
