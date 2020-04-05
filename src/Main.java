@@ -56,8 +56,9 @@ public class Main extends Application {
         taskController = new TaskTabController();
 
         calendarModel = new Calendar();
-        coursesModel = new CoursesModel();
         taskModel = new TaskBoardModel();
+        coursesModel = new CoursesModel(calendarModel, taskModel);
+
 
         //Set up the controllers with respective models
         calController.setModel(calendarModel);

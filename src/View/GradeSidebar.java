@@ -36,7 +36,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
     ListView gradesList;
     VBox summary = new VBox();
     ObservableList<HBox> assessmentsListArray;
-    private Button addGradeButton, addCourseButton;
+    private Button addGradeButton, addCourseButton, removeCourseButton;
     ObservableList<String> courses;
     ComboBox<String> courseChoice;
     GradeTabController controller;
@@ -69,6 +69,11 @@ public class GradeSidebar extends VBox implements PlannerListener {
         addGradeButton.setPrefHeight(60);
         addGradeButton.setPrefWidth(100);
 
+        // Initialize the remove grade button
+        removeCourseButton = new Button("Remove Course");
+        removeCourseButton.setPrefWidth(60);
+        removeCourseButton.setPrefWidth(110);
+
         // Title fields
         Label title = new Label("Title");
         Label grade = new Label("Grade");
@@ -87,7 +92,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
         gradeBox.setAlignment(Pos.CENTER_LEFT);
         gradeBox.setPadding(new Insets(0, 0, 0, 8));
 
-
         VBox weightBox = new VBox(weight);
         weightBox.setPrefSize(50, 50);
         weightBox.setAlignment(Pos.CENTER_LEFT);
@@ -97,7 +101,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
         fields.setPrefHeight(100);
 
         // ButtonBar
-        HBox buttonBar = new HBox(addGradeButton, addCourseButton);
+        HBox buttonBar = new HBox(addGradeButton, addCourseButton, removeCourseButton);
         buttonBar.setPrefHeight(100);
 
         generateSummary();
@@ -129,6 +133,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
     public void setButtonController(GradeTabController controller) {
         addGradeButton.setOnAction(controller::handleAddGradeClicked);
         addCourseButton.setOnAction(controller::handleAddCourseClicked);
+        removeCourseButton.setOnAction(controller::handleRemoveCourseClicked);
         courseChoice.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
@@ -193,7 +198,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
             Button detailsButton = new Button("Details");
             detailsButton.setPrefSize(70, 40);
             initializeDetailsButton(currentAssessment, detailsButton);
-
 
             Button removeButton = new Button("Remove");
             removeButton.setPrefSize(70, 40);
@@ -300,7 +304,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Button Clicked");
                 controller.setAssessmentToDelete(currentAssessment);
                 controller.handleRemoveAssessmentClicked(actionEvent);
             }

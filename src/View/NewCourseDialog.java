@@ -20,7 +20,7 @@ public class NewCourseDialog extends InputDialog {
         addCourseBox = new VBox();
         addCourseBox.setPrefWidth(400);
 
-        Label mainLabel = new Label("Enter new grade information");
+        Label mainLabel = new Label("Enter new course information");
         mainLabel.setFont(new Font("Arial", 16));
         title = new TextField();
         title.setPromptText("Title");

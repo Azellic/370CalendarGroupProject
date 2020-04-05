@@ -48,6 +48,11 @@ public class Calendar {
        }
    }
 
+   public void updateEvents() {
+       currentDayEvents = getEvents();
+       notifySubscribers();
+   }
+
    private ArrayList<Event> formatEventQuery(ResultSet query, ArrayList<Event> events) {
        try {
            while (query.next()) {

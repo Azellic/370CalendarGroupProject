@@ -160,6 +160,26 @@ public class DataBase {
         }
     }
 
+    public void deleteCourse(String courseName) {
+        PreparedStatement prep = null;
+        try {
+            setConnection();
+            prep = con.prepareStatement("DELETE FROM course WHERE courseName = ?");
+            prep.setString(1, courseName);
+            prep.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Problem deleting course form data base");
+            e.printStackTrace();
+        } finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing deleteCourse prepared statement");
+                e.printStackTrace();
+            }
+        }
+    }
+
     public ResultSet getAllCourses() {
         ResultSet resultQuery = null;
         try {

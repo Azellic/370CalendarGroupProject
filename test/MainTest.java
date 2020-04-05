@@ -60,7 +60,9 @@ public class MainTest {
         // Make sure to start with a new database
         db = new DataBase();
         db.startUp();
-        courseModel = new CoursesModel();
+        calendarModel = new Calendar();
+        taskModel = new TaskBoardModel();
+        courseModel = new CoursesModel(calendarModel, taskModel);
         /**
          * Inserting Courses, Tests will check if succeeded
          */
@@ -116,7 +118,6 @@ public class MainTest {
         /**
          * Inserting Events
          */
-        calendarModel = new Calendar();
         SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
         String startTimeString = "9:30";
         String endTimeString = "12:30";
@@ -146,9 +147,9 @@ public class MainTest {
                 4, 2020, startTime, endTime, "Physics");
         event8 = new Event("Class8", "test8", "CMPT360", Color.RED, 9,
                 4, 2020, startTime, endTime, "Physics");
-        event9 = new Event("Class9", "test9", "MATH364", Color.ORANGE, 9,
+        event9 = new Event("Class9", "test9", "CMPT360", Color.ORANGE, 9,
                 4, 2020, startTime, endTime, "Arts");
-        event10 = new Event("Class10", "test10", "MATH364", Color.ORANGE, 7,
+        event10 = new Event("Class10", "test10", "CMPT370", Color.ORANGE, 7,
                 4, 2020, startTime, endTime, "Arts");
         calendarModel.insertEvent(event1);
         calendarModel.insertEvent(event2);
@@ -163,7 +164,6 @@ public class MainTest {
         /**
          * Inserting tasks
          */
-        taskModel = new TaskBoardModel();
         String dueTimeString = "18:00";
         Time dueTime;
         try {
@@ -213,6 +213,26 @@ public class MainTest {
         assertTrue(course3.equalsByField(coursesDB.get(3)));
     }
 
+    @Test
+    public void deleteCoursesTest() {
+        ArrayList<Course> coursesDB;
+        coursesDB = courseModel.getCoursesFromDB();
+        ArrayList<Assessment> assessmentsDB;
+        assessmentsDB = courseModel.getSpecificCourseAssessmentList("MATH364");
+
+        assertEquals(5, coursesDB.size());
+        assertEquals(50, assessmentsDB.size());
+
+        db.deleteCourse("MATH364");
+        coursesDB = courseModel.getCoursesFromDB();
+        assessmentsDB = courseModel.getSpecificCourseAssessmentList("MATH364");
+
+        assertEquals(4, coursesDB.size());
+        assertEquals(0, assessmentsDB.size());
+
+
+
+    }
     @Test
     public void insertAssessmentsTest() {
         ArrayList<Assessment> assessmentsDB;

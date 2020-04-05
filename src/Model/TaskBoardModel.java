@@ -25,6 +25,11 @@ public class TaskBoardModel {
         return tasks;
     }
 
+    public void updateTasks() {
+        tasks = getTasksFromDB();
+        notifySubscribers();
+    }
+
     public ArrayList<Task> getTasksFromDB() {
         ResultSet tasksQuery = db.getAllTasks();
         ArrayList<Task> tasks = new ArrayList<>();
