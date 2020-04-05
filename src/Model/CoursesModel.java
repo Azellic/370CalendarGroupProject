@@ -145,6 +145,17 @@ public class CoursesModel {
         notifySubscribers();
     }
 
+    public void deleteAssessment(Assessment userInput) {
+        db.deleteAssessment(userInput.getCourseTitle(), userInput.getWeight(), userInput.getMark(),
+                userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
+                userInput.getYear());
+        if (userInput.getCourseTitle() == getSelectedCourse()) {
+            updateAssessmentList();
+        }
+        System.out.println("Here");
+        notifySubscribers();
+    }
+
     public void addSubscriber (PlannerListener aSub) {
         subscribers.add(aSub);
     }

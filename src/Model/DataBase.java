@@ -342,6 +342,36 @@ public class DataBase {
         }
     }
 
+    public void deleteAssessment(String courseName, double weight, double grade, String assessmentTitle,
+                                 String description, int day, int month, int year) {
+        PreparedStatement prep = null;
+        try {
+            setConnection();
+            prep = con.prepareStatement("DELETE FROM assessment WHERE " +
+                    "weight = ? AND grade = ? AND assessmentTitle = ? AND description = ? " +
+                    "AND day = ? AND month = ? AND year = ? AND" +
+                    "(SELECT courseID from course where courseName = ?);");
+            prep.setDouble(1, weight);
+            prep.setDouble(2, grade);
+            prep.setString(3, assessmentTitle);
+            prep.setString(4, description);
+            prep.setInt(5, day);
+            prep.setInt(6, month);
+            prep.setInt(7, year);
+            prep.setString(8, courseName);
+            prep.executeUpdate();
+        } catch (SQLException e){
+            System.out.println("Problem deleting assessment from dataBase");
+            e.printStackTrace();
+        } finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                System.out.println("Problem closing deleteAssessment prepared statement");
+            }
+        }
+    }
+
     public ResultSet getSpecificCourseAssessments(String courseName) {
         ResultSet resultQuery = null;
         try {

@@ -119,8 +119,8 @@ public class DaySidebar extends VBox implements PlannerListener {
             removeButtonBox.setPrefSize(200, 50);
             //removeButtonBox.setStyle("-fx-background-color: White");
             removeButtonBox.setAlignment(Pos.CENTER_RIGHT);
-            box.getChildren().addAll(left, detailsButtonBox, removeButtonBox);
 
+            box.getChildren().addAll(left, detailsButtonBox, removeButtonBox);
             box.setAlignment(Pos.CENTER_LEFT);
             box.setPrefSize(400, 50);
 

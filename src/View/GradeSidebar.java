@@ -39,6 +39,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
     private Button addGradeButton, addCourseButton;
     ObservableList<String> courses;
     ComboBox<String> courseChoice;
+    GradeTabController controller;
 
     Stage primaryStage;
 
@@ -76,19 +77,23 @@ public class GradeSidebar extends VBox implements PlannerListener {
         HBox fields = new HBox();
         fields.setPadding(new Insets(2,2,2,2));
 
-        VBox left = new VBox(title);
-        left.setPrefSize(100, 50);
-        left.setAlignment(Pos.CENTER_LEFT);
+        VBox titleBox = new VBox(title);
+        titleBox.setPrefSize(100, 50);
+        titleBox.setAlignment(Pos.CENTER_LEFT);
+        titleBox.setPadding(new Insets(0, 0, 0, 8));
 
-        VBox center = new VBox(grade);
-        center.setPrefSize(100, 50);
-        center.setAlignment(Pos.CENTER);
+        VBox gradeBox = new VBox(grade);
+        gradeBox.setPrefSize(100, 50);
+        gradeBox.setAlignment(Pos.CENTER_LEFT);
+        gradeBox.setPadding(new Insets(0, 0, 0, 8));
 
-        VBox right = new VBox(weight);
-        right.setPrefSize(100, 50);
-        right.setAlignment(Pos.CENTER_RIGHT);
 
-        fields.getChildren().addAll(left, center, right);
+        VBox weightBox = new VBox(weight);
+        weightBox.setPrefSize(50, 50);
+        weightBox.setAlignment(Pos.CENTER_LEFT);
+        weightBox.setPadding(new Insets(0, 0, 0, 8));
+
+        fields.getChildren().addAll(titleBox, gradeBox, weightBox);
         fields.setPrefHeight(100);
 
         // ButtonBar
@@ -115,6 +120,10 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
     public void modelChanged() {
         draw();
+    }
+
+    public void setGradeController(GradeTabController controller) {
+        this.controller = controller;
     }
 
     public void setButtonController(GradeTabController controller) {
@@ -181,44 +190,55 @@ public class GradeSidebar extends VBox implements PlannerListener {
             Label value = new Label(currentAssessment.getMark() + "%");
             Label weight = new Label(currentAssessment.getWeight() + "");
 
-            Button button = new Button("Details");
-            button.setPrefSize(80, 40);
-            initializeDetailsButton(currentAssessment, button);
+            Button detailsButton = new Button("Details");
+            detailsButton.setPrefSize(70, 40);
+            initializeDetailsButton(currentAssessment, detailsButton);
+
+
+            Button removeButton = new Button("Remove");
+            removeButton.setPrefSize(70, 40);
+            initializeRemoveButton(currentAssessment, removeButton);
 
             HBox box = new HBox();
             box.setPadding(new Insets(2,2,2,2));
 
-            HBox left = new HBox(title);
-            left.setAlignment(Pos.CENTER_LEFT);
-            left.setPrefSize(100, 50);
+            HBox titleBox = new HBox(title);
+            titleBox.setAlignment(Pos.CENTER_LEFT);
+            titleBox.setPrefSize(91, 50);
 
-            HBox center = new HBox(value);
-            center.setAlignment(Pos.CENTER);
-            center.setPrefSize(100, 50);
+            HBox markBox = new HBox(value);
+            markBox.setAlignment(Pos.CENTER_LEFT);
+            markBox.setPadding(new Insets(0, 0, 0, 8));
+            markBox.setPrefSize(100, 50);
 
-            HBox rightText = new HBox(weight);
-            rightText.setAlignment(Pos.CENTER_RIGHT);
-            rightText.setPrefSize(100, 50);
+            HBox weightBox = new HBox(weight);
+            weightBox.setAlignment(Pos.CENTER_LEFT);
+            weightBox.setPadding(new Insets(0, 0, 0, 8));
+            weightBox.setPrefSize(60, 50);
 
-            HBox right = new HBox(button);
-            right.setPrefSize(100, 50);
-            right.setAlignment(Pos.CENTER_RIGHT);
+            HBox detailsButtonBox = new HBox(detailsButton);
+            detailsButtonBox.setPrefSize(80, 50);
+            detailsButtonBox.setAlignment(Pos.CENTER_LEFT);
 
-            HBox gradeDisplayInfo = new HBox();
-            gradeDisplayInfo.setPadding(new Insets(2, 2, 2, 2));
-            gradeDisplayInfo.setPrefSize(400, 50);
-            gradeDisplayInfo.getChildren().addAll(left, center, rightText, right);
-            gradeDisplayInfo.setAlignment(Pos.CENTER_LEFT);
+            HBox removeButtonBox = new HBox(removeButton);
+            removeButtonBox.setPrefSize(75, 50);
+            removeButtonBox.setAlignment(Pos.CENTER_LEFT);
+
+            box.getChildren().addAll(titleBox, markBox, weightBox, detailsButtonBox, removeButtonBox);
+            box.setAlignment(Pos.CENTER_LEFT);
+            box.setPrefSize(400, 50);
 
             // Generates alternating colours for the boxes
             if (i % 2 == 0) {
-                gradeDisplayInfo.setStyle("-fx-background-color: lavender");
+                box.setStyle("-fx-background-color: lavender");
+                //gradeDisplayInfo.setStyle("-fx-background-color: lavender");
             } else {
-                gradeDisplayInfo.setStyle("-fx-background-color: lightslategrey");
+                box.setStyle("-fx-background-color: lightslategray");
+                //gradeDisplayInfo.setStyle("-fx-background-color: lightslategrey");
             }
 
             // Add the new box to the array to display
-            box.getChildren().add(gradeDisplayInfo);
+            //box.getChildren().add(gradeDisplayInfo);
 
             assessmentsListArray.add(box);
             i++;
@@ -272,6 +292,17 @@ public class GradeSidebar extends VBox implements PlannerListener {
                 Scene dialogScene = new Scene(dialogVbox, 300, 200);
                 dialog.setScene(dialogScene);
                 dialog.show();
+            }
+        });
+    }
+
+    public void initializeRemoveButton(Assessment currentAssessment, Button button) {
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Button Clicked");
+                controller.setAssessmentToDelete(currentAssessment);
+                controller.handleRemoveAssessmentClicked(actionEvent);
             }
         });
     }

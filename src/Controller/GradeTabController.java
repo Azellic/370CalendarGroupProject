@@ -15,9 +15,14 @@ import java.util.Optional;
 
 public class GradeTabController {
     CoursesModel model;
+    Assessment assessmentToDelete;
 
     public void setModel(CoursesModel newModel) {
         model = newModel;
+    }
+
+    public void setAssessmentToDelete(Assessment assessment) {
+        this.assessmentToDelete = assessment;
     }
 
     public void handleAddGradeClicked(ActionEvent actionEvent) {
@@ -50,5 +55,10 @@ public class GradeTabController {
 
             model.insertCourse(event);
         });
+    }
+
+    public void handleRemoveAssessmentClicked(ActionEvent actionEvent) {
+        System.out.println("handldREmove");
+        model.deleteAssessment(assessmentToDelete);
     }
 }
