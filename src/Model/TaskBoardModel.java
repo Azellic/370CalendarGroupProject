@@ -25,6 +25,11 @@ public class TaskBoardModel {
         return tasks;
     }
 
+    public void updateTasks() {
+        tasks = getTasksFromDB();
+        notifySubscribers();
+    }
+
     public ArrayList<Task> getTasksFromDB() {
         ResultSet tasksQuery = db.getAllTasks();
         ArrayList<Task> tasks = new ArrayList<>();
@@ -61,9 +66,16 @@ public class TaskBoardModel {
         db.insertTask(userInput.getTitle(), userInput.getDescription(), userInput.getCourseName(),
                 userInput.getColor().getRed(), userInput.getColor().getGreen(), userInput.getColor().getBlue(),
                 userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getDueTime().toString());
-        getTasks().add(userInput);
+        tasks = getTasksFromDB();
         db.closeConnection();
-        System.out.println(getTasks());
+        notifySubscribers();
+    }
+
+    public void deleteTask(Task userInput) {
+        db.deleteTask(userInput.getTitle(), userInput.getDescription(), userInput.getCourseName(),
+                userInput.getColor().getRed(), userInput.getColor().getGreen(), userInput.getColor().getBlue(),
+                userInput.getDay(), userInput.getMonth(), userInput.getYear(), userInput.getDueTime().toString());
+        db.closeConnection();
         notifySubscribers();
     }
 

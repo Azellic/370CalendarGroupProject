@@ -30,7 +30,7 @@ public class TaskSidebar extends VBox implements PlannerListener  {
     Button addTaskbutton;
     ListView tasksList;
     ObservableList<HBox> taskListArray;
-
+    TaskTabController controller;
     Stage primaryStage;
 
 
@@ -65,6 +65,10 @@ public class TaskSidebar extends VBox implements PlannerListener  {
         draw();
     }
 
+    public void setController(TaskTabController controller) {
+        this.controller = controller;
+    }
+
     public void setButtonController(TaskTabController controller) {
         addTaskbutton.setOnAction(controller::handleAddTaskClicked);
     }
@@ -87,8 +91,12 @@ public class TaskSidebar extends VBox implements PlannerListener  {
             Button button = new Button("Details");
             button.setPrefSize(80,40);
 
+            Button removeButton = new Button("Remove");
+            removeButton.setPrefSize(80, 40);
+
             // Moved details window code to its own function to fully view the event
             initializeDetailsButton(currentTask, button);
+            initializeRemoveButton(currentTask, removeButton);
 
             HBox box = new HBox();
             box.setPadding(new Insets(2,2,2,2));
@@ -101,7 +109,11 @@ public class TaskSidebar extends VBox implements PlannerListener  {
             right.setPrefSize(200, 50);
             right.setAlignment(Pos.CENTER_RIGHT);
 
-            box.getChildren().addAll(left, right);
+            VBox removeButtonBox = new VBox(removeButton);
+            removeButtonBox.setPrefSize(200, 50);
+            removeButtonBox.setAlignment(Pos.CENTER_RIGHT);
+
+            box.getChildren().addAll(left, right, removeButtonBox);
 
             box.setAlignment(Pos.CENTER_LEFT);
             box.setPrefSize(400, 50);
@@ -207,6 +219,17 @@ public class TaskSidebar extends VBox implements PlannerListener  {
                 Scene dialogScene = new Scene(dialogVbox, 300, 200);
                 dialog.setScene(dialogScene);
                 dialog.show();
+            }
+        });
+    }
+
+    public void initializeRemoveButton(Task currentTask, Button button) {
+        Task buttonTask = currentTask;
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.setTaskToDelete(buttonTask);
+                controller.handleRemoveTaskClicked(actionEvent);
             }
         });
     }

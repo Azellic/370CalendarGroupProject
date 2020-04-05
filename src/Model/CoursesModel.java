@@ -14,11 +14,15 @@ public class CoursesModel {
     DataBase db;
     double minimumGrade;
     double averageGrade;
+    Calendar calendarModel;
+    TaskBoardModel taskModel;
 
-    public CoursesModel() {
+    public CoursesModel(Calendar calendarModel, TaskBoardModel taskModel) {
         subscribers = new ArrayList<>();
         db = new DataBase();
         courses = getCoursesFromDB();
+        this.calendarModel = calendarModel;
+        this.taskModel = taskModel;
     }
 
     public ArrayList<Course> getCourseList() {
@@ -134,11 +138,34 @@ public class CoursesModel {
         notifySubscribers();
     }
 
+    public void deleteCourse(Course userInput) {
+        db.deleteCourse(userInput.getTitle());
+        db.closeConnection();
+        courses = getCoursesFromDB();
+        if (userInput.getTitle() == getSelectedCourse()) {
+            setSelectedCourse("Default");
+            updateAssessmentList();
+        }
+        taskModel.updateTasks();
+        calendarModel.updateEvents();
+        notifySubscribers();
+    }
+
     public void insertAssessment(Assessment userInput) {
         db.insertAssessment(userInput.getCourseTitle(), userInput.getWeight(), userInput.getMark(),
                 userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
                 userInput.getYear());
         db.closeConnection();
+        if (userInput.getCourseTitle() == getSelectedCourse()) {
+            updateAssessmentList();
+        }
+        notifySubscribers();
+    }
+
+    public void deleteAssessment(Assessment userInput) {
+        db.deleteAssessment(userInput.getCourseTitle(), userInput.getWeight(), userInput.getMark(),
+                userInput.getTitle(), userInput.getDescription(), userInput.getDay(), userInput.getMonth(),
+                userInput.getYear());
         if (userInput.getCourseTitle() == getSelectedCourse()) {
             updateAssessmentList();
         }

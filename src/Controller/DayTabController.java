@@ -14,6 +14,7 @@ import java.util.Optional;
 public class DayTabController {
     Calendar model;
     CoursesModel courseModel;
+    Event eventToDelete;
 
     public void setModel(Calendar newModel) {
         model = newModel;
@@ -21,6 +22,10 @@ public class DayTabController {
 
     public void setCoursesModel(CoursesModel newModel) {
         courseModel = newModel;
+    }
+
+    public void setEventToDelete(Event event) {
+        this.eventToDelete = event;
     }
 
     /**
@@ -44,6 +49,10 @@ public class DayTabController {
 
             model.insertEvent(event);
         });
+    }
+
+    public void handleRemoveEventClicked(ActionEvent actionEvent) {
+        model.deleteEvent(eventToDelete);
     }
 }
 

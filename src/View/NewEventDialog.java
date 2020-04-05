@@ -146,6 +146,8 @@ public class NewEventDialog extends InputDialog {
 
             if (!courseChoice.getValue().equals("None")){
                 newEvent.setCourseName(courseChoice.getValue());
+            } else {
+                newEvent.setCourseName("Default");
             }
 
             return newEvent;

@@ -111,13 +111,14 @@ public class NewTaskDialog extends InputDialog {
             }
             LocalTime eTime = LocalTime.of(hour.getValue()+mod, minute.getValue());
 
-
             Task newTask =  new Task(title.getText(), desc.getText(), courseChoice.getValue(), c,
                     datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
                     datePicker.getValue().getYear(), Time.valueOf(eTime));
 
             if (!courseChoice.getValue().equals("None")){
                 newTask.setCourseName(courseChoice.getValue());
+            } else {
+                newTask.setCourseName("Default");
             }
 
             return newTask;

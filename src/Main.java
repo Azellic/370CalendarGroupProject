@@ -56,8 +56,9 @@ public class Main extends Application {
         taskController = new TaskTabController();
 
         calendarModel = new Calendar();
-        coursesModel = new CoursesModel();
         taskModel = new TaskBoardModel();
+        coursesModel = new CoursesModel(calendarModel, taskModel);
+
 
         //Set up the controllers with respective models
         calController.setModel(calendarModel);
@@ -81,6 +82,11 @@ public class Main extends Application {
         dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
 
         //Set up each view with the model it will draw
+        dayView.setController(daytabController);
+        taskView.setController(taskController);
+        gradeView.setGradeController(gradeController);
+
+
         dayView.setModel(calendarModel);
         taskView.setModel(taskModel);
         calendarView.setModel(calendarModel);
@@ -99,6 +105,9 @@ public class Main extends Application {
         dayView.setButtonController(daytabController);
         gradeView.setButtonController(gradeController);
         taskView.setButtonController(taskController);
+
+        // needed for remove
+
 
         // Set the title
         primaryStage.setTitle("CMPT370 Project");

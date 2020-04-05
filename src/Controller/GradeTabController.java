@@ -5,6 +5,7 @@ import Model.Course;
 import Model.CoursesModel;
 import View.NewCourseDialog;
 import View.NewGradeDialog;
+import View.RemoveCourseDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,9 +16,14 @@ import java.util.Optional;
 
 public class GradeTabController {
     CoursesModel model;
+    Assessment assessmentToDelete;
 
     public void setModel(CoursesModel newModel) {
         model = newModel;
+    }
+
+    public void setAssessmentToDelete(Assessment assessment) {
+        this.assessmentToDelete = assessment;
     }
 
     public void handleAddGradeClicked(ActionEvent actionEvent) {
@@ -50,5 +56,28 @@ public class GradeTabController {
 
             model.insertCourse(event);
         });
+    }
+
+    public void handleRemoveCourseClicked(ActionEvent actionEvent) {
+        ArrayList<String> courseStrings = new ArrayList<>();
+        ArrayList<Course> courses = model.getCourseList();
+        for(Course c : courses){
+            if(!c.getTitle().equals("Default")){
+                courseStrings.add(c.getTitle());
+            }
+        }
+        Dialog<Course> dialog = new RemoveCourseDialog(courseStrings);
+
+        Optional<Course> result = dialog.showAndWait();
+
+        result.ifPresent(event -> {
+            System.out.println(event.toString());
+
+            model.deleteCourse(event);
+        });
+    }
+
+    public void handleRemoveAssessmentClicked(ActionEvent actionEvent) {
+        model.deleteAssessment(assessmentToDelete);
     }
 }
