@@ -297,6 +297,24 @@ public class DataBase {
         return resultQuery;
     }
 
+    public ResultSet getNumEventsSpecificDay(int year, int month, int day) {
+        ResultSet resultQuery = null;
+        try {
+            setConnection();
+            PreparedStatement prep= con.prepareStatement("SELECT COUNT(*) AS rowcount FROM event " +
+                    "WHERE year = ? AND month = ? AND day = ?; ");
+            prep.setInt(1, year);
+            prep.setInt(2, month);
+            prep.setInt(3, day);
+            resultQuery = prep.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Problem getting number of events");
+            e.printStackTrace();
+        }
+
+        return resultQuery;
+    }
+
     public ResultSet getEvents(int year, int month, int day) {
         ResultSet resultQuery = null;
         try {
