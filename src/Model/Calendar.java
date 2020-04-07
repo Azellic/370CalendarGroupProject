@@ -35,6 +35,11 @@ public class Calendar {
        notifySubscribers();
    }
 
+   public LocalDate getSelectedDay(){
+       LocalDate date = LocalDate.of(selectedYear, selectedMonth, selectedDay);
+       return date;
+   }
+
    public void changeMonthBy(int increment) {
        selectedMonth += increment;
        if(selectedMonth < 1){

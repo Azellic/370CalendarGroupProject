@@ -3,13 +3,14 @@ package View;
 import Controller.CalendarController;
 import Model.Calendar;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -92,14 +93,10 @@ public class FullCalendarView implements PlannerListener {
         });
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
-        // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth);
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
     }
-    public YearMonth getCurrentYearMonth() {
-        return currentYearMonth;
-    }
+
     /**
      * Set the days of the calendar to correspond to the appropriate date
      * @param yearMonth year and month of month to render
@@ -114,14 +111,35 @@ public class FullCalendarView implements PlannerListener {
         // Populate the calendar with day numbers
         for (AnchorPaneNode ap : allCalendarDays) {
             if (ap.getChildren().size() != 0) {
-                ap.getChildren().remove(0);
+                ap.getChildren().clear();
             }
-            Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+            Text day = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+            if(model.getSelectedDay().compareTo(calendarDate) == 0){
+                ap.setBackground(new Background(new BackgroundFill(Color.rgb(204, 204, 255),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else if(LocalDate.now().compareTo(calendarDate) == 0){
+                ap.setBackground(new Background(new BackgroundFill(Color.rgb(148, 148, 209),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else{
+                ap.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+            }
             ap.setDate(calendarDate);
-            //TODO: If we are going to add events to the calendar, this would be the place
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
+            int count = model.getNumEventsSpecificDay(calendarDate.getYear(),
+                    calendarDate.getMonthValue(), calendarDate.getDayOfMonth());
+            ap.setTopAnchor(day, 5.0);
+            ap.setLeftAnchor(day, 5.0);
+            ap.getChildren().add(day);
+            if(count > 0){
+                Text eventCount = new Text("Events: " + String.valueOf(count));
+                eventCount.setBoundsType(TextBoundsType.VISUAL);
+                ap.setRightAnchor(eventCount, 10.0);
+                ap.setBottomAnchor(eventCount, 10.0);
+                ap.getChildren().add(eventCount);
+            }
+
             calendarDate = calendarDate.plusDays(1);
         }
         // Change the title of the calendar
