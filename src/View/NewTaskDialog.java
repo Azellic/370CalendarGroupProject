@@ -106,10 +106,16 @@ public class NewTaskDialog extends InputDialog {
             }
 
             int mod = 0;
-            if (((RadioButton) groupAMPM.getSelectedToggle()).getText().equals("PM")){
+            if (((RadioButton) groupAMPM.getSelectedToggle()).getText().equals("PM") && hour.getValue() != 12){
                 mod = 12;
             }
+
             LocalTime eTime = LocalTime.of(hour.getValue()+mod, minute.getValue());
+
+            if(((RadioButton)groupAMPM.getSelectedToggle()).getText().equals("AM") && (hour.getValue()) == 12){
+                eTime = LocalTime.of(0, minute.getValue());
+            }
+
 
             Task newTask =  new Task(title.getText(), desc.getText(), courseChoice.getValue(), c,
                     datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
