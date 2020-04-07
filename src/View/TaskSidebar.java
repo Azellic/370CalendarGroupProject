@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -88,35 +89,33 @@ public class TaskSidebar extends VBox implements PlannerListener  {
             Label day = new Label("Day: " + currentTask.getDay() + "/" + currentTask.getMonth() + "/" + currentTask.getYear());
             Label dueDate = new Label("Due Time: " + currentTask.getDueTime());
 
-            Button button = new Button("Details");
-            button.setPrefSize(80,40);
+            Button detailsButton = new Button("Details");
+            detailsButton.setPrefSize(80,60);
 
             Button removeButton = new Button("Remove");
-            removeButton.setPrefSize(80, 40);
+            removeButton.setPrefSize(80, 60);
 
             // Moved details window code to its own function to fully view the event
-            initializeDetailsButton(currentTask, button);
+            initializeDetailsButton(currentTask, detailsButton);
             initializeRemoveButton(currentTask, removeButton);
 
             HBox box = new HBox();
             box.setPadding(new Insets(2,2,2,2));
 
             VBox left = new VBox(title, day, dueDate);
-            left.setPrefSize(200, 50);
+            left.setPrefSize(250, 60);
             left.setAlignment(Pos.CENTER_LEFT);
 
-            VBox right = new VBox(button);
-            right.setPrefSize(200, 50);
+            HBox right = new HBox(detailsButton, removeButton);
+            right.setPrefSize(300, 60);
+            right.setSpacing(20);
+            right.setPadding(new Insets(10, 30, 10, 30));
             right.setAlignment(Pos.CENTER_RIGHT);
 
-            VBox removeButtonBox = new VBox(removeButton);
-            removeButtonBox.setPrefSize(200, 50);
-            removeButtonBox.setAlignment(Pos.CENTER_RIGHT);
-
-            box.getChildren().addAll(left, right, removeButtonBox);
+            box.getChildren().addAll(left, right);
 
             box.setAlignment(Pos.CENTER_LEFT);
-            box.setPrefSize(400, 50);
+            box.setPrefSize(400, 60);
 
            if(currentTask.getColor() == null) {
                 if (i % 2 == 0) {
