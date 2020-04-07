@@ -2,7 +2,6 @@ package Model;
 
 import java.awt.*;
 
-import View.DaySidebar;
 import View.PlannerListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +33,11 @@ public class Calendar {
        selectedYear = date.getYear();
        currentDayEvents = getEvents();
        notifySubscribers();
+   }
+
+   public LocalDate getSelectedDay(){
+       LocalDate date = LocalDate.of(selectedYear, selectedMonth, selectedDay);
+       return date;
    }
 
    public void changeMonthBy(int increment) {

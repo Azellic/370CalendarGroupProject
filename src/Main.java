@@ -91,6 +91,9 @@ public class Main extends Application {
         taskView.setModel(taskModel);
         calendarView.setModel(calendarModel);
 
+        // Populate calendar with the appropriate day numbers
+        calendarView.populateCalendar(YearMonth.now());
+
         dayView.setStage(primaryStage);
         taskView.setStage(primaryStage);
         gradeView.setStage(primaryStage);
