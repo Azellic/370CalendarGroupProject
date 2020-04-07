@@ -8,14 +8,11 @@ public class CalendarItem {
     protected String description;
     private Color color;
     private String courseName;
-    //private Course course;
-
 
     public CalendarItem(String title, String description, String courseName, Color color){
         this.title = title;
         this.description = description;
         this.courseName = courseName;
-        //this.course = course;
         this.color = color;
     }
 
@@ -42,19 +39,6 @@ public class CalendarItem {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-
-    //    public Course getCourse(){
-//        return this.course;
-//    }
-
-//    public void setCourse(Course course){
-//        this.course = course;
-//    }
-
-//    public void setCourse(String value) {
-//        //TODO: find course by name and assign
-//    }
-
 
     public Color getColor(){
         return this.color;

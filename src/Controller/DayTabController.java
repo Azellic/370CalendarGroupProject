@@ -40,12 +40,11 @@ public class DayTabController {
             courseStrings.add(c.getTitle());
         }
 
-        Dialog<Event> dialog = new NewEventDialog(courseStrings);// in order to generate list of courses
+        Dialog<Event> dialog = new NewEventDialog(courseStrings);
 
         Optional<Event> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            //System.out.println("DayTabController: " + event.toString());
 
             model.insertEvent(event);
         });

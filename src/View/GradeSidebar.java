@@ -152,7 +152,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
         for (Course c : allCourses) {
             courseStrings.add(c.getTitle());
         }
-        System.out.println(courseStrings.toString());
         courses = FXCollections.observableArrayList(courseStrings);
         if (courseChoice != null) {
             currentChoice = courseChoice.getValue();
@@ -239,9 +238,6 @@ public class GradeSidebar extends VBox implements PlannerListener {
                 box.setStyle("-fx-background-color: lightslategray");
                 //gradeDisplayInfo.setStyle("-fx-background-color: lightslategrey");
             }
-
-            // Add the new box to the array to display
-            //box.getChildren().add(gradeDisplayInfo);
 
             assessmentsListArray.add(box);
             i++;

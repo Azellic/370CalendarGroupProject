@@ -128,7 +128,6 @@ public class TaskSidebar extends VBox implements PlannerListener  {
             else {
                 String colour = "-fx-background-color: " + getColour(currentTask.getColor());
 
-                System.out.println("Colour found: " + colour);
                 box.setStyle(colour);
             }
             taskListArray.add(box);
@@ -143,7 +142,6 @@ public class TaskSidebar extends VBox implements PlannerListener  {
     public String getColour(Color eventColour){
         String colour = "";
 
-        System.out.println("Colour given: " + eventColour);
         if (Color.GREEN.equals(eventColour)) {
             colour = "limeGreen";
         }

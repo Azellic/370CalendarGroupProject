@@ -6,8 +6,6 @@ import Model.CoursesModel;
 import View.NewCourseDialog;
 import View.NewGradeDialog;
 import View.RemoveCourseDialog;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
@@ -34,12 +32,9 @@ public class GradeTabController {
             courseStrings.add(c.getTitle());
         }
         Dialog<Assessment> dialog = new NewGradeDialog(courseStrings);
-        System.out.println("gradeClicked");
         Optional<Assessment> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-
-            System.out.println(event.toString());
 
             model.insertAssessment(event);
         });
@@ -51,8 +46,6 @@ public class GradeTabController {
         Optional<Course> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-
-            System.out.println(event.toString());
 
             model.insertCourse(event);
         });
@@ -71,7 +64,6 @@ public class GradeTabController {
         Optional<Course> result = dialog.showAndWait();
 
         result.ifPresent(event -> {
-            System.out.println(event.toString());
 
             model.deleteCourse(event);
         });

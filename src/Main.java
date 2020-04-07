@@ -27,7 +27,6 @@ public class Main extends Application {
     TaskBoardModel taskModel;
     //Controllers
     CalendarController calController;
-    DashboardController dashController;
     DayTabController daytabController;
     GradeTabController gradeController;
     TaskTabController taskController;
@@ -50,7 +49,6 @@ public class Main extends Application {
 
 
         calController = new CalendarController();
-        dashController = new DashboardController();
         daytabController = new DayTabController();
         gradeController = new GradeTabController();
         taskController = new TaskTabController();

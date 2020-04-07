@@ -5,8 +5,6 @@ import Model.Task;
 import Model.Course;
 import Model.TaskBoardModel;
 import View.NewTaskDialog;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
@@ -43,7 +41,6 @@ public class TaskTabController {
 
         result.ifPresent(event -> {
 
-            System.out.println(event.toString());
 
             model.insertTask(event);
         });
