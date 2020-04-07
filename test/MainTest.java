@@ -161,6 +161,8 @@ public class MainTest {
         calendarModel.insertEvent(event8);
         calendarModel.insertEvent(event9);
         calendarModel.insertEvent(event10);
+        System.out.println(calendarModel.getNumEventsSpecificDay(2020, 4, 8));
+        System.out.println(calendarModel.getNumEventsSpecificDay(2020, 4, 9));
         /**
          * Inserting tasks
          */

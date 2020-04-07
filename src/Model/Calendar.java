@@ -2,7 +2,6 @@ package Model;
 
 import java.awt.*;
 
-import View.DaySidebar;
 import View.PlannerListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,6 +104,25 @@ public class Calendar {
        ResultSet eventsQuery = db.getEvents(selectedYear, selectedMonth, selectedDay);
        ArrayList<Event> events = new ArrayList<Event>();
        return formatEventQuery(eventsQuery, events);
+   }
+
+   public int getNumEventsSpecificDay(int year, int month, int day) {
+       ResultSet eventsQuery = db.getNumEventsSpecificDay(year, month, day);
+       int numEvents = 0;
+       try {
+           eventsQuery.next();
+           numEvents = eventsQuery.getInt("rowcount");
+       } catch (SQLException e) {
+           System.out.println("problem getting rowcount");
+           e.printStackTrace();
+       } finally {
+           try {
+               eventsQuery.close();
+           } catch (SQLException e) {
+               System.out.println("problem closing events query");
+           }
+       }
+       return numEvents;
    }
 
    public void insertEvent(Event userInput) {
