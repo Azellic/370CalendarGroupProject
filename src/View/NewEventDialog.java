@@ -128,17 +128,33 @@ public class NewEventDialog extends InputDialog {
             if(((RadioButton)startAMPM.getSelectedToggle()).getText().equals("PM")){
                 mod = 12;
             }
-            LocalTime sTime = LocalTime.of(startHour.getValue()+mod, startMinute.getValue());
+            LocalTime sTime;
+            if(startHour.getValue() == 12){
+                sTime = LocalTime.of(startHour.getValue(), startMinute.getValue());
+            }
+            else {
+                sTime = LocalTime.of(startHour.getValue() + mod, startMinute.getValue());
+            }
 
             mod = 0;
             if (((RadioButton)endAMPM.getSelectedToggle()).getText().equals("PM")){
                 mod = 12;
             }
-            LocalTime eTime = LocalTime.of(endHour.getValue()+mod, endMinute.getValue());
-
-            if(sTime.isAfter(eTime)){
-                eTime = sTime;
+            LocalTime eTime;
+            if(endHour.getValue() == 12){
+                eTime = LocalTime.of(endHour.getValue(), endMinute.getValue());
             }
+            else{
+                eTime = LocalTime.of(endHour.getValue()+mod, endMinute.getValue());
+            }
+
+            if(((RadioButton)startAMPM.getSelectedToggle()).getText().equals("AM") && (endHour.getValue()) == 12){
+                eTime = LocalTime.of(0, endMinute.getValue());
+            }
+            if(((RadioButton)startAMPM.getSelectedToggle()).getText().equals("AM") && (startHour.getValue()) == 12){
+                sTime = LocalTime.of(0, startMinute.getValue());
+            }
+
 
             Event newEvent =  new Event(title.getText(), desc.getText(), courseChoice.getValue(), c,
                     datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
