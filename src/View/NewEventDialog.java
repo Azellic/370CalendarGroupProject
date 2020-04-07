@@ -114,8 +114,7 @@ public class NewEventDialog extends InputDialog {
                 else {
                     c = Color.PINK;
                 }
-                // System.out.println("NewEventDialog in Try: Just before Assignment");
-                // c = (Color)field.get(null);
+
             } catch (Exception e) {
                 c = Color.GREEN; // Not defined
             }
@@ -126,8 +125,10 @@ public class NewEventDialog extends InputDialog {
 
             int mod = 0;
             if(((RadioButton)startAMPM.getSelectedToggle()).getText().equals("PM")){
+                System.out.println("Here");
                 mod = 12;
             }
+
             LocalTime sTime;
             if(startHour.getValue() == 12){
                 sTime = LocalTime.of(startHour.getValue(), startMinute.getValue());
@@ -141,6 +142,7 @@ public class NewEventDialog extends InputDialog {
                 mod = 12;
             }
             LocalTime eTime;
+
             if(endHour.getValue() == 12){
                 eTime = LocalTime.of(endHour.getValue(), endMinute.getValue());
             }
@@ -155,6 +157,10 @@ public class NewEventDialog extends InputDialog {
                 sTime = LocalTime.of(0, startMinute.getValue());
             }
 
+            //need at least a minute in between
+            if(sTime.isAfter(eTime)) {
+                return null;
+            }
 
             Event newEvent =  new Event(title.getText(), desc.getText(), courseChoice.getValue(), c,
                     datePicker.getValue().getDayOfMonth(), datePicker.getValue().getMonthValue(),
