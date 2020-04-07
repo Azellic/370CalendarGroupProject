@@ -8,7 +8,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -109,11 +111,10 @@ public class FullCalendarView implements PlannerListener {
         // Populate the calendar with day numbers
         for (AnchorPaneNode ap : allCalendarDays) {
             if (ap.getChildren().size() != 0) {
-                ap.getChildren().remove(0);
+                ap.getChildren().clear();
             }
             Text day = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             if(model.getSelectedDay().compareTo(calendarDate) == 0){
-                System.out.println("Selected day found: " );
                 ap.setBackground(new Background(new BackgroundFill(Color.rgb(204, 204, 255),
                         CornerRadii.EMPTY, Insets.EMPTY)));
             }
@@ -126,11 +127,18 @@ public class FullCalendarView implements PlannerListener {
                         CornerRadii.EMPTY, Insets.EMPTY)));
             }
             ap.setDate(calendarDate);
-            //TODO: If we are going to add events to the calendar, this would be the place
-            //Text eventCount = new Text(String.valueOf(model.));
+            int count = model.getNumEventsSpecificDay(calendarDate.getYear(),
+                    calendarDate.getMonthValue(), calendarDate.getDayOfMonth());
             ap.setTopAnchor(day, 5.0);
             ap.setLeftAnchor(day, 5.0);
             ap.getChildren().add(day);
+            if(count > 0){
+                Text eventCount = new Text("Events: " + String.valueOf(count));
+                eventCount.setBoundsType(TextBoundsType.VISUAL);
+                ap.setRightAnchor(eventCount, 10.0);
+                ap.setBottomAnchor(eventCount, 10.0);
+                ap.getChildren().add(eventCount);
+            }
 
             calendarDate = calendarDate.plusDays(1);
         }
