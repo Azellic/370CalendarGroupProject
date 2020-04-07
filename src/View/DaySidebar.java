@@ -94,7 +94,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             Label location = new Label("Location: " + currentEvent.getLocation());
 
             Button detailsButton = new Button("Details");
-            detailsButton.setPrefSize(60, 40);
+            detailsButton.setPrefSize(80, 40);
 
             Button removeButton = new Button("Remove");
             removeButton.setPrefSize(80, 40);
@@ -116,7 +116,7 @@ public class DaySidebar extends VBox implements PlannerListener {
             detailsButtonBox.setAlignment(Pos.CENTER);
 
             VBox removeButtonBox = new VBox(removeButton);
-            removeButtonBox.setPrefSize(200, 50);
+            removeButtonBox.setPrefSize(100, 50);
             //removeButtonBox.setStyle("-fx-background-color: White");
             removeButtonBox.setAlignment(Pos.CENTER_RIGHT);
 
