@@ -71,8 +71,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
 
         // Initialize the remove grade button
         removeCourseButton = new Button("Remove Course");
-        removeCourseButton.setPrefWidth(60);
-        removeCourseButton.setPrefWidth(110);
+        removeCourseButton.setPrefWidth(140);
 
         // Title fields
         Label title = new Label("Title");
@@ -93,7 +92,7 @@ public class GradeSidebar extends VBox implements PlannerListener {
         gradeBox.setPadding(new Insets(0, 0, 0, 8));
 
         VBox weightBox = new VBox(weight);
-        weightBox.setPrefSize(50, 50);
+        weightBox.setPrefSize(100, 50);
         weightBox.setAlignment(Pos.CENTER_LEFT);
         weightBox.setPadding(new Insets(0, 0, 0, 8));
 
