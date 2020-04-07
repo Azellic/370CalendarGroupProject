@@ -161,8 +161,7 @@ public class MainTest {
         calendarModel.insertEvent(event8);
         calendarModel.insertEvent(event9);
         calendarModel.insertEvent(event10);
-        System.out.println(calendarModel.getNumEventsSpecificDay(2020, 4, 8));
-        System.out.println(calendarModel.getNumEventsSpecificDay(2020, 4, 9));
+
         /**
          * Inserting tasks
          */
@@ -300,7 +299,13 @@ public class MainTest {
     }
 
     @Test
-    public void tasksTest(){
+    public void testNumberOfEvents() {
+        int numEvents = calendarModel.getNumEventsSpecificDay(2020, 4, 8);
+        assertEquals(3, numEvents);
+    }
+
+    @Test
+    public void tasksTest() {
         ArrayList<Task> tasks = taskModel.getTasksFromDB();
         assertEquals(10, tasks.size());
         assertTrue(task1.equalsByField(tasks.get(0)));
@@ -325,14 +330,14 @@ public class MainTest {
         assertEquals(7, tasks.size());
     }
 
-//    @AfterClass
-//    public static void cleanUp() {
-//        File file = new File("plannerDB.db");
-//        if (file.delete()) {
-//            System.out.println("Done testing deleting DataBase");
-//        } else {
-//            System.out.println("Failed to delete DataBase after testing.");
-//            System.out.println("Please manually delete the database from the directory");
-//        }
-//    }
+    @AfterClass
+    public static void cleanUp() {
+        File file = new File("plannerDB.db");
+        if (file.delete()) {
+            System.out.println("Done testing deleting DataBase");
+        } else {
+            System.out.println("Failed to delete DataBase after testing.");
+            System.out.println("Please manually delete the database from the directory");
+        }
+    }
 }
