@@ -1,7 +1,55 @@
 # 370project
-- Project is in the preliminary stages as of now just consists of a database and methods to communitcate with the database
-- The methods created, create the embedded database and add data to the tables, as well as display the data
-- Testing is done by signing into the virtual machine and running the jar file
-- To use the program sign into the virutal machine and execute a ls command to make sure a Planner.jar file exists.
-- If not cd to the home directory.
-- There will be a README.txt file in the home directory as well with instructions of how to execute the program.
+**IMPROTANT You need at least java version 13.0.2
+
+
+For Mac
+ - Easiest way is to download the whole repository and make that your current working directory in a terminal
+ - You should be able to do a ls to verify that you are in the correct directory
+ - Next you want to execute the following command
+ - java --module-path javaFX/ --add-modules javafx.controls,javafx.fxml -jar 370project.jar
+ - This will launch the product and you can start using it
+
+Alternative For Mac
+ - The required files for running on the mac are the javaFX directory and the 370project.jar
+ - Save both of those files in a directory on your computer
+ - Next open terminal and make the directory where you saved the files your current working directory
+ - Once there use the following command to launch the product
+ - java --module-path javaFX/ --add-modules javafx.controls,javafx.fxml -jar 370project.jar
+
+For Linux
+ - Easiest way is to download the whole repository and make that your current working directory in a terminal
+ - You should be able to do a ls to verify that you are in the correct directory
+ - Next you want to execute the following command
+ - java --module-path javaFXLinux/lib/ --add-modules javafx.controls,javafx.fxml -jar 370project.jar
+ - This will launch the product and you can start using it
+
+Alternative For Linux
+ - The required files for linux are the javaFXLinux directory and the 370project.jar
+ - Save both of these files in a directory on your computer
+ - Next open a terminal and make the directory where you save the files your current working directory
+ - Once there use the following command to launch the product
+ - java --module-path javaFX/ --add-modules javafx.controls,javafx.fxml -jar 370project.jar
+
+For Windows
+ - Easiest way is to download the whole repository and make that your current working directory in a cmd prompt
+ - You should be able to do a dir to verify you are in the correct directory
+ - Next you want to execute the following command
+ - java --module-path javaFXWindows\lib --add-modules javafx.controls,javafx.fxml -jar 370project.jar
+
+Alternative For Windows
+ - The required files for linux are the javaFXWindows directory and the 370project.jar
+ - Save both of these files in a directory on your computer
+ - Next open a cmd prompt and make the directory where you save the files your current working directory
+ - Once there use the following command to launch the product
+ - java --module-path javaFXWindows\lib --add-modules javafx.controls,javafx.fxml -jar 370project.jar
+
+ Notes:
+ - The database will be created on inital startup. All data will be saved and to exit the program you can just click the x.
+ - At any point you can delete the database from the directory. Although all data will be lost. To get it back just restart
+   the program.
+
+Testing:
+ - A great portion of the product was tested by inspection. For what wasn't tested by inspection the only way to use the tests 
+ is to import the project into intelliJ or another development envirment. 
+ We ran the tests before submitting and they all passed. The tests are located in the test/ 
+ directory in the repository for veiwing.
