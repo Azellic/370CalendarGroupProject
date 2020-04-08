@@ -23,6 +23,7 @@ public class CoursesModel {
         courses = getCoursesFromDB();
         this.calendarModel = calendarModel;
         this.taskModel = taskModel;
+
     }
 
     public ArrayList<Course> getCourseList() {
@@ -55,16 +56,26 @@ public class CoursesModel {
     }
 
     public void setAverageGrade(ArrayList<Assessment> assessments) {
-        double averageGrade = 0;
-        double runningWeight = 0;
+        double averageGrade = 0.0;
+        double runningWeight = 0.0;
         for(Assessment assessment : assessments) {
+            System.out.println(averageGrade);
             runningWeight += assessment.getWeight();
             averageGrade = averageGrade + (assessment.getMark() * (assessment.getWeight()/100));
+            System.out.println(averageGrade);
         }
-        this.averageGrade = (averageGrade / runningWeight) * 100;
+        if(runningWeight > 0){
+            this.averageGrade = (averageGrade / runningWeight) * 100;
+        }
+        else{
+            this.averageGrade = 0.0;
+        }
+
+
     }
 
     public double getAverageGrade() {
+        System.out.println(averageGrade);
         return averageGrade;
     }
 
