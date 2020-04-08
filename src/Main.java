@@ -1,122 +1,130 @@
 import Controller.*;
-import Model.Calendar;
-import Model.CalendarItem;
-import Model.CoursesModel;
-import Model.TaskBoardModel;
+import Model.*;
 import View.*;
+import View.FullCalendarView;
+import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-// Main execution for the app
-public class Main {//extends Application{
+import java.text.ParseException;
+import java.time.YearMonth;
+
+public class Main extends Application {
     //Models
     Calendar calendarModel;
     CoursesModel coursesModel;
     TaskBoardModel taskModel;
     //Controllers
     CalendarController calController;
-    DashboardController dashController;
     DayTabController daytabController;
     GradeTabController gradeController;
     TaskTabController taskController;
     //Views
-    CalendarView calendarView;
     Dashboard dashboard;
     DaySidebar dayView;
     GradeSidebar gradeView;
     TaskSidebar taskView;
+    FullCalendarView calendarView;
 
-    /*
+    // The view the calendar is stored in
+    BorderPane border;
+
+    public static DataBase db;
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start (Stage primaryStage){
+        StackPane root = new StackPane();
+        border = new BorderPane();
 
-    }*/
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        PlannerSQL test = new PlannerSQL();
-        test.startUp();
+        calController = new CalendarController();
+        daytabController = new DayTabController();
+        gradeController = new GradeTabController();
+        taskController = new TaskTabController();
 
-        //launch(args);
+        calendarModel = new Calendar();
+        taskModel = new TaskBoardModel();
+        coursesModel = new CoursesModel(calendarModel, taskModel);
 
-        // Insert values careful not to add repeats on multiple runs
-        ResultSet tagResult = test.displayTags();
-        if (!tagResult.next()){
-            test.insertTag("CMPT370");
-            test.insertTag("CMPT340");
-            test.insertTag("MATH110");
-            test.insertTag("WORK");
-        } else {
-            System.out.println("\nTags Table Testing");
-            System.out.println(tagResult.getInt("tagID")+ " "+ tagResult.getString("tagName"));
-            while(tagResult.next()){
-                System.out.println(tagResult.getInt("tagID")+ " "+ tagResult.getString("tagName"));
-            }
-        }
 
-        ResultSet eventResult = test.displayEvents();
-        if (!eventResult.next()){
-            test.insertEvent(1, "10:30", "11:30",
-                    3, 3, 2020, "Midterm");
-            test.insertEvent(2, "11:30", "12:30",
-                    27, 3, 2020, "Midterm");
-            test.insertEvent(3, "7:30", "11:30",
-                    7, 3, 2020, "Midterm");
-            test.insertEvent(4, "10:30", "11:30",
-                    3, 2, 2020, "Work Shift");
-            test.insertEvent(1, "6:00", "11:30",
-                    2, 6, 2020, "Class");
-            test.insertEvent(2, "12:30", "2:45",
-                    2, 5, 2020, "Class");
-            test.insertEvent(3, "8:30", "11:30",
-                    7, 8, 2020, "Class");
-            test.insertEvent(4, "7:00", "10:00",
-                    10, 3, 2020, "Work Shift");
-        } else {
-            System.out.println("\nEvent Table Tests");
-            System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("tagID")+" "+
-                    eventResult.getString("startTime")+" "+eventResult.getString("endTime")+ " "+
-                    eventResult.getInt("day")+ " " + eventResult.getInt("month")+ " "+
-                    eventResult.getInt("year")+ " " + eventResult.getString("eventTitle"));
-            while(eventResult.next()){
-                System.out.println(eventResult.getInt("eventID") +" "+ eventResult.getInt("tagID")+" "+
-                        eventResult.getString("startTime")+" "+eventResult.getString("endTime")+ " "+
-                        eventResult.getInt("day")+ " " + eventResult.getInt("month")+ " "+
-                        eventResult.getInt("year")+ " " + eventResult.getString("eventTitle"));
-            }
-        }
-        ResultSet assessmentResult = test.displayAssessments();
-        if (!assessmentResult.next()){
-            test.insertAssessment(1, 25, 100, "Midterm");
-            test.insertAssessment(2, 50, 25, "Final");
-            test.insertAssessment(3, 35, 37.5, "Final Project");
-            test.insertAssessment(1, 5, 55.5, "assignment 1");
-            test.insertAssessment(2, 10, 65, "Assignment 3");
-        } else {
-            System.out.println("\nAssessment Table Tests");
-            System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("tagID")+" "+
-                    assessmentResult.getInt("grade")+" "+assessmentResult.getString("assessmentTitle"));
-            while(assessmentResult.next()){
-                System.out.println(assessmentResult.getInt("assessmentId")+" "+assessmentResult.getInt("tagID")+" "+
-                        assessmentResult.getInt("grade")+" "+assessmentResult.getString("assessmentTitle"));
-            }
-        }
-        ResultSet tasksResult = test.displayTasks();
-        if (!tasksResult.next()) {
-            test.insertTask(1, 6, 4, 2020, "Assignment");
-            test.insertTask(1, 5, 8, 2020, "Assignment");
-            test.insertTask(2, 3, 4, 2020, "clean room");
-            test.insertTask(3, 5, 6, 2020, "Do Dishes");
-        } else {
-            System.out.println("\nTasks Table Tests");
-            System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("tagID")+" "+
-                    tasksResult.getInt("dueDay")+" "+tasksResult.getInt("dueMonth")+" "+
-                    tasksResult.getInt("dueYear")+" "+tasksResult.getString("taskTitle"));
-            while(tasksResult.next()) {
-                System.out.println(tasksResult.getInt("taskID")+" "+tasksResult.getInt("tagID")+" "+
-                        tasksResult.getInt("dueDay")+" "+tasksResult.getInt("dueMonth")+" "+
-                        tasksResult.getInt("dueYear")+" "+tasksResult.getString("taskTitle"));
-            }
-        }
+        //Set up the controllers with respective models
+        calController.setModel(calendarModel);
+        daytabController.setModel(calendarModel);
+        daytabController.setCoursesModel(coursesModel);
+        gradeController.setModel(coursesModel);
+        taskController.setModel(taskModel);
+        taskController.setCoursesModel(coursesModel);
 
+        Screen screen = Screen.getPrimary();
+        Rectangle2D wBounds = screen.getVisualBounds();
+        Rectangle2D bounds = new Rectangle2D(wBounds.getMinX(), wBounds.getMinY(), wBounds.getWidth(),
+                wBounds.getHeight()-20);
+
+        dayView = new DaySidebar(bounds);
+        taskView = new TaskSidebar(bounds);
+
+        calendarView = new FullCalendarView(YearMonth.now(), calController);
+        gradeView = new GradeSidebar(bounds, coursesModel);
+
+        dashboard = new Dashboard(bounds, calendarView, gradeView, taskView, dayView);
+
+        //Set up each view with the model it will draw
+        dayView.setController(daytabController);
+        taskView.setController(taskController);
+        gradeView.setGradeController(gradeController);
+
+
+        dayView.setModel(calendarModel);
+        taskView.setModel(taskModel);
+        calendarView.setModel(calendarModel);
+
+        // Populate calendar with the appropriate day numbers
+        calendarView.populateCalendar(YearMonth.now());
+
+        dayView.setStage(primaryStage);
+        taskView.setStage(primaryStage);
+        gradeView.setStage(primaryStage);
+
+        //Set up model-view subscriber relationship
+        calendarModel.addSubscriber(dayView);
+        calendarModel.addSubscriber(calendarView);
+        taskModel.addSubscriber(taskView);
+        coursesModel.addSubscriber(gradeView);
+
+        //Establish controller - add-button relationship
+        dayView.setButtonController(daytabController);
+        gradeView.setButtonController(gradeController);
+        taskView.setButtonController(taskController);
+
+        // needed for remove
+
+        // Set the title
+        primaryStage.setTitle("CMPT370 Project");
+
+
+        // Set the window size based on the screen bounds
+        primaryStage.setX(wBounds.getMinX());
+        primaryStage.setY(wBounds.getMinY());
+        primaryStage.setWidth(wBounds.getWidth());
+        primaryStage.setHeight(wBounds.getHeight());
+
+        // Set items in the border into the scene and display the scene
+        root.getChildren().add(dashboard);
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, ParseException {
+        db = new DataBase();
+        db.startUp();
+        db.closeConnection();
+        //DON'T PUT THINGS HERE. EVERYTHING SHOULD BE CREATED IN THE START FUNCTION
+        launch(args);
     }
 }
