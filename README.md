@@ -44,9 +44,10 @@ Alternative For Windows
  - java --module-path javaFXWindows\lib --add-modules javafx.controls,javafx.fxml -jar 370project.jar
 
  Notes:
- - The database will be created on inital startup. All data will be saved and to exit the program you can just click the x.
- - At any point you can delete the database from the directory. Although all data will be lost. To get it back just restart
-   the program.
+ - The database will be created on initial startup. All data will be saved and to exit the program you can just click the x.
+ - At any point you can delete the database from the directory. Although all data will be lost. 
+ - Starting the program again as normal will create a new blank database
+ - Deleting the database will result in all data being lost.
 
 Testing:
  - A great portion of the product was tested by inspection. For what wasn't tested by inspection the only way to use the tests 
